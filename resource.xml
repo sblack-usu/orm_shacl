@@ -1,0 +1,60 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs1="http://www.w3.org/2000/01/rdf-schema#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:hsterms="http://hydroshare.org/terms/">
+  <rdf:Description rdf:about="http://www.hydroshare.org/resource/ea93a49284204912be7fab054a9d41df">
+    <dc:title>00_ZemelWoodlandN_SiteModel</dc:title>
+    <dc:type rdf:resource="http://www.hydroshare.org/terms/CompositeResource"/>
+    <dc:description>
+      <rdf:Description>
+        <dcterms:abstract>Part of Stroud Water Research Center’s (SWRC) development modelling project for Open Space Institute's (OSI) Land Protection Impact Assessment (LPIA). Parcel analysis carried out by Model My Watershed's (MMW) Site Storm Model. Analyzing the following: ⏎ 1) Forest to Open Space Development ⏎ 2) Forest to Low Density Development ⏎ 3) Forest to Medium Density Development ⏎ 4) Forest to High Density Development ⏎ 5) OSI’s Development Scenario</dcterms:abstract>
+      </rdf:Description>
+    </dc:description>
+    <dc:creator>
+      <rdf:Description rdf:about="http://www.hydroshare.org/user/3015/">
+        <hsterms:name>Matt Gisondi</hsterms:name>
+        <hsterms:creatorOrder>1</hsterms:creatorOrder>
+        <hsterms:organization>Stroud Water Research Center</hsterms:organization>
+        <hsterms:email>mgisondi@stroudcenter.org</hsterms:email>
+      </rdf:Description>
+    </dc:creator>
+    <dc:coverage>
+      <dcterms:box>
+        <rdf:value>northlimit=39.8474472377113; eastlimit=-74.46517977947326; southlimit=39.833547609226464; westlimit=-74.49757575942797; units=Decimal degrees; projection=WGS 84 EPSG:4326</rdf:value>
+      </dcterms:box>
+    </dc:coverage>
+    <dc:date>
+      <dcterms:created>
+        <rdf:value>2020-01-20T18:12:41.356860+00:00</rdf:value>
+      </dcterms:created>
+    </dc:date>
+    <dc:date>
+      <dcterms:modified>
+        <rdf:value>2020-01-20T18:13:34.486788+00:00</rdf:value>
+      </dcterms:modified>
+    </dc:date>
+    <dc:identifier>
+      <rdf:Description>
+        <hsterms:hydroShareIdentifier>http://www.hydroshare.org/resource/ea93a49284204912be7fab054a9d41df</hsterms:hydroShareIdentifier>
+      </rdf:Description>
+    </dc:identifier>
+    <dc:language>eng</dc:language>
+    <dc:rights>
+      <rdf:Description>
+        <hsterms:rightsStatement>This resource is shared under the Creative Commons Attribution CC BY.</hsterms:rightsStatement>
+        <hsterms:URL rdf:resource="http://creativecommons.org/licenses/by/4.0/"/>
+      </rdf:Description>
+    </dc:rights>
+    <dc:subject>osi</dc:subject>
+    <dc:subject>model-my-watershed</dc:subject>
+    <dc:subject>open-space-institute</dc:subject>
+    <dc:subject>mmw</dc:subject>
+    <hsterms:extendedMetadata>
+      <rdf:Description>
+        <hsterms:key>appkey</hsterms:key>
+        <hsterms:value>model-my-watershed</hsterms:value>
+      </rdf:Description>
+    </hsterms:extendedMetadata>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.hydroshare.org/terms/CompositeResource">
+    <rdfs1:label>Composite Resource</rdfs1:label>
+    <rdfs1:isDefinedBy>http://www.hydroshare.org/terms</rdfs1:isDefinedBy>
+  </rdf:Description>
+</rdf:RDF>
