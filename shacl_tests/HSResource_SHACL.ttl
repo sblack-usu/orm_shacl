@@ -6,10 +6,11 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix hsterms: <http://hydroshare.org/terms/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 
 schema:HSResourceShape
     a sh:NodeShape ;
-    sh:targetClass schema:HSResource ;
+    sh:targetClass hsterms:resource ;
     sh:property [
         sh:path dc:title ;
         sh:datatype xsd:string ;
@@ -30,6 +31,22 @@ schema:HSResourceShape
     sh:property [
         sh:path hsterms:extendedMetadata ;
         sh:node schema:HSKeyValueShape ;
+    ] ;
+    sh:property [
+        sh:path dc:coverage ;
+        sh:property [
+            a dcterms:box ;
+            sh:path rdf:value ;
+            sh:datatype xsd:string ;
+            sh:pattern ".*" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+        ] ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path dc:creator ;
+        sh:minCount 1 ;
     ] .
 
 schema:HSKeyValueShape
