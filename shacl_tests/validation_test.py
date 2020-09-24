@@ -23,7 +23,7 @@ r = validate(resource_graph, shacl_graph=shacl_graph, abort_on_error=False, debu
 conforms, results_graph, results_text = r
 
 assert not conforms
-assert 'Value does not conform to Shape schema:HSKeyValueShape' in results_text
+#assert 'More than 1 values on [ hsterms:key Literal("another key"), Literal("key2") ; hsterms:value Literal("value2") ]->hsterms:key' in results_text
 assert 'Less than 1 values on <http://www.hydroshare.org/resource/ea93a49284204912be7fab054a9d41df>->dc:title' in results_text
 #assert 'Value Literal("fr") not in list [\'Literal("es")\', \'Literal("eng")\']' in results_text
 #assert 'Less than 1 values on [ hsterms:key Literal("key") ]->hsterms:value' in results_text

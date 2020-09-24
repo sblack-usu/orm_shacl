@@ -30,7 +30,18 @@ schema:HSResourceShape
     ] ;
     sh:property [
         sh:path hsterms:extendedMetadata ;
-        sh:node schema:HSKeyValueShape ;
+        sh:property [
+            sh:path hsterms:key ;
+            sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+        ] ;
+        sh:property [
+            sh:path hsterms:value ;
+            sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+        ] ;
     ] ;
     sh:property [
         sh:path dc:coverage ;
@@ -47,19 +58,4 @@ schema:HSResourceShape
     sh:property [
         sh:path dc:creator ;
         sh:minCount 1 ;
-    ] .
-
-schema:HSKeyValueShape
-    a sh:NodeShape ;
-    sh:property [
-        sh:path hsterms:key ;
-        sh:datatype xsd:string ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-    ] ;
-    sh:property [
-        sh:path hsterms:value ;
-        sh:datatype xsd:string ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
     ] .

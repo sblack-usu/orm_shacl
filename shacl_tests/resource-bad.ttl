@@ -6,7 +6,7 @@
 @prefix schema: <http://schema.org/> .
 
 <http://www.hydroshare.org/resource/ea93a49284204912be7fab054a9d41df>
-    a schema:HSResource ;
+    a hsterms:resource ;
     hsterms:extendedMetadata
         [ hsterms:key "key2", "another key" ;
             hsterms:value "value2" ],
