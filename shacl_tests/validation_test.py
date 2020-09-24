@@ -7,6 +7,10 @@ hd = hydro_document("ea93a49284204912be7fab054a9d41df")
 
 from rdflib import Graph
 shacl_graph = Graph().parse("shacl_tests/HSResource_SHACL.ttl", format='turtle')
+for triple in shacl_graph.triples((None, None, None)):
+    print(triple)
+with open('hsresource-shacl.xml', 'wb') as f:
+    f.write(shacl_graph.serialize())
 #resource_graph = hd.document.graph
 resource_graph = Graph().parse("shacl_tests/resource.ttl", format='turtle')
 

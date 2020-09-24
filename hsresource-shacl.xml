@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:sh="http://www.w3.org/ns/shacl#"
+>
+  <rdf:Description rdf:nodeID="ub1bL47C21">
+    <sh:path rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#value"/>
+    <sh:pattern>.*</sh:pattern>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/box"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL38C21">
+    <sh:path rdf:resource="http://hydroshare.org/terms/value"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL19C17">
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:in rdf:nodeID="f717c888f6b334303af6cb78b1005845ab1"/>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:path rdf:resource="http://purl.org/dc/elements/1.1/language"/>
+    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://schema.org/HSResourceShape">
+    <sh:property rdf:nodeID="ub1bL19C17"/>
+    <sh:property rdf:nodeID="ub1bL30C17"/>
+    <sh:property rdf:nodeID="ub1bL45C17"/>
+    <sh:targetClass rdf:resource="http://hydroshare.org/terms/resource"/>
+    <sh:property rdf:nodeID="ub1bL26C17"/>
+    <sh:property rdf:nodeID="ub1bL57C17"/>
+    <rdf:type rdf:resource="http://www.w3.org/ns/shacl#NodeShape"/>
+    <sh:property rdf:nodeID="ub1bL13C17"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL30C17">
+    <sh:property rdf:nodeID="ub1bL32C21"/>
+    <sh:path rdf:resource="http://hydroshare.org/terms/extendedMetadata"/>
+    <sh:property rdf:nodeID="ub1bL38C21"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL32C21">
+    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:path rdf:resource="http://hydroshare.org/terms/key"/>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="f717c888f6b334303af6cb78b1005845ab2">
+    <rdf:first>es</rdf:first>
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL45C17">
+    <sh:property rdf:nodeID="ub1bL47C21"/>
+    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+    <sh:path rdf:resource="http://purl.org/dc/elements/1.1/coverage"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="f717c888f6b334303af6cb78b1005845ab1">
+    <rdf:rest rdf:nodeID="f717c888f6b334303af6cb78b1005845ab2"/>
+    <rdf:first>eng</rdf:first>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL26C17">
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:path rdf:resource="http://purl.org/dc/elements/1.1/subject"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL57C17">
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:path rdf:resource="http://purl.org/dc/elements/1.1/creator"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL13C17">
+    <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+    <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+    <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <sh:path rdf:resource="http://purl.org/dc/elements/1.1/title"/>
+  </rdf:Description>
+</rdf:RDF>
