@@ -1,5 +1,5 @@
 # orm-shacl
-a python class object mapper with SHACL and rdflib
+a python class object mapper with SHACL and rdflib.  Given a SHACL spec, create and modify an rdflib graph through python class properties which comply with the SHACL specification.
 
 ## Example:
 ```python
