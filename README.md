@@ -11,7 +11,9 @@ metadata_graph = Graph().parse('tests/data/resource.ttl', format='turtle')
 shacl_graph = Graph().parse('tests/data/HSResource_SHACL.ttl', format='turtle')
 res = RDFMetadata(shacl_graph, metadata_graph)
 
+# access the underlying rdflib graph with a python class property
 print(res.title) # '00_ZemelWoodlandN_SiteModel'
+# shows that the rdflib graph matches
 print(str(next(res._metadata_graph.objects(subject=None, predicate=DC.title)))) # '00_ZemelWoodlandN_SiteModel'
 
 res.title = "modified title"
