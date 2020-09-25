@@ -7,8 +7,8 @@ from rdflib import Graph
 from rdflib.namespace import DC
 from rdf_orm import RDFMetadata
 
-metadata_graph = Graph().parse('data/resource.ttl', format='turtle')
-shacl_graph = Graph().parse('data/HSResource_SHACL.ttl', format='turtle')
+metadata_graph = Graph().parse('tests/data/resource.ttl', format='turtle')
+shacl_graph = Graph().parse('tests/data/HSResource_SHACL.ttl', format='turtle')
 res = RDFMetadata(shacl_graph, metadata_graph)
 
 print(res.title) # '00_ZemelWoodlandN_SiteModel'

@@ -79,5 +79,3 @@ def root_subject(graph):
     if len(root_nodes) > 1:
         raise Exception("Currently only supporting one root node in shacl spec")
     return root_nodes.pop()
-
-
