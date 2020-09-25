@@ -1,4 +1,5 @@
 from rdflib import Graph
+from rdflib.namespace import DC
 from rdf_orm import RDFMetadata
 
 
@@ -18,6 +19,7 @@ def test__property_modification():
 
     res.title = 'modified'
     assert res.title == 'modified'
+    assert str(next(res._metadata_graph.objects(subject=None, predicate=DC.title))) == 'modified'
 
     res.language = 'es'
     assert res.language == 'es'
