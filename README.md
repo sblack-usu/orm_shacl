@@ -19,7 +19,7 @@ res.title = "modified title"
 print(res.title) # 'modified title'
 print(str(next(res._metadata_graph.objects(subject=None, predicate=DC.title)))) # 'modified title'
 ```
-#### data/HSResource_SHACL.ttl
+#### tests/data/HSResource_SHACL.ttl
 ```
 @prefix schema: <http://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -37,7 +37,7 @@ schema:HSResourceShape
         sh:minCount 1 ;
     ] .
 ```
-#### data/resource.ttl
+#### tests/data/resource.ttl
 ```
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix hsterms: <http://hydroshare.org/terms/> .
