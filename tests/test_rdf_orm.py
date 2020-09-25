@@ -18,6 +18,11 @@ def test__property_setup():
     for creator in res.creator:
         assert creator in ['http://www.hydroshare.org/user/3015/']
 
+    assert res.version == 1
+
+    for value in res.value:
+        assert value in [1, 2, 3]
+
 def test__property_modification():
     metadata_graph = Graph().parse('data/resource.ttl', format='turtle')
     shacl_graph = Graph().parse('data/HSResource_SHACL.ttl', format='turtle')
@@ -42,3 +47,11 @@ def test__property_modification():
     assert len(res.creator) == 2
     for creator in res.creator:
         assert creator in new_creators
+
+    res.version = 2
+    assert res.version == 2
+
+    new_values = [4, 5, 6]
+    res.value = new_values
+    for value in res.value:
+        assert value in [4, 5, 6]

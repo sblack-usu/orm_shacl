@@ -18,6 +18,16 @@ schema:HSResourceShape
         sh:minCount 1 ;
     ] ;
     sh:property [
+        sh:path dc:version ;
+        sh:datatype xsd:integer ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path dc:value ;
+        sh:datatype xsd:integer ;
+    ] ;
+    sh:property [
         sh:path dc:language ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;

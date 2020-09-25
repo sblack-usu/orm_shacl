@@ -1,6 +1,6 @@
 from rdflib import Literal
 from rdflib.namespace import SH, XSD
-from rdf_metadata_properties import property_string, property_list_string
+from rdf_metadata_properties import rdf_property, rdf_property_list
 
 
 class RDFMetadata(object):
@@ -40,13 +40,12 @@ class RDFMetadata(object):
         # minCount = self._shacl_graph.value(subject, SH.minCount)
         property_name = extract_name(term)
 
-        if data_type == XSD.string:
-            if max_count == Literal(1):
-                setattr(self.__class__, property_name,
-                        property_string(self._root_instance_subject, term))
-            else:
-                setattr(self.__class__, property_name,
-                        property_list_string(self._root_instance_subject, term))
+        if max_count == Literal(1):
+            setattr(self.__class__, property_name,
+                    rdf_property(self._root_instance_subject, term, data_type))
+        else:
+            setattr(self.__class__, property_name,
+                    rdf_property_list(self._root_instance_subject, term, data_type))
 
 def extract_name(term):
     '''

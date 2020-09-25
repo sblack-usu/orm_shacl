@@ -28,6 +28,10 @@
         "model-my-watershed",
         "open-space-institute",
         "osi" ;
+    dc:version 1 ;
+    dc:value 1,
+         2,
+         3 ;
     dc:title "00_ZemelWoodlandN_SiteModel" ;
     dc:type <http://www.hydroshare.org/terms/CompositeResource> .
 
