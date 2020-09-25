@@ -1,4 +1,15 @@
-from rdflib import Literal
+from rdflib import Literal, URIRef
+
+def URIRef_or_Literal(value):
+    '''
+    Determines whether the value is a url. Not sure if we can assume all urls should be URIRef.
+    :param value:
+    :return: URIRef(value) for urls, else Literal(value)
+    '''
+    if value.startswith('http'):
+        return URIRef(value)
+    else:
+        return Literal(value)
 
 def property_string(subject, predicate):
     '''
@@ -14,7 +25,7 @@ def property_string(subject, predicate):
     @property_string.setter
     def property_string(self, value):
         self._metadata_graph.remove((subject, predicate, None))
-        self._metadata_graph.add((subject, predicate, Literal(value)))
+        self._metadata_graph.add((subject, predicate, URIRef_or_Literal(value)))
 
     return property_string
 
@@ -33,6 +44,6 @@ def property_list_string(subject, predicate):
     def property_list_string(self, values):
         self._metadata_graph.remove((subject, predicate, None))
         for value in values:
-            self._metadata_graph.add((subject, predicate, Literal(value)))
+            self._metadata_graph.add((subject, predicate, URIRef_or_Literal(value)))
 
     return property_list_string

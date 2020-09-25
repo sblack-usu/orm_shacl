@@ -57,5 +57,7 @@ schema:HSResourceShape
     ] ;
     sh:property [
         sh:path dc:creator ;
+        sh:datatype xsd:string ;
+        sh:pattern ".*" ;
         sh:minCount 1 ;
     ] .
