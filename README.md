@@ -3,6 +3,10 @@ a python class object mapper with SHACL and rdflib
 
 ## Example:
 ```python
+from rdflib import Graph
+from rdflib.namespace import DC
+from rdf_orm import RDFMetadata
+
 metadata_graph = Graph().parse('data/resource.ttl', format='turtle')
 shacl_graph = Graph().parse('data/HSResource_SHACL.ttl', format='turtle')
 res = RDFMetadata(shacl_graph, metadata_graph)
