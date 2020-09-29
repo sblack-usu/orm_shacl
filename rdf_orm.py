@@ -4,33 +4,7 @@ from rdf_metadata_properties import rdf_property, rdf_property_list, rdf_nested_
     extract_name
 
 
-class InstancePropertiesBase:
-    """
-    A base class that allows properties to be attached to a class instance
-    """
-
-    def __setattr__(self, attr, value):
-        try:
-            # Try invoking the descriptor protocol __set__ "manually"
-            got_attr = super().__getattribute__(attr)
-            got_attr.__set__(self, value)
-        except AttributeError:
-            # Attribute is not a descriptor, just set it:
-            super().__setattr__(attr, value)
-
-    def __getattribute__(self, attr):
-        # If the attribute does not exist, super().__getattribute__()
-        # will raise an AttributeError
-        got_attr = super().__getattribute__(attr)
-        try:
-            # Try "manually" invoking the descriptor protocol __get__()
-            return got_attr.__get__(self, type(self))
-        except AttributeError:
-            # Attribute is not a descriptor, just return it:
-            return got_attr
-
-
-class RDFMetadata(InstancePropertiesBase):
+class RDFMetadata:
     '''
     A python class object wrapper around an rdflib graph.  Given a SHACL schema as an rdflib graph,
     this class will build a python class which will allow you to create/edit an rdflib graph in a
@@ -75,15 +49,15 @@ class RDFMetadata(InstancePropertiesBase):
         property_name = extract_name(term)
 
         if self._shacl_graph.value(subject, SH.property):
-            setattr(self, property_name,
+            setattr(self.__class__, property_name,
                     rdf_nested_property_list(self._root_metadata_subject, term))
         else:
             if max_count == Literal(1):
-                setattr(self, property_name,
+                setattr(self.__class__, property_name,
                         rdf_property(self._root_metadata_subject, term, data_type))
             else:
                 # property is a list
-                setattr(self, property_name,
+                setattr(self.__class__, property_name,
                         rdf_property_list(self._root_metadata_subject, term, data_type))
 
 def root_subject(graph):

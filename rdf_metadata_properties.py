@@ -2,6 +2,11 @@ from rdflib import Literal, URIRef, BNode
 from rdflib.namespace import XSD, SH
 
 
+def anonymous_metadata_class(shacl_graph, metadata_graph, shacl_obj=None, metadata_obj=None):
+    from rdf_orm import RDFMetadata
+    anon_class = type('AnonymousRDFMetadata', (RDFMetadata, ), {})
+    return anon_class(shacl_graph, metadata_graph, shacl_obj, metadata_obj)
+
 def URIRef_or_Literal(value):
     '''
     Determines whether the value is a url. Not sure if we can assume all urls should be URIRef.
@@ -106,13 +111,12 @@ def rdf_nested_property_list(subject, predicate):
     '''
     @property
     def rdf_nested_property_list(self):
-        from rdf_orm import RDFMetadata
         classes = []
         print("NESTED READING; subject: {} predicate:{}".format(subject, predicate))
         for metadata_obj in self._metadata_graph.objects(subject, predicate):
             shacl_obj = self._shacl_graph.value(predicate=SH.path, object=predicate)
-            prop = RDFMetadata(self._shacl_graph, self._metadata_graph, shacl_obj, metadata_obj)
-            classes.append(prop)
+            clazz = anonymous_metadata_class(self._shacl_graph, self._metadata_graph, shacl_obj, metadata_obj)
+            classes.append(clazz)
         return classes
 
     @rdf_nested_property_list.setter
