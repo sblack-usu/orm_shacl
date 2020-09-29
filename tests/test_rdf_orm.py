@@ -12,16 +12,24 @@ def test__property_setup():
 
     assert res.language == 'eng'
 
+    assert len(res.subject) == 4
     for subject in res.subject:
         assert subject in ["mmw", "model-my-watershed", "open-space-institute", "osi"]
 
+    assert len(res.creator) == 1
     for creator in res.creator:
         assert creator in ['http://www.hydroshare.org/user/3015/']
 
     assert res.version == 1
 
+    assert len(res.value) == 3
     for value in res.value:
         assert value in [1, 2, 3]
+
+    assert len(res.extendedMetadata) == 2
+    for em in res.extendedMetadata:
+        em.key in ['key', 'key2']
+        em.value in ['value', 'value2']
 
 def test__property_modification():
     metadata_graph = Graph().parse('data/resource.ttl', format='turtle')
@@ -55,3 +63,17 @@ def test__property_modification():
     res.value = new_values
     for value in res.value:
         assert value in [4, 5, 6]
+
+    assert len(res.extendedMetadata) == 2
+    for i, em in enumerate(res.extendedMetadata):
+        em.key in ['key', 'key2']
+        em.value in ['value', 'value2']
+        em.key = "key_{}".format(i)
+        em.value = "value_{}".format(i)
+
+    assert len(res.extendedMetadata) == 2
+    for em in res.extendedMetadata:
+        em.key in ['key_1', 'key_2']
+        em.value in ['value_2', 'value_2']
+
+    #res.extendedMetadata = [('key', 'new key')]
