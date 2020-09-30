@@ -1,12 +1,12 @@
 from rdflib import Graph
 from rdflib.namespace import DC
-from rdf_metadata_properties import anonymous_metadata_class
+from rdf_orm import schema_class
 
 
 def test__property_setup():
     metadata_graph = Graph().parse('data/resource.ttl', format='turtle')
     shacl_graph = Graph().parse('data/HSResource_SHACL.ttl', format='turtle')
-    res = anonymous_metadata_class(shacl_graph, metadata_graph)
+    res = schema_class(shacl_graph, metadata_graph)
 
     assert res.title == '00_ZemelWoodlandN_SiteModel'
 
@@ -34,7 +34,7 @@ def test__property_setup():
 def test__property_modification():
     metadata_graph = Graph().parse('data/resource.ttl', format='turtle')
     shacl_graph = Graph().parse('data/HSResource_SHACL.ttl', format='turtle')
-    res = anonymous_metadata_class(shacl_graph, metadata_graph)
+    res = schema_class(shacl_graph, metadata_graph)
 
     res.title = 'modified'
     assert res.title == 'modified'
