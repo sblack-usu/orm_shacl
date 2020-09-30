@@ -27,9 +27,14 @@ def test__property_setup():
         assert value in [1, 2, 3]
 
     assert len(res.extendedMetadata) == 2
+    keys = ['key', 'key2']
+    values = ['value', 'value2']
     for em in res.extendedMetadata:
-        em.key in ['key', 'key2']
-        em.value in ['value', 'value2']
+        assert em.key in keys
+        keys.remove(em.key)
+        assert em.value in values
+        values.remove(em.value)
+
 
 def test__property_modification():
     metadata_graph = Graph().parse('data/resource.ttl', format='turtle')
@@ -65,15 +70,26 @@ def test__property_modification():
         assert value in [4, 5, 6]
 
     assert len(res.extendedMetadata) == 2
+    keys = ['key', 'key2']
+    values = ['value', 'value2']
+    new_extendedMetadata = []
     for i, em in enumerate(res.extendedMetadata):
-        em.key in ['key', 'key2']
-        em.value in ['value', 'value2']
+        assert em.key in keys
+        keys.remove(em.key)
+        assert em.value in values
+        values.remove(em.value)
+
         em.key = "key_{}".format(i)
         em.value = "value_{}".format(i)
+        new_extendedMetadata.append(em)
 
+    res.extendedMetadata = new_extendedMetadata
     assert len(res.extendedMetadata) == 2
+    keys = ['key_0', 'key_1']
+    values = ['value_0', 'value_1']
     for em in res.extendedMetadata:
-        em.key in ['key_1', 'key_2']
-        em.value in ['value_2', 'value_2']
+        assert em.key in keys
+        keys.remove(em.key)
+        assert em.value in values
+        values.remove(em.value)
 
-    #res.extendedMetadata = [('key', 'new key')]

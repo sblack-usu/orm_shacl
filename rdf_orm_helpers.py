@@ -12,34 +12,6 @@ def URIRef_or_Literal(value):
     else:
         return Literal(value)
 
-def from_XSD(val, data_type):
-    '''
-    Determines the python type from the XSD data type
-    :param val: an rdflib value
-    :param data_type: an XSD data type
-    :return: val as a python type
-    '''
-    if data_type == XSD.string:
-        return str(val)
-    if data_type == XSD.integer:
-        return int(val)
-    else:
-        raise Exception("Encountered unsupported XSD data type {}".format(data_type))
-
-def to_XSD(val, data_type):
-    '''
-    Determines the XSD data type from the python type
-    :param val: an rdflib value
-    :param data_type: an XSD data type
-    :return: val as a XSD data type
-    '''
-    if data_type == XSD.string:
-        return URIRef_or_Literal(val)
-    elif data_type == XSD.integer:
-        return Literal(val)
-    else:
-        raise Exception("Encountered unsupported XSD data type {}".format(data_type))
-
 def extract_name(term):
     '''
     Strips the namespace from the term and returns the identifer
