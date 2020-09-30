@@ -11,10 +11,15 @@ def test__property_setup():
     assert res.title == '00_ZemelWoodlandN_SiteModel'
 
     assert res.language == 'eng'
+    del res.language
+    assert not res.language
 
     assert len(res.subject) == 4
     for subject in res.subject:
         assert subject in ["mmw", "model-my-watershed", "open-space-institute", "osi"]
+
+    del res.subject
+    assert len(res.subject) == 0
 
     assert len(res.creator) == 1
     for creator in res.creator:
@@ -34,6 +39,9 @@ def test__property_setup():
         keys.remove(em.key)
         assert em.value in values
         values.remove(em.value)
+
+    del res.extendedMetadata
+    assert len(res.extendedMetadata) == 0
 
 
 def test__property_modification():
