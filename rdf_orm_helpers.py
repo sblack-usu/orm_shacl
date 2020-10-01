@@ -1,4 +1,4 @@
-from rdflib import URIRef, Literal, XSD
+from rdflib import URIRef, Literal
 
 
 def URIRef_or_Literal(value):

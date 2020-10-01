@@ -1,8 +1,5 @@
-import uuid
-
 from rdflib import Literal
 from rdflib.namespace import SH, XSD, Namespace, RDF
-from rdflib.term import Identifier, BNode
 
 from rdf_orm_helpers import extract_name, root_subject, URIRef_or_Literal
 
@@ -15,36 +12,22 @@ class RDFMetadata:
     familiar python class object way.
     '''
 
-    def shacl_graph(self):
-        return self._shacl_graph
-
-    def metadata_graph(self):
-        return self._metadata_graph
-
+    @property
     def shacl_subject(self):
         return self._root_shacl_subject
 
+    @property
     def metadata_subject(self):
         return self._root_metadata_subject
 
-    def _get_term(self):
-        term = self._shacl_graph.value(self.shacl_subject(), SH.targetClass)
+    @property
+    def term(self):
+        term = self._shacl_graph.value(self._shacl_subject, SH.targetClass)
         if not term:
-            term = self._shacl_graph.value(self.shacl_subject())
+            term = self._shacl_graph.value(self._shacl_subject, SH.path)
         if not term:
             raise Exception("shacl_obj {} must have a predicate sh:targetClass or sh:path")
         return term
-
-    def _term_predicate(self):
-        if self._shacl_graph.value(self.shacl_subject(), SH.targetClass):
-            return SH.targetClass
-        return SH.path
-
-    def new_empty_instance(self):
-        new_subject = getattr(HSRESOURCE, uuid.uuid4().hex)
-        self._metadata_graph.add((new_subject, RDF.type, self._get_term()))
-        from rdf_orm import schema_class
-        return schema_class(self._shacl_graph, self._metadata_graph, self._root_shacl_subject, new_subject)
 
     def __init__(self, shacl_graph, metadata_graph, shacl_subject=None, metadata_subject=None):
         '''
@@ -67,7 +50,11 @@ class RDFMetadata:
             self._root_metadata_subject = root_subject(self._metadata_graph)
 
         for property_object in self._shacl_graph.objects(subject=self._root_shacl_subject, predicate=SH.property):
-            self._setup_property(property_object)
+            if self._shacl_graph.value(subject=property_object, predicate=SH.property):
+                # it's a nested property TODO
+                pass
+            else:
+                self._setup_property(property_object)
 
     def _setup_property(self, subject):
         '''
@@ -89,11 +76,36 @@ class RDFMetadata:
         if max_count == Literal(1):
             # single item
             setattr(self.__class__, property_name,
-                    RDFProperty(self._root_metadata_subject, term, data_type))
+                    RDFProperty(self.metadata_subject, term, data_type))
         else:
             # list of items
             setattr(self.__class__, property_name,
-                    RDFPropertyList(self._root_metadata_subject, term, data_type))
+                    RDFPropertyList(self.metadata_subject, term, data_type))
+
+    def metadata_value(self, subject=None, predicate=RDF.value,
+                       object=None, default=None, any=True):
+        return self._metadata_graph.value(subject, predicate, object, default, any)
+
+    def shacl_value(self, subject=None, predicate=RDF.value,
+                       object=None, default=None, any=True):
+        return self._shacl_graph.value(subject, predicate, object, default, any)
+
+    def metadata_objects(self, subject=None, predicate=None):
+        return self._metadata_graph.objects(subject, predicate)
+
+    def metadata_triples(self, triple):
+        return self._metadata_graph.triples(triple)
+
+    def metadata_replace_object(self, subject, predicate, object):
+        self.metadata_remove_objects(subject, predicate)
+        self.metadata_add(subject, predicate, object)
+
+    def metadata_add(self, subject, predicate, object):
+        self._metadata_graph.add((subject, predicate, object))
+
+    def metadata_remove_objects(self, subject, predicate):
+        # todo, update this to remove children
+        self._metadata_graph.remove((subject, predicate, None))
 
 
 class RDFProperty(object):
@@ -112,20 +124,20 @@ class RDFProperty(object):
         self.data_type = data_type
 
     def __get__(self, instance, owner):
-        val = instance.metadata_graph().value(self.subject, self.predicate)
+        val = instance.metadata_value(self.subject, self.predicate)
         return self.from_datatype(instance, val, self.data_type)
 
     def __set__(self, instance, value):
-        instance.metadata_graph().remove((self.subject, self.predicate, None))
-        instance.metadata_graph().add((self.subject, self.predicate, self.to_datatype(value, self.data_type)))
+        instance.metadata_replace_object(self.subject, self.predicate, self.to_datatype(value, self.data_type))
 
     def __delete__(self, instance):
-        instance.metadata_graph().remove((self.subject, self.predicate, None))
+        instance.metadata_remove_objects(self.subject, self.predicate)
 
     def from_datatype(self, instance, val, data_type):
         '''
         Determines the python type from the XSD data type.  If the property has a property
         then a schema_class is setup to handle the nested properties as a schema class object
+        :param
         :param val: an rdflib value
         :param data_type: an XSD data type
         :return: val as a python type
@@ -136,12 +148,6 @@ class RDFProperty(object):
             return str(val)
         if data_type == XSD.integer:
             return int(val)
-        if isinstance(data_type, Identifier):
-            from rdf_orm import schema_class
-            # data_type is a property of the shape, the subject of data_type is the schema
-            prop = instance.shacl_graph().value(predicate=SH.property, object=data_type)
-            clazz = schema_class(instance.shacl_graph(), instance.metadata_graph(), prop, val)
-            return clazz
         raise Exception("Encountered unsupported XSD data type {}".format(data_type))
 
     def to_datatype(self, val, data_type):
@@ -151,12 +157,12 @@ class RDFProperty(object):
         :param data_type: an XSD data type
         :return: val as a XSD data type
         '''
+        if not val:
+            return None
         if data_type == XSD.string:
             return URIRef_or_Literal(val)
         if data_type == XSD.integer:
             return Literal(val)
-        if isinstance(data_type, Identifier):
-            return data_type
         else:
             raise Exception("Encountered unsupported XSD data type {}".format(data_type))
 
@@ -166,28 +172,16 @@ class RDFPropertyList(RDFProperty):
     A property wrapping an rdflib graph that functions as a python list properties
     '''
     def __get__(self, instance, owner):
-        return [self.from_datatype(instance, obj, self.data_type) for obj in instance.metadata_graph().objects(self.subject, self.predicate)]
+        return [self.from_datatype(instance, obj, self.data_type)
+                for obj in instance.metadata_objects(self.subject, self.predicate)]
 
     def __set__(self, instance, values):
-        instance.metadata_graph().remove((self.subject, self.predicate, None))
+        self.__delete__(instance)
+        instance.metadata_remove_objects(self.subject, self.predicate)
         if values:
-            if self.to_datatype(values[0], self.data_type) != self.data_type:
-                # add each value
-                for value in values:
-                    instance.shacl_graph().value(subject=self.data_type, predicate=SH.property)
-                    instance.metadata_graph().add((self.subject, self.predicate, self.to_datatype(value, self.data_type)))
-            else:
-                # it's a nested property... this should be revisited
-                for value in values:
-                    schema = BNode()
-                    instance.metadata_graph().add((self.subject, self.predicate, schema))
-                    for prop in instance.shacl_graph().objects(subject=value.shacl_subject(), predicate=SH.property):
-                        data_type = instance.shacl_graph().value(prop, SH.datatype)
-                        term = instance.shacl_graph().value(prop, SH.path)
-                        property_name = extract_name(term)
-                        prop_value = getattr(value, property_name)
-                        instance.metadata_graph().add(
-                            (schema, term, self.to_datatype(prop_value, data_type)))
+            for value in values:
+                instance.shacl_value(subject=self.data_type, predicate=SH.property)
+                instance.metadata_add(self.subject, self.predicate, self.to_datatype(value, self.data_type))
 
     def __delete__(self, instance):
-        instance.metadata_graph().remove((self.subject, self.predicate, None))
+        instance.metadata_remove_objects(self.subject, self.predicate)
