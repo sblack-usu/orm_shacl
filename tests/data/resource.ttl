@@ -4,8 +4,10 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <http://schema.org/> .
+@prefix hsresource: <http://www.hydroshare.org/resource/> .
+@prefix hsuser: <http://www.hydroshare.org/user/> .
 
-<http://www.hydroshare.org/resource/ea93a49284204912be7fab054a9d41df>
+hsresource:ea93a49284204912be7fab054a9d41df
     a hsterms:resource ;
     hsterms:extendedMetadata
         [ hsterms:key "key2" ;
@@ -14,7 +16,7 @@
             hsterms:value "value" ] ;
     dc:coverage [ a dcterms:box ;
             rdf:value "northlimit=39.8474472377113; eastlimit=-74.46517977947326; southlimit=39.833547609226464; westlimit=-74.49757575942797; units=Decimal degrees; projection=WGS 84 EPSG:4326" ] ;
-    dc:creator <http://www.hydroshare.org/user/3015/> ;
+    dc:creator hsuser:3015 ;
     dc:date [ a dcterms:created ;
             rdf:value "2020-01-20T18:12:41.356860+00:00" ],
         [ a dcterms:modified ;
@@ -33,12 +35,12 @@
          2,
          3 ;
     dc:title "00_ZemelWoodlandN_SiteModel" ;
-    dc:type <http://www.hydroshare.org/terms/CompositeResource> .
+    dc:type hsterms:CompositeResource .
 
-<http://www.hydroshare.org/terms/CompositeResource> rdfs:label "Composite Resource" ;
+hsterms:CompositeResource rdfs:label "Composite Resource" ;
     rdfs:isDefinedBy "http://www.hydroshare.org/terms" .
 
-<http://www.hydroshare.org/user/3015/> hsterms:creatorOrder "1" ;
+hsuser:3015 hsterms:creatorOrder "1" ;
     hsterms:email "mgisondi@stroudcenter.org" ;
     hsterms:name "Matt Gisondi" ;
     hsterms:organization "Stroud Water Research Center" .

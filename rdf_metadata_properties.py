@@ -1,9 +1,12 @@
+import uuid
+
 from rdflib import Literal
-from rdflib.namespace import SH, XSD
+from rdflib.namespace import SH, XSD, Namespace, RDF
 from rdflib.term import Identifier, BNode
 
 from rdf_orm_helpers import extract_name, root_subject, URIRef_or_Literal
 
+HSRESOURCE = Namespace('http://www.hydroshare.org/resource/')
 
 class RDFMetadata:
     '''
@@ -23,6 +26,25 @@ class RDFMetadata:
 
     def metadata_subject(self):
         return self._root_metadata_subject
+
+    def _get_term(self):
+        term = self._shacl_graph.value(self.shacl_subject(), SH.targetClass)
+        if not term:
+            term = self._shacl_graph.value(self.shacl_subject())
+        if not term:
+            raise Exception("shacl_obj {} must have a predicate sh:targetClass or sh:path")
+        return term
+
+    def _term_predicate(self):
+        if self._shacl_graph.value(self.shacl_subject(), SH.targetClass):
+            return SH.targetClass
+        return SH.path
+
+    def new_empty_instance(self):
+        new_subject = getattr(HSRESOURCE, uuid.uuid4().hex)
+        self._metadata_graph.add((new_subject, RDF.type, self._get_term()))
+        from rdf_orm import schema_class
+        return schema_class(self._shacl_graph, self._metadata_graph, self._root_shacl_subject, new_subject)
 
     def __init__(self, shacl_graph, metadata_graph, shacl_subject=None, metadata_subject=None):
         '''

@@ -7,6 +7,8 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix hsterms: <http://hydroshare.org/terms/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix hsresource: <http://www.hydroshare.org/resource/> .
+@prefix hsuser: <http://www.hydroshare.org/user/> .
 
 schema:HSResourceShape
     a sh:NodeShape ;

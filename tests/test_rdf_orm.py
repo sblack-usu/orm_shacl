@@ -3,10 +3,24 @@ from rdflib.namespace import DC
 from rdf_orm import schema_class
 
 
+def test__creation():
+    metadata_graph = Graph().parse('data/resource.ttl', format='turtle')
+    shacl_graph = Graph().parse('data/HSResource_SHACL.ttl', format='turtle')
+    res = schema_class(shacl_graph, metadata_graph)
+
+    res2 = res.new_empty_instance()
+    print(res._metadata_graph.serialize(format='turtle').decode())
+    assert res2.title == None
+    res2.title = "a fresh start"
+    assert res2.title == 'a fresh start'
+    assert res.title == '00_ZemelWoodlandN_SiteModel'
+
 def test__property_setup():
     metadata_graph = Graph().parse('data/resource.ttl', format='turtle')
     shacl_graph = Graph().parse('data/HSResource_SHACL.ttl', format='turtle')
     res = schema_class(shacl_graph, metadata_graph)
+
+    assert str(res.metadata_subject()) == 'http://www.hydroshare.org/resource/ea93a49284204912be7fab054a9d41df'
 
     assert res.title == '00_ZemelWoodlandN_SiteModel'
 
@@ -22,8 +36,7 @@ def test__property_setup():
     assert len(res.subject) == 0
 
     assert len(res.creator) == 1
-    for creator in res.creator:
-        assert creator in ['http://www.hydroshare.org/user/3015/']
+    assert res.creator[0] == 'http://www.hydroshare.org/user/3015'
 
     assert res.version == 1
 
@@ -63,7 +76,7 @@ def test__property_modification():
     for subject in res.subject:
         assert subject in new_subjects
 
-    new_creators = ['http://www.hydroshare.org/user/3015/', 'http://www.hydroshare.org/user/3014/']
+    new_creators = ['http://www.hydroshare.org/user/3015', 'http://www.hydroshare.org/user/3014']
     res.creator = new_creators
     assert len(res.creator) == 2
     for creator in res.creator:
