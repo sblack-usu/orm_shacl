@@ -8,6 +8,12 @@ HSTERMS = Namespace("http://hydroshare.org/terms/")
 
 
 def root_class(shacl_filename, format='turtle'):
+    """
+    Generates all the classes in the shacl file.  Returns only the generated root class described in the shacl file.
+    :param shacl_filename:
+    :param format:
+    :return:
+    """
     shacl_graph = Graph().parse(source=shacl_filename, format=format)
     subject = root_subject(shacl_graph)
     target_class = shacl_graph.value(subject=subject, predicate=SH.targetClass)
@@ -15,7 +21,7 @@ def root_class(shacl_filename, format='turtle'):
 
 def generate_classes(shacl_filename, format='turtle'):
     """
-
+    Generates classes that represents each NodeShape in a SHACL rdf graph
     :param shacl_filename:
     :param format: shacl_filename format, defaults to turtle
     :return:
@@ -24,12 +30,23 @@ def generate_classes(shacl_filename, format='turtle'):
     shape_by_targetClass = {}
 
     def nested_property(subject):
+        """
+        Determines whether the subject has a property with a property (nested)
+        :param subject: a subject of the shacl_graph
+        :return: True if nested
+        """
         for prop in shacl_graph.objects(subject=subject, predicate=SH.property):
             if shacl_graph.value(subject=prop, predicate=SH.targetClass):
                 return True
         return False
 
     def parse_class(subject):
+        """
+        Generates a class with parent AbstractRDFMetadata for the shacl subject.  The new class
+        will have an RDFProperty for each property on the subject
+        :param subject: an shacl subject in the shacl rdflib graph
+        :return: the class generated from the shacl subject
+        """
         schema_name = shacl_graph.value(subject, SH.name)
         target_class = shacl_graph.value(subject, SH.targetClass)
 

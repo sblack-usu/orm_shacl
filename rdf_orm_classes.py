@@ -5,12 +5,19 @@ from rdf_orm_helpers import from_datatype
 
 class RDFProperty:
     '''
-    A property to allow us to do validation at assignment
+    A property that can read/write to a metadata graph for a given sh:property.
+
+    Someday, we can add validation at assignment within __get__
     '''
     def __init__(self, property_name, path, data_type, max_count=None, min_count=None):
-        '''
-        :param property_name: The name of the property
-        '''
+        """
+
+        :param property_name:
+        :param path:
+        :param data_type:
+        :param max_count:
+        :param min_count:
+        """
         self.property_name = property_name
         self.private_property = "_" + property_name
         self.path = path
@@ -19,15 +26,33 @@ class RDFProperty:
         self.min_count = min_count
 
     def __get__(self, instance, owner):
+        """
+        If instance is None, return self for this property. If instance is provided,
+        return the private property on the instance
+        :param instance:
+        :param owner:
+        :return:
+        """
         if instance is None:
             # returning self allows us to store property parsing data and logic on the descriptor
             return self
         return getattr(instance, self.private_property)
 
     def __set__(self, instance, value):
+        """
+        validation could happen here in the future
+        :param instance:
+        :param value:
+        :return:
+        """
         return setattr(instance, self.private_property, value)
 
     def __delete__(self, instance):
+        """
+        We could eventually add validation here, currently just sets the property to None
+        :param instance:
+        :return:
+        """
         setattr(instance, self.private_property, None)
 
     def parse(self, metadata_graph, subject):
@@ -55,9 +80,21 @@ class RDFProperty:
 
 
 class AbstractRDFMetadata:
+    """
+    A base abstract class for generating a SHACL schema with an RDFProperty for each sh:property in the schema
+    """
     _target_class = None
 
     def __init__(self, file_name=None, format='turtle', metadata_graph=None, root_subject=None):
+        """
+        Requires either the file_name or the metadata_graph.
+        Extracts all metadata information from the metadata for the given root_subject.  If root_subject is
+        not supplied, the root of the graph is used.
+        :param file_name:
+        :param format:
+        :param metadata_graph:
+        :param root_subject:
+        """
         if file_name and metadata_graph:
             raise Exception("give me either the rdflib graph or the filename, not both")
         if not file_name and not metadata_graph:
@@ -77,6 +114,10 @@ class AbstractRDFMetadata:
             setattr(self, property_name, property_value)
 
     def _public_properties(self):
+        """
+        Determines all the public properties (does not start with '_') on self
+        :return: list of property names as strings
+        """
         names = []
         for name in dir(self):
             if not name.startswith('_'):
