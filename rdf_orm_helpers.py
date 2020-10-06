@@ -1,4 +1,4 @@
-from rdflib import URIRef, Literal
+from rdflib import URIRef, Literal, XSD
 
 
 def URIRef_or_Literal(value):
@@ -43,3 +43,20 @@ def root_subject(graph):
     if len(root_nodes) > 1:
         raise Exception("Currently only supporting one root node in shacl spec")
     return root_nodes.pop()
+
+def from_datatype(val, data_type):
+    '''
+    Determines the python type from the XSD data type.  If the property has a property
+    then a schema_class is setup to handle the nested properties as a schema class object
+    :param
+    :param val: an rdflib value
+    :param data_type: an XSD data type
+    :return: val as a python type
+    '''
+    if not val:
+        return None
+    if data_type == XSD.string:
+        return str(val)
+    if data_type == XSD.integer:
+        return int(val)
+    raise Exception("Unknown data type {}".format(data_type))
