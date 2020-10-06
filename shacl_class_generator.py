@@ -33,34 +33,39 @@ class RDFProperty:
     def __delete__(self, instance):
         setattr(instance, self.private_property, None)
 
+    def parse(self, metadata_graph, subject):
+        values = []
+        if str(self.data_type).startswith(str(XSD)):
+            values = [from_datatype(prop_value, self.data_type)
+                      for prop_value in
+                      metadata_graph.objects(subject=subject, predicate=self.path)]
+        else:
+            nested_class = shape_by_targetClass[self.data_type]
+            if not nested_class:
+                raise Exception("Class {} does not exist".format(extract_name(self.data_type)))
+            for nested_subject in metadata_graph.objects(subject=subject, predicate=self.path):
+                val = nested_class(metadata_graph, nested_subject)
+                values.append(val)
+
+        if self.max_count == Literal(1):
+            return values[0]
+        else:
+            return values
+
 
 class AbstractRDFMetadata:
     _target_class = None
 
     def __init__(self, metadata_graph, root_subject=None):
-        target_class = self._target_class
         if not root_subject:
-            root_subject = metadata_graph.value(predicate=RDF.type, object=target_class)
+            root_subject = metadata_graph.value(predicate=RDF.type, object=self._target_class)
         props = self._public_properties()
         for property_name in props:
             prop_descriptor = getattr(type(self), property_name)
-            values = []
-            if str(prop_descriptor.data_type).startswith(str(XSD)):
-                values = [from_datatype(prop_value, prop_descriptor.data_type)
-                         for prop_value in
-                         metadata_graph.objects(subject=root_subject, predicate=prop_descriptor.path)]
-            else:
-                nested_class = shape_by_targetClass[prop_descriptor.data_type]
-                if not nested_class:
-                    raise Exception("Class {} does not exist".format(extract_name(prop_descriptor.data_type)))
-                for nested_subject in metadata_graph.objects(subject=root_subject, predicate=prop_descriptor.path):
-                    val = nested_class(metadata_graph, nested_subject)
-                    values.append(val)
-
-            if prop_descriptor.max_count == Literal(1):
-                setattr(self, property_name, values[0])
-            else:
-                setattr(self, property_name, values)
+            if not prop_descriptor:
+                raise Exception("must be a public property that isn't RDFProperty")
+            property_value = prop_descriptor.parse(metadata_graph, root_subject)
+            setattr(self, property_name, property_value)
 
     def _public_properties(self):
         names = []
