@@ -1,4 +1,4 @@
-from rdflib import XSD, Literal, RDF
+from rdflib import XSD, Literal, RDF, Graph
 
 from rdf_orm_helpers import from_datatype
 
@@ -45,7 +45,7 @@ class RDFProperty:
                       metadata_graph.objects(subject=subject, predicate=self.path)]
         else:
             for nested_subject in metadata_graph.objects(subject=subject, predicate=self.path):
-                val = self.data_type(metadata_graph, nested_subject)
+                val = self.data_type(metadata_graph=metadata_graph, root_subject=nested_subject)
                 values.append(val)
 
         if self.max_count == Literal(1):
@@ -57,7 +57,14 @@ class RDFProperty:
 class AbstractRDFMetadata:
     _target_class = None
 
-    def __init__(self, metadata_graph, root_subject=None):
+    def __init__(self, file_name=None, metadata_graph=None, root_subject=None):
+        if file_name and metadata_graph:
+            raise Exception("give me either the rdflib graph or the filename, not both")
+        if not file_name and not metadata_graph:
+            raise Exception("I need either the file_name or the rdflib graph")
+        if file_name:
+            metadata_graph = Graph().parse(source=file_name, format='turtle')
+
         if not root_subject:
             root_subject = metadata_graph.value(predicate=RDF.type, object=self._target_class)
         props = self._public_properties()

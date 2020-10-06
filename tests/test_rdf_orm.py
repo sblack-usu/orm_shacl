@@ -1,14 +1,14 @@
 from rdflib import Graph
 from rdflib.namespace import DC
-from rdf_orm import schema_class
+
+from shacl_class_generator import root_class
 
 
 def test__property_setup():
-    metadata_graph = Graph().parse('data/resource.ttl', format='turtle')
-    shacl_graph = Graph().parse('data/HSResource_SHACL.ttl', format='turtle')
-    res = schema_class(shacl_graph, metadata_graph)
-
-    assert str(res.metadata_subject) == 'http://www.hydroshare.org/resource/ea93a49284204912be7fab054a9d41df'
+    shacl_filename = 'data/HSResource_SHACL.ttl'
+    metadata_filename = 'data/resource.ttl'
+    Resource = root_class(shacl_filename)
+    res = Resource(file_name=metadata_filename)
 
     assert res.title == '00_ZemelWoodlandN_SiteModel'
 
@@ -20,9 +20,6 @@ def test__property_setup():
     for subject in res.subject:
         assert subject in ["mmw", "model-my-watershed", "open-space-institute", "osi"]
 
-    del res.subject
-    assert len(res.subject) == 0
-
     assert len(res.creator) == 1
     assert res.creator[0] == 'http://www.hydroshare.org/user/3015'
 
@@ -32,33 +29,29 @@ def test__property_setup():
     for value in res.value:
         assert value in [1, 2, 3]
 
-    '''
-    assert len(res.extendedMetadata) == 2
+    assert len(res.extended_metadata) == 2
     keys = ['key', 'key2']
     values = ['value', 'value2']
-    for em in res.extendedMetadata:
+    for em in res.extended_metadata:
         assert em.key in keys
         keys.remove(em.key)
         assert em.value in values
         values.remove(em.value)
 
-    del res.extendedMetadata
-    assert len(res.extendedMetadata) == 0
-    '''
-
 
 def test__property_modification():
-    metadata_graph = Graph().parse('data/resource.ttl', format='turtle')
-    shacl_graph = Graph().parse('data/HSResource_SHACL.ttl', format='turtle')
-    res = schema_class(shacl_graph, metadata_graph)
+    metadata_filename = 'data/resource.ttl'
+    shacl_filename = 'data/HSResource_SHACL.ttl'
+    Resource = root_class(shacl_filename)
+    res = Resource(file_name=metadata_filename)
 
     res.title = 'modified'
     assert res.title == 'modified'
-    assert str(next(res._metadata_graph.objects(subject=None, predicate=DC.title))) == 'modified'
+    #assert str(next(res._metadata_graph.objects(subject=None, predicate=DC.title))) == 'modified'
 
     res.language = 'es'
     assert res.language == 'es'
-    assert str(next(res._metadata_graph.objects(subject=None, predicate=DC.language))) == 'es'
+    #assert str(next(res._metadata_graph.objects(subject=None, predicate=DC.language))) == 'es'
 
     new_subjects = ['one', 'two', 'three']
     res.subject = new_subjects
