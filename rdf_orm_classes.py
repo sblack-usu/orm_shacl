@@ -57,13 +57,13 @@ class RDFProperty:
 class AbstractRDFMetadata:
     _target_class = None
 
-    def __init__(self, file_name=None, metadata_graph=None, root_subject=None):
+    def __init__(self, file_name=None, format='turtle', metadata_graph=None, root_subject=None):
         if file_name and metadata_graph:
             raise Exception("give me either the rdflib graph or the filename, not both")
         if not file_name and not metadata_graph:
             raise Exception("I need either the file_name or the rdflib graph")
         if file_name:
-            metadata_graph = Graph().parse(source=file_name, format='turtle')
+            metadata_graph = Graph().parse(source=file_name, format=format)
 
         if not root_subject:
             root_subject = metadata_graph.value(predicate=RDF.type, object=self._target_class)

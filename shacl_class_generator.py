@@ -7,19 +7,20 @@ from rdf_orm_helpers import root_subject
 HSTERMS = Namespace("http://hydroshare.org/terms/")
 
 
-def root_class(shacl_filename):
-    shacl_graph = Graph().parse(source=shacl_filename, format='turtle')
+def root_class(shacl_filename, format='turtle'):
+    shacl_graph = Graph().parse(source=shacl_filename, format=format)
     subject = root_subject(shacl_graph)
     target_class = shacl_graph.value(subject=subject, predicate=SH.targetClass)
     return generate_classes(shacl_filename)[target_class]
 
-def generate_classes(shacl_filename):
+def generate_classes(shacl_filename, format='turtle'):
     """
 
-    :param shacl_filename: in ttl format
+    :param shacl_filename:
+    :param format: shacl_filename format, defaults to turtle
     :return:
     """
-    shacl_graph = Graph().parse(source=shacl_filename, format='turtle')
+    shacl_graph = Graph().parse(source=shacl_filename, format=format)
     shape_by_targetClass = {}
 
     def nested_property(subject):
