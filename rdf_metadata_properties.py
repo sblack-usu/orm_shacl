@@ -209,7 +209,7 @@ def from_datatype(val, data_type):
         return str(val)
     if data_type == XSD.integer:
         return int(val)
-    return None
+    raise Exception("Unknown data type {}".format(data_type))
 
 def to_datatype(val, data_type):
     '''
