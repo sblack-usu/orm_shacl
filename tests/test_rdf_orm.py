@@ -79,6 +79,7 @@ def test__property_modification():
     res.value = new_values
     for value in res.value:
         assert value in [4, 5, 6]
+
     '''
     assert len(res.extendedMetadata) == 2
     keys = ['key', 'key2']

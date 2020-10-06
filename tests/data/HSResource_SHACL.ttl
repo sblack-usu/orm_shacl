@@ -12,24 +12,29 @@
 
 schema:HSResourceShape
     a sh:NodeShape ;
+    sh:name "resource" ;
     sh:targetClass hsterms:resource ;
     sh:property [
+        sh:name "title" ;
         sh:path dc:title ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
         sh:minCount 1 ;
     ] ;
     sh:property [
+        sh:name "version" ;
         sh:path dc:version ;
         sh:datatype xsd:integer ;
         sh:maxCount 1 ;
         sh:minCount 1 ;
     ] ;
     sh:property [
+        sh:name "value" ;
         sh:path dc:value ;
         sh:datatype xsd:integer ;
     ] ;
     sh:property [
+        sh:name "language" ;
         sh:path dc:language ;
         sh:datatype xsd:string ;
         sh:maxCount 1 ;
@@ -37,18 +42,24 @@ schema:HSResourceShape
         sh:in ( "eng" "es" ) ;
     ] ;
     sh:property [
+        sh:name "subject" ;
         sh:path dc:subject ;
         sh:datatype xsd:string ;
     ] ;
     sh:property [
+        a sh:NodeShape ;
+        sh:name "extended_metadata" ;
+        sh:targetClass hsterms:extendedMetadata ;
         sh:path hsterms:extendedMetadata ;
         sh:property [
+            sh:name "key" ;
             sh:path hsterms:key ;
             sh:datatype xsd:string ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
         ] ;
         sh:property [
+            sh:name "value" ;
             sh:path hsterms:value ;
             sh:datatype xsd:string ;
             sh:minCount 1 ;
@@ -56,8 +67,12 @@ schema:HSResourceShape
         ] ;
     ] ;
     sh:property [
+        a sh:NodeShape ;
+        sh:name "coverage" ;
+        sh:targetClass dc:coverage ;
         sh:path dc:coverage ;
         sh:property [
+            sh:name "box" ;
             a dcterms:box ;
             sh:path rdf:value ;
             sh:datatype xsd:string ;
@@ -68,6 +83,7 @@ schema:HSResourceShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
+        sh:name "creator" ;
         sh:path dc:creator ;
         sh:datatype xsd:string ;
         sh:pattern ".*" ;
