@@ -10,11 +10,10 @@ class RDFProperty:
     '''
     A property that can read/write to a metadata graph for a given sh:property.
 
-    Someday, we can add validation at assignment within __get__
+    Someday, we can add validation at assignment within __get__/__delete__
     '''
     def __init__(self, property_name, path, data_type, max_count=None, min_count=None):
         """
-
         :param property_name:
         :param path:
         :param data_type:
@@ -73,7 +72,9 @@ class RDFProperty:
                       metadata_graph.objects(subject=subject, predicate=self.path)]
         else:
             for nested_subject in metadata_graph.objects(subject=subject, predicate=self.path):
-                val = self.data_type(metadata_graph=metadata_graph, root_subject=nested_subject)
+                rdf_metadata_class = self.data_type
+                val = rdf_metadata_class()
+                val.parse_from_graph(metadata_graph=metadata_graph, root_subject=nested_subject)
                 values.append(val)
 
         if self.max_count == Literal(1):
@@ -114,23 +115,37 @@ class AbstractRDFMetadata:
     """
     _target_class = None
 
-    def __init__(self, file_name=None, format='turtle', metadata_graph=None, root_subject=None):
+    def __init__(self):
         """
-        Requires either the file_name or the metadata_graph.
-        Extracts all metadata information from the metadata for the given root_subject.  If root_subject is
-        not supplied, the root of the graph is used.
-        :param file_name:
-        :param format:
-        :param metadata_graph:
+        Initiallizes all properties to None
+        """
+        self._root_subject = None
+
+        properties = self._rdf_properties()
+        for property_name in properties:
+            setattr(self, property_name, None)
+
+    def parse(self, file, file_format='turtle', root_subject=None):
+        """
+        Requires the file path of an rdf serialization.  The default file format is turtle.
+        Extracts all metadata for each RDFPropertyon the class for the given root_subject.
+        If root_subject is not supplied, the root of the graph is used.
+        :param file:
+        :param file_format:
         :param root_subject:
         """
-        if file_name and metadata_graph:
-            raise Exception("give me either the rdflib graph or the filename, not both")
-        if not file_name and not metadata_graph:
-            raise Exception("I need either the file_name or the rdflib graph")
-        if file_name:
-            metadata_graph = Graph().parse(source=file_name, format=format)
+        metadata_graph = Graph().parse(file, format=file_format)
+        self.parse_from_graph(metadata_graph, root_subject)
 
+    def parse_from_graph(self, metadata_graph, root_subject=None):
+        """
+        Requires the an rdflib graph. Extracts all metadata for each RDFProperty within
+        the class for the given root_subject.
+        If root_subject is not supplied, a root_subject will be extracted from the graph using
+        the _target_class term associated with the class implementation
+        :param metadata_graph: an rdflib Graph
+        :param root_subject:
+        """
         if not root_subject:
             root_subject = metadata_graph.value(predicate=RDF.type, object=self._target_class)
             if not root_subject:
@@ -160,9 +175,10 @@ class AbstractRDFMetadata:
         for property_name in props:
             prop_descriptor = getattr(type(self), property_name)
             prop_descriptor.serialize(self, metadata_graph, subject)
+
+        # TODO these bindings should happen elsewhere
         metadata_graph.bind('dc', DC)
         metadata_graph.bind('hsterms', HSTERMS)
-
 
     def _rdf_properties(self):
         """

@@ -8,7 +8,8 @@ def test__property_setup():
     shacl_filename = 'data/HSResource_SHACL.ttl'
     metadata_filename = 'data/resource.ttl'
     Resource = root_class(shacl_filename)
-    res = Resource(file_name=metadata_filename)
+    res = Resource()
+    res.parse(file_name=metadata_filename)
 
     assert res.title == '00_ZemelWoodlandN_SiteModel'
 
@@ -43,7 +44,8 @@ def test__property_modification():
     metadata_filename = 'data/resource.ttl'
     shacl_filename = 'data/HSResource_SHACL.ttl'
     Resource = root_class(shacl_filename)
-    res = Resource(file_name=metadata_filename)
+    res = Resource()
+    res.parse(file_name=metadata_filename)
 
     res.title = 'modified'
     assert res.title == 'modified'
