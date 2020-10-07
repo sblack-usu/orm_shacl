@@ -10,7 +10,7 @@ def test__property_setup():
     metadata_filename = 'data/resource.ttl'
     Resource = root_class(shacl_filename)
     res = Resource()
-    res.parse(file_name=metadata_filename)
+    res.parse(file=metadata_filename)
 
     assert res.title == '00_ZemelWoodlandN_SiteModel'
 
@@ -46,15 +46,13 @@ def test__property_modification():
     shacl_filename = 'data/HSResource_SHACL.ttl'
     Resource = root_class(shacl_filename)
     res = Resource()
-    res.parse(file_name=metadata_filename)
+    res.parse(file=metadata_filename)
 
     res.title = 'modified'
     assert res.title == 'modified'
-    #assert str(next(res._metadata_graph.objects(subject=None, predicate=DC.title))) == 'modified'
 
     res.language = 'es'
     assert res.language == 'es'
-    #assert str(next(res._metadata_graph.objects(subject=None, predicate=DC.language))) == 'es'
 
     new_subjects = ['one', 'two', 'three']
     res.subject = new_subjects
@@ -103,28 +101,24 @@ def test__property_modification():
 
 def test_rdf_creation():
     shacl_filename = 'data/HSResource_SHACL.ttl'
-    classes_by_targetClass = generate_classes(shacl_filename)
+    classes = generate_classes(shacl_filename)
 
-    Resource = classes_by_targetClass[HSTERMS.resource]
-    ExtendedMetadata = classes_by_targetClass[HSTERMS.extendedMetadata]
-    Coverage = classes_by_targetClass[DC.coverage]
-
-    res = Resource()
+    res = classes['resource']()
     res.subject = ['subject 1', 'subject 2']
     res.title = "a new title"
     res.language = "en"
 
-    em1 = ExtendedMetadata()
+    em1 = classes['extended_metadata']()
     em1.key = "key1"
     em1.value = "value1"
 
-    em2 = ExtendedMetadata()
+    em2 = classes['extended_metadata']()
     em2.key = "key2"
     em2.value = "value2"
 
     res.extended_metadata = [em1, em2]
 
-    coverage = Coverage()
+    coverage = classes['coverage']()
     coverage.box = "I don't have regex validation running yet so any string will do for box coverage"
     res.coverage = coverage
 
