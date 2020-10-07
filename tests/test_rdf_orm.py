@@ -123,7 +123,7 @@ def test_rdf_creation():
     res.coverage = coverage
 
     g = Graph()
-    res.serialize_with_graph(g, BNode())
+    res.serialize_with_graph(g)
 
     res2 = classes['resource']()
     res2.parse_from_graph(g)

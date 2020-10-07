@@ -119,7 +119,6 @@ class AbstractRDFMetadata:
         """
         Initiallizes all properties to None
         """
-        self._root_subject = None
 
         properties = self._rdf_properties()
         for property_name in properties:
@@ -150,7 +149,6 @@ class AbstractRDFMetadata:
             root_subject = metadata_graph.value(predicate=RDF.type, object=self._target_class)
             if not root_subject:
                 raise Exception("Could not find subject for predicate=RDF.type, object={}".format())
-        self._root_subject = root_subject
 
         properties = self._rdf_properties()
         for property_name in properties:
@@ -158,7 +156,7 @@ class AbstractRDFMetadata:
             prop_descriptor = getattr(type(self), property_name)
             if not prop_descriptor:
                 raise Exception("{} is not a RDFProperty or RDFProperty got screwed up")
-            property_value = prop_descriptor.parse(metadata_graph, self._root_subject)
+            property_value = prop_descriptor.parse(metadata_graph, root_subject)
             setattr(self, property_name, property_value)
 
     def serialize(self, subject=BNode(), serialization_format='turtle'):
@@ -166,15 +164,13 @@ class AbstractRDFMetadata:
         self.serialize_with_graph(g, subject)
         return g.serialize(format=serialization_format).decode()
 
-    def serialize_with_graph(self, metadata_graph, subject=None):
+    def serialize_with_graph(self, metadata_graph, subject=BNode()):
         """
         Serializes all data contained within this class to an rdflib Graph with the given subject
         :param metadata_graph: The rdflib Graph to serialize the class data to
         :param subject: The subject of the class data
         :return:
         """
-        if not subject:
-            subject = self._root_subject
         props = self._rdf_properties()
         metadata_graph.add((subject, RDF.type, self._target_class))
         for property_name in props:
