@@ -1,4 +1,4 @@
-from rdflib import Graph
+from rdflib import Graph, BNode
 from rdflib.namespace import DC, Namespace
 
 from shacl_class_generator import root_class, generate_classes
@@ -122,4 +122,30 @@ def test_rdf_creation():
     coverage.box = "I don't have regex validation running yet so any string will do for box coverage"
     res.coverage = coverage
 
-    print(res.serialize())
+    g = Graph()
+    res.serialize_with_graph(g, BNode())
+
+    res2 = classes['resource']()
+    res2.parse_from_graph(g)
+
+    assert res2.title == 'a new title'
+    assert res2.language == 'en'
+
+    keys = ['key1', 'key2']
+    values = ['value1', 'value2']
+    assert len(res2.extended_metadata) == 2
+    for em in res2.extended_metadata:
+        assert em.key in keys
+        keys.remove(em.key)
+        assert em.value in values
+        values.remove(em.value)
+
+    subjects = ['subject 1', 'subject 2']
+    assert len(res2.subject) == 2
+    for subject in res2.subject:
+        assert subject in subjects
+        subjects.remove(subject)
+
+    assert res.coverage.box == "I don't have regex validation running yet so any string will do for box coverage"
+
+

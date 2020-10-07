@@ -78,7 +78,6 @@ class RDFProperty:
                 values.append(val)
 
         if self.max_count == Literal(1):
-            return values[0]
             if len(values) == 1:
                 return values[0]
             if len(values) > 1:
@@ -150,7 +149,7 @@ class AbstractRDFMetadata:
         if not root_subject:
             root_subject = metadata_graph.value(predicate=RDF.type, object=self._target_class)
             if not root_subject:
-                raise Exception("Coult not find subject for predicate=RDF.type, object={}".format())
+                raise Exception("Could not find subject for predicate=RDF.type, object={}".format())
         self._root_subject = root_subject
 
         properties = self._rdf_properties()
