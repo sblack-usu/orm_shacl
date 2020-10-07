@@ -73,12 +73,11 @@ def test__property_modification():
     for value in res.value:
         assert value in [4, 5, 6]
 
-    '''
-    assert len(res.extendedMetadata) == 2
+    assert len(res.extended_metadata) == 2
     keys = ['key', 'key2']
     values = ['value', 'value2']
-    new_extendedMetadata = []
-    for i, em in enumerate(res.extendedMetadata):
+    new_extended_metadata = []
+    for i, em in enumerate(res.extended_metadata):
         assert em.key in keys
         keys.remove(em.key)
         assert em.value in values
@@ -86,16 +85,18 @@ def test__property_modification():
 
         em.key = "key_{}".format(i)
         em.value = "value_{}".format(i)
-        new_extendedMetadata.append(em)
+        new_extended_metadata.append(em)
 
-    res.extendedMetadata = new_extendedMetadata
-    assert len(res.extendedMetadata) == 2
+    res.extended_metadata = new_extended_metadata
+    assert len(res.extended_metadata) == 2
     keys = ['key_0', 'key_1']
     values = ['value_0', 'value_1']
-    for em in res.extendedMetadata:
+    for em in res.extended_metadata:
         assert em.key in keys
         keys.remove(em.key)
         assert em.value in values
         values.remove(em.value)
-    '''
 
+    mg = Graph()
+    res.serialize(mg, res._root_subject)
+    print(mg.serialize(format='ttl').decode())

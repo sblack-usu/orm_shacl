@@ -60,3 +60,19 @@ def from_datatype(val, data_type):
     if data_type == XSD.integer:
         return int(val)
     raise Exception("Unknown data type {}".format(data_type))
+
+def to_datatype(val, data_type):
+    '''
+    Determines the XSD data type from the python type
+    :param val: an rdflib value
+    :param data_type: an XSD data type
+    :return: val as a XSD data type
+    '''
+    if not val:
+        return None
+    if data_type == XSD.string:
+        return URIRef_or_Literal(val)
+    if data_type == XSD.integer:
+        return Literal(val)
+    else:
+        raise Exception("Encountered unsupported XSD data type {}".format(data_type))
