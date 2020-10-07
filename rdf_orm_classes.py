@@ -106,7 +106,7 @@ class RDFProperty:
                 else:
                     property_subject = BNode()
                     metadata_graph.add((subject, self.path, property_subject))
-                    val.serialize_with_graph(metadata_graph, property_subject)
+                    val.serialize(metadata_graph, property_subject)
 
 
 class AbstractRDFMetadata:
@@ -127,7 +127,7 @@ class AbstractRDFMetadata:
     def parse(self, file, file_format='turtle', root_subject=None):
         """
         Requires the file path of an rdf serialization.  The default file format is turtle.
-        Extracts all metadata for each RDFPropertyon the class for the given root_subject.
+        Extracts all metadata for each RDFPropertynon the class for the given root_subject.
         If root_subject is not supplied, the root of the graph is used.
         :param file:
         :param file_format:
@@ -159,12 +159,7 @@ class AbstractRDFMetadata:
             property_value = prop_descriptor.parse(metadata_graph, root_subject)
             setattr(self, property_name, property_value)
 
-    def serialize(self, subject=BNode(), serialization_format='turtle'):
-        g = Graph()
-        self.serialize_with_graph(g, subject)
-        return g.serialize(format=serialization_format).decode()
-
-    def serialize_with_graph(self, metadata_graph, subject=BNode()):
+    def serialize(self, metadata_graph=Graph(), subject=BNode()):
         """
         Serializes all data contained within this class to an rdflib Graph with the given subject
         :param metadata_graph: The rdflib Graph to serialize the class data to
@@ -180,6 +175,8 @@ class AbstractRDFMetadata:
         # TODO these bindings should happen elsewhere
         metadata_graph.bind('dc', DC)
         metadata_graph.bind('hsterms', HSTERMS)
+
+        return metadata_graph
 
     def _rdf_properties(self):
         """
