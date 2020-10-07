@@ -1,8 +1,9 @@
 from rdflib import Graph
-from rdflib.namespace import DC
+from rdflib.namespace import DC, Namespace
 
-from shacl_class_generator import root_class
+from shacl_class_generator import root_class, generate_classes
 
+HSTERMS = Namespace("http://hydroshare.org/terms/")
 
 def test__property_setup():
     shacl_filename = 'data/HSResource_SHACL.ttl'
@@ -99,6 +100,32 @@ def test__property_modification():
         assert em.value in values
         values.remove(em.value)
 
-    mg = Graph()
-    res.serialize(mg, res._root_subject)
-    print(mg.serialize(format='ttl').decode())
+
+def test_rdf_creation():
+    shacl_filename = 'data/HSResource_SHACL.ttl'
+    classes_by_targetClass = generate_classes(shacl_filename)
+
+    Resource = classes_by_targetClass[HSTERMS.resource]
+    ExtendedMetadata = classes_by_targetClass[HSTERMS.extendedMetadata]
+    Coverage = classes_by_targetClass[DC.coverage]
+
+    res = Resource()
+    res.subject = ['subject 1', 'subject 2']
+    res.title = "a new title"
+    res.language = "en"
+
+    em1 = ExtendedMetadata()
+    em1.key = "key1"
+    em1.value = "value1"
+
+    em2 = ExtendedMetadata()
+    em2.key = "key2"
+    em2.value = "value2"
+
+    res.extended_metadata = [em1, em2]
+
+    coverage = Coverage()
+    coverage.box = "I don't have regex validation running yet so any string will do for box coverage"
+    res.coverage = coverage
+
+    print(res.serialize())

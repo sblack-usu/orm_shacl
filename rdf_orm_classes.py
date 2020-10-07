@@ -97,16 +97,17 @@ class RDFProperty:
         :return:
         """
         values = getattr(instance, self.private_property)
-        if self.max_count == Literal(1):
-            values = [values]
+        if values:
+            if self.max_count == Literal(1):
+                values = [values]
 
-        for val in values:
-            if str(self.data_type).startswith(str(XSD)):
-                metadata_graph.add((subject, self.path, to_datatype(val, self.data_type)))
-            else:
-                property_subject = BNode()
-                metadata_graph.add((subject, self.path, property_subject))
-                val.serialize(metadata_graph, property_subject)
+            for val in values:
+                if str(self.data_type).startswith(str(XSD)):
+                    metadata_graph.add((subject, self.path, to_datatype(val, self.data_type)))
+                else:
+                    property_subject = BNode()
+                    metadata_graph.add((subject, self.path, property_subject))
+                    val.serialize_with_graph(metadata_graph, property_subject)
 
 
 class AbstractRDFMetadata:
@@ -161,7 +162,12 @@ class AbstractRDFMetadata:
             property_value = prop_descriptor.parse(metadata_graph, self._root_subject)
             setattr(self, property_name, property_value)
 
-    def serialize(self, metadata_graph, subject=None):
+    def serialize(self, subject=BNode(), serialization_format='turtle'):
+        g = Graph()
+        self.serialize_with_graph(g, subject)
+        return g.serialize(format=serialization_format).decode()
+
+    def serialize_with_graph(self, metadata_graph, subject=None):
         """
         Serializes all data contained within this class to an rdflib Graph with the given subject
         :param metadata_graph: The rdflib Graph to serialize the class data to
