@@ -47,7 +47,6 @@ schema:HSResourceShape
         sh:path dc:coverage ;
         sh:property [
             a dcterms:box ;
-            sh:path rdf:value ;
             sh:datatype xsd:string ;
             sh:pattern ".*" ;
             sh:maxCount 1 ;

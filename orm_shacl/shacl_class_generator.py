@@ -1,8 +1,8 @@
 from rdflib import Graph, Namespace
-from rdflib.namespace import RDF, SH
+from rdflib.namespace import RDF, SH, XSD
 
-from rdf_orm_classes import RDFProperty, AbstractRDFMetadata
-from rdf_orm_helpers import root_subject
+from orm_shacl.rdf_orm_classes import RDFProperty, AbstractRDFMetadata
+from orm_shacl.rdf_orm_helpers import root_subject
 
 HSTERMS = Namespace("http://hydroshare.org/terms/")
 
@@ -55,9 +55,14 @@ def generate_classes(shacl_filename, format='turtle'):
             name = shacl_graph.value(prop, SH.name).value
             # TODO implement validation against reserved attribute names of the AbstractRDFMetadata
             path = shacl_graph.value(prop, SH.path)
+
             max_count = shacl_graph.value(prop, SH.maxCount)
             min_count = shacl_graph.value(prop, SH.minCount)
             data_type = shacl_graph.value(prop, SH.datatype)
+            if not data_type:
+                # TODO - should account for rdf:type rdf:value better than this
+                if shacl_graph.value(prop, getattr(SH, "in")):
+                    data_type = XSD.string
             if not data_type:
                 # if data type is not provided, then it must be a nested class
                 nested_schema_name = shacl_graph.value(prop, SH.name).value
@@ -67,7 +72,7 @@ def generate_classes(shacl_filename, format='turtle'):
                 if not data_type:
                     raise Exception("Could not find a class definition for {}".format(nested_schema_name))
 
-            attributes[name] = RDFProperty(name, path, data_type, max_count, min_count)
+            attributes[name] = RDFProperty(property_name=name, data_type=data_type, path=path, max_count=max_count, min_count=min_count)
 
         shape_class = type(schema_name, (AbstractRDFMetadata,), {'_target_class': target_class, **attributes})
         classes[schema_name] = shape_class

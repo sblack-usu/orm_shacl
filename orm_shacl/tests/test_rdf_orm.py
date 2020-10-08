@@ -1,7 +1,7 @@
-from rdflib import Graph, BNode
-from rdflib.namespace import DC, Namespace
+from rdflib import Graph
+from rdflib.namespace import Namespace
 
-from shacl_class_generator import root_class, generate_classes
+from orm_shacl.shacl_class_generator import root_class, generate_classes
 
 HSTERMS = Namespace("http://hydroshare.org/terms/")
 

@@ -1,6 +1,6 @@
 from rdflib import XSD, Literal, RDF, Graph, BNode, Namespace, DC
 
-from rdf_orm_helpers import from_datatype, to_datatype
+from orm_shacl.rdf_orm_helpers import from_datatype, to_datatype
 
 
 HSTERMS = Namespace("http://hydroshare.org/terms/")
@@ -12,18 +12,18 @@ class RDFProperty:
 
     Someday, we can add validation at assignment within __get__/__delete__
     '''
-    def __init__(self, property_name, path, data_type, max_count=None, min_count=None):
+    def __init__(self, property_name, data_type, path, max_count=None, min_count=None):
         """
         :param property_name:
-        :param path:
         :param data_type:
+        :param path:
         :param max_count:
         :param min_count:
         """
         self.property_name = property_name
         self.private_property = "_" + property_name
-        self.path = path
         self.data_type = data_type
+        self.path = path
         self.max_count = max_count
         self.min_count = min_count
 
@@ -66,12 +66,14 @@ class RDFProperty:
         :return: the value of this property in the metadata_graph
         """
         values = []
+        predicate = self.path
+
         if str(self.data_type).startswith(str(XSD)):
             values = [from_datatype(prop_value, self.data_type)
                       for prop_value in
-                      metadata_graph.objects(subject=subject, predicate=self.path)]
+                      metadata_graph.objects(subject=subject, predicate=predicate)]
         else:
-            for nested_subject in metadata_graph.objects(subject=subject, predicate=self.path):
+            for nested_subject in metadata_graph.objects(subject=subject, predicate=predicate):
                 rdf_metadata_class = self.data_type
                 val = rdf_metadata_class()
                 val.parse_from_graph(metadata_graph=metadata_graph, root_subject=nested_subject)
@@ -82,7 +84,7 @@ class RDFProperty:
                 return values[0]
             if len(values) > 1:
                 raise Exception("Invalid data, max count of 1, "
-                                "found {} for path {} and {}".format(len(values), self.path, subject))
+                                "found {} for path {} and {}".format(len(values), predicate, subject))
             return None
         else:
             return values
@@ -138,7 +140,7 @@ class AbstractRDFMetadata:
 
     def parse_from_graph(self, metadata_graph, root_subject=None):
         """
-        Requires the an rdflib graph. Extracts all metadata for each RDFProperty within
+        Requires an rdflib graph. Extracts all metadata for each RDFProperty within
         the class for the given root_subject.
         If root_subject is not supplied, a root_subject will be extracted from the graph using
         the _target_class term associated with the class implementation
@@ -148,7 +150,7 @@ class AbstractRDFMetadata:
         if not root_subject:
             root_subject = metadata_graph.value(predicate=RDF.type, object=self._target_class)
             if not root_subject:
-                raise Exception("Could not find subject for predicate=RDF.type, object={}".format())
+                raise Exception("Could not find subject for predicate=RDF.type, object={}".format(self._target_class))
 
         properties = self._rdf_properties()
         for property_name in properties:
