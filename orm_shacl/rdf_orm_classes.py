@@ -161,15 +161,17 @@ class AbstractRDFMetadata:
             property_value = prop_descriptor.parse(metadata_graph, root_subject)
             setattr(self, property_name, property_value)
 
-    def serialize(self, metadata_graph=Graph(), subject=BNode()):
+    def serialize(self, metadata_graph=Graph(), subject=BNode(), root=True):
         """
         Serializes all data contained within this class to an rdflib Graph with the given subject
         :param metadata_graph: The rdflib Graph to serialize the class data to
         :param subject: The subject of the class data
+        :param root:
         :return:
         """
         props = self._rdf_properties()
-        metadata_graph.add((subject, RDF.type, self._target_class))
+        if root:
+            metadata_graph.add((subject, RDF.type, self._target_class), False)
         for property_name in props:
             prop_descriptor = getattr(type(self), property_name)
             prop_descriptor.serialize(self, metadata_graph, subject)
