@@ -108,7 +108,7 @@ class RDFProperty:
                 else:
                     property_subject = BNode()
                     metadata_graph.add((subject, self.path, property_subject))
-                    val.serialize(metadata_graph, property_subject)
+                    val.serialize(metadata_graph, property_subject, False)
 
 
 class AbstractRDFMetadata:
@@ -171,7 +171,7 @@ class AbstractRDFMetadata:
         """
         props = self._rdf_properties()
         if root:
-            metadata_graph.add((subject, RDF.type, self._target_class), False)
+            metadata_graph.add((subject, RDF.type, self._target_class))
         for property_name in props:
             prop_descriptor = getattr(type(self), property_name)
             prop_descriptor.serialize(self, metadata_graph, subject)
