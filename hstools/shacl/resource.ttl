@@ -47,9 +47,9 @@ schema:HSResource
         sh:name "language" ;
         sh:path dc:language ;
         sh:datatype xsd:string ;
-        #sh:maxCount 1 ;
-        #sh:minCount 1 ;
-        #sh:in ( "eng" "es" ) ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+        sh:in ( "eng" "es" ) ;
     ] ;
     sh:property [
         sh:name "subject" ;
@@ -133,6 +133,7 @@ schema:Date
     sh:property [
         sh:name "type" ;
         sh:path rdf:type ;
+        sh:datatype xsd:string ;
         sh:in ( dcterms:created dcterms:modified ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
