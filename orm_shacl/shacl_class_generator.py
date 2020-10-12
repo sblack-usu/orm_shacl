@@ -2,7 +2,7 @@ from rdflib import Graph, Namespace
 from rdflib.namespace import RDF, SH, XSD
 
 from orm_shacl.rdf_orm_classes import RDFProperty, AbstractRDFMetadata
-from orm_shacl.rdf_orm_helpers import root_subject
+from orm_shacl.rdf_orm_helpers import root_subject, extract_name
 
 HSTERMS = Namespace("http://hydroshare.org/terms/")
 
@@ -36,7 +36,7 @@ def generate_classes(shacl_filename, format='turtle'):
         :return: True if nested
         """
         for prop in shacl_graph.objects(subject=subject, predicate=SH.property):
-            if shacl_graph.value(subject=prop, predicate=SH.targetClass):
+            if shacl_graph.value(subject=prop, predicate=RDF.type):
                 return True
         return False
 
@@ -47,32 +47,38 @@ def generate_classes(shacl_filename, format='turtle'):
         :param subject: an shacl subject in the shacl rdflib graph
         :return: the class generated from the shacl subject
         """
-        schema_name = shacl_graph.value(subject, SH.name).value
+        schema_name = extract_name(subject)
         target_class = shacl_graph.value(subject, SH.targetClass)
 
         attributes = {}
         for prop in shacl_graph.objects(subject, SH.property):
-            name = shacl_graph.value(prop, SH.name).value
-            # TODO implement validation against reserved attribute names of the AbstractRDFMetadata
-            path = shacl_graph.value(prop, SH.path)
-
-            max_count = shacl_graph.value(prop, SH.maxCount)
-            min_count = shacl_graph.value(prop, SH.minCount)
-            data_type = shacl_graph.value(prop, SH.datatype)
-            if not data_type:
-                # TODO - should account for rdf:type rdf:value better than this
-                if shacl_graph.value(prop, getattr(SH, "in")):
-                    data_type = XSD.string
-            if not data_type:
-                # if data type is not provided, then it must be a nested class
-                nested_schema_name = shacl_graph.value(prop, SH.name).value
-                if not nested_schema_name:
-                    raise Exception("Could not find sh:datatype or sh:name on {}".format(name))
+            nested_schema = shacl_graph.value(prop, RDF.type)
+            if nested_schema:
+                nested_schema_name = extract_name(shacl_graph.value(prop, RDF.type))
+                if nested_schema_name not in classes:
+                    raise Exception("{} is not a known schema".format(nested_schema_name))
+                name = extract_name(shacl_graph.value(prop, SH.name))
+                if not name:
+                    raise Exception("Could not find sh:name on {}".format(nested_schema_name))
+                term = shacl_graph.value(nested_schema, SH.targetClass)
                 data_type = classes[nested_schema_name]
                 if not data_type:
                     raise Exception("Could not find a class definition for {}".format(nested_schema_name))
+                max_count = shacl_graph.value(prop, SH.maxCount)
+            else:
+                name = shacl_graph.value(prop, SH.name).value
+                # TODO implement validation against reserved attribute names of the AbstractRDFMetadata
+                term = shacl_graph.value(prop, SH.path)
 
-            attributes[name] = RDFProperty(property_name=name, data_type=data_type, path=path, max_count=max_count, min_count=min_count)
+                max_count = shacl_graph.value(prop, SH.maxCount)
+                data_type = shacl_graph.value(prop, SH.datatype)
+                if not data_type:
+                    # TODO - should account for rdf:type rdf:value better than this
+                    if shacl_graph.value(prop, getattr(SH, "in")):
+                        data_type = XSD.string
+            if term is None:
+                raise Exception("term is required")
+            attributes[name] = RDFProperty(property_name=name, data_type=data_type, term=term, max_count=max_count)
 
         shape_class = type(schema_name, (AbstractRDFMetadata,), {'_target_class': target_class, **attributes})
         classes[schema_name] = shape_class

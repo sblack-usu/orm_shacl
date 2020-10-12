@@ -12,7 +12,7 @@ class RDFProperty:
 
     Someday, we can add validation at assignment within __get__/__delete__
     '''
-    def __init__(self, property_name, data_type, path, max_count=None, min_count=None):
+    def __init__(self, property_name, data_type, term, max_count=None, min_count=None):
         """
         :param property_name:
         :param data_type:
@@ -23,7 +23,7 @@ class RDFProperty:
         self.property_name = property_name
         self.private_property = "_" + property_name
         self.data_type = data_type
-        self.path = path
+        self.term = term
         self.max_count = max_count
         self.min_count = min_count
 
@@ -66,7 +66,7 @@ class RDFProperty:
         :return: the value of this property in the metadata_graph
         """
         values = []
-        predicate = self.path
+        predicate = self.term
 
         if str(self.data_type).startswith(str(XSD)):
             values = [from_datatype(prop_value, self.data_type)
@@ -84,7 +84,7 @@ class RDFProperty:
                 return values[0]
             if len(values) > 1:
                 raise Exception("Invalid data, max count of 1, "
-                                "found {} for path {} and {}".format(len(values), predicate, subject))
+                                "found {} for term {} and {}".format(len(values), predicate, subject))
             return None
         else:
             return values
@@ -104,10 +104,10 @@ class RDFProperty:
 
             for val in values:
                 if str(self.data_type).startswith(str(XSD)):
-                    metadata_graph.add((subject, self.path, to_datatype(val, self.data_type)))
+                    metadata_graph.add((subject, self.term, to_datatype(val, self.data_type)))
                 else:
                     property_subject = BNode()
-                    metadata_graph.add((subject, self.path, property_subject))
+                    metadata_graph.add((subject, self.term, property_subject))
                     val.serialize(metadata_graph, property_subject, False)
 
 

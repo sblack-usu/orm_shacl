@@ -10,9 +10,8 @@
 @prefix hsresource: <http://www.hydroshare.org/resource/> .
 @prefix hsuser: <http://www.hydroshare.org/user/> .
 
-schema:HSResourceShape
+schema:HSResource
     a sh:NodeShape ;
-    sh:name "resource" ;
     sh:targetClass hsterms:resource ;
     # sh:closed true ;
     sh:property [
@@ -23,136 +22,26 @@ schema:HSResourceShape
         sh:minCount 1 ;
     ] ;
     sh:property [
-        a sh:NodeShape ;
+        a schema:Description ;
         sh:name "description" ;
-        sh:path dc:description ;
-        sh:targetClass dc:description ;
         sh:maxCount 1 ;
         sh:minCount 1 ;
-        sh:property [
-            sh:name "abstract" ;
-            sh:path dcterms:abstract ;
-            sh:datatype xsd:string ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-        ] ;
     ] ;
     sh:property [
-        a sh:NodeShape ;
+        a schema:Date ;
         sh:name "date" ;
-        sh:path dc:date ;
-        sh:targetClass dc:date ;
-        sh:property [
-            sh:name "value" ;
-            sh:path rdf:value ;
-            sh:datatype xsd:string ;
-            sh:pattern ".*" ;
-            sh:minCount 1 ;
-            sh:maxCount 1 ;
-        ] ;
-        sh:property [
-            sh:name "type" ;
-            sh:path rdf:type ;
-            sh:in ( dcterms:created dcterms:modified ) ;
-            sh:minCount 1 ;
-            sh:maxCount 1 ;
-        ] ;
     ] ;
     sh:property [
-        a sh:NodeShape ;
+        a schema:AwardInfo ;
         sh:name "award_info" ;
-        sh:path hsterms:awardInfo ;
-        sh:targetClass hsterms:awardInfo ;
-        sh:property [
-            sh:name "award_number" ;
-            sh:path hsterms:awardNumber ;
-            sh:datatype xsd:string ;
-            sh:maxCount 1 ;
-        ] ;
-        sh:property [
-            sh:name "funding_agency_url" ;
-            sh:path hsterms:fundingAgencyURL ;
-            sh:datatype xsd:string ;
-            sh:maxCount 1 ;
-        ] ;
-        sh:property [
-            sh:name "award_title" ;
-            sh:path hsterms:awardTitle ;
-            sh:datatype xsd:string ;
-            sh:maxCount 1 ;
-        ] ;
-        sh:property [
-            sh:name "funding_agency_name" ;
-            sh:path hsterms:fundingAgencyName ;
-            sh:datatype xsd:string ;
-            sh:maxCount 1 ;
-        ] ;
     ] ;
     sh:property [
-        a sh:NodeShape ;
+        a schema:Contributor ;
         sh:name "contributor" ;
-        sh:path dc:contributor ;
-        sh:targetClass dc:contributor ;
-        sh:property [
-            sh:name "phone" ;
-            sh:path hsterms:phone ;
-            sh:datatype xsd:string ;
-            sh:maxCount 1 ;
-        ] ;
-        sh:property [
-            sh:name "address" ;
-            sh:path hsterms:address ;
-            sh:datatype xsd:string ;
-            sh:maxCount 1 ;
-        ] ;
-        sh:property [
-            sh:name "email" ;
-            sh:path hsterms:email ;
-            sh:datatype xsd:string ;
-            sh:maxCount 1 ;
-        ] ;
-        sh:property [
-            sh:name "organization" ;
-            sh:path hsterms:organization ;
-            sh:datatype xsd:string ;
-            sh:maxCount 1 ;
-        ] ;
-        sh:property [
-            sh:name "ORCID" ;
-            sh:path hsterms:ORCID ;
-            sh:datatype xsd:string ;
-            sh:maxCount 1 ;
-        ] ;
-        sh:property [
-            sh:name "homepage" ;
-            sh:path hsterms:homepage ;
-            sh:datatype xsd:string ;
-            sh:maxCount 1 ;
-        ] ;
-        sh:property [
-            sh:name "google_scholar_id" ;
-            sh:path hsterms:GoogleScholarID ;
-            sh:datatype xsd:string ;
-            sh:maxCount 1 ;
-        ] ;
-        sh:property [
-            sh:name "research_gate_id" ;
-            sh:path hsterms:ResearchGateID ;
-            sh:datatype xsd:string ;
-            sh:maxCount 1 ;
-        ] ;
     ] ;
     sh:property [
-        a sh:NodeShape ;
+        a schema:Source ;
         sh:name "source" ;
-        sh:targetClass dc:source ;
-        sh:path dc:source ;
-        sh:property [
-            sh:name "is_derived_from" ;
-            sh:path hsterms:isDerivedFrom ;
-            sh:datatype xsd:string ;
-            sh:maxCount 1 ;
-        ] ;
     ] ;
     sh:property [
         sh:name "language" ;
@@ -168,181 +57,314 @@ schema:HSResourceShape
         sh:datatype xsd:string ;
     ] ;
     sh:property [
-        a sh:NodeShape ;
+        a schema:ExtendedMetadata ;
         sh:name "extended_metadata" ;
-        sh:targetClass hsterms:extendedMetadata ;
-        sh:path hsterms:extendedMetadata ;
-        sh:property [
-            sh:name "key" ;
-            sh:path hsterms:key ;
-            sh:datatype xsd:string ;
-            sh:minCount 1 ;
-            sh:maxCount 1 ;
-        ] ;
-        sh:property [
-            sh:name "value" ;
-            sh:path hsterms:value ;
-            sh:datatype xsd:string ;
-            sh:minCount 1 ;
-            sh:maxCount 1 ;
-        ] ;
     ] ;
     sh:property [
-        a sh:NodeShape ;
+        a schema:Coverage ;
         sh:name "coverage" ;
-        sh:targetClass dc:coverage ;
-        sh:path dc:coverage ;
-        sh:property [
-            sh:name "value" ;
-            sh:path rdf:value ;
-            sh:datatype xsd:string ;
-            sh:pattern ".*" ;
-            sh:minCount 1 ;
-            sh:maxCount 1 ;
-        ] ;
-        sh:property [
-            sh:name "type" ;
-            sh:path rdf:type ;
-            sh:datatype xsd:string ;
-            sh:in ( dcterms:box dcterms:period ) ;
-            sh:minCount 1 ;
-            sh:maxCount 1 ;
-        ] ;
     ] ;
     sh:property [
-        a sh:NodeShape ;
+        a schema:DCType ;
         sh:name "dc_type" ;
-        sh:targetClass dc:type ;
-        sh:path dc:type ;
         sh:maxCount 1 ;
         sh:minCount 1 ;
-        sh:property [
-            sh:name "is_defined_by" ;
-            sh:path rdfs:isDefinedBy ;
-            sh:datatype xsd:string ;
-            sh:pattern "http://hydroshare.org/terms/" ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-        ] ;
-        sh:property [
-            sh:name "label" ;
-            sh:path rdfs:label ;
-            sh:datatype xsd:string ;
-            sh:pattern "Composite Resource" ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-        ] ;
     ] ;
     sh:property [
-        a sh:NodeShape ;
+        a schema:Relation ;
         sh:name "relation" ;
-        sh:targetClass dc:relation ;
-        sh:path dc:relation ;
-        sh:property [
-            sh:name "is_part_of" ;
-            sh:path hsterms:isPartOf ;
-            sh:datatype xsd:string ;
-            sh:pattern ".*" ;
-            sh:maxCount 1 ;
-        ] ;
-        sh:property [
-            sh:name "is_copied_from" ;
-            sh:path hsterms:isCopiedFrom ;
-            sh:datatype xsd:string ;
-            sh:pattern ".*" ;
-            sh:maxCount 1 ;
-        ] ;
     ] ;
     sh:property [
-        a sh:NodeShape ;
+        a schema:Rights ;
         sh:name "rights" ;
-        sh:targetClass dc:rights ;
-        sh:path dc:rights ;
-        sh:property [
-            sh:name "url" ;
-            sh:path hsterms:URL ;
-            sh:datatype xsd:string ;
-            sh:pattern ".*" ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-        ] ;
-        sh:property [
-            sh:name "rights_statement" ;
-            sh:path hsterms:rightsStatement ;
-            sh:datatype xsd:string ;
-            sh:pattern ".*" ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-        ] ;
     ] ;
     sh:property [
-        a sh:NodeShape ;
-        sh:name "rights" ;
-        sh:targetClass dc:rights ;
-        sh:path dc:rights ;
-        sh:property [
-            sh:name "url" ;
-            sh:path hsterms:URL ;
-            sh:datatype xsd:string ;
-            sh:pattern ".*" ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-        ] ;
-        sh:property [
-            sh:name "rights_statement" ;
-            sh:path hsterms:rightsStatement ;
-            sh:datatype xsd:string ;
-            sh:pattern ".*" ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-        ] ;
-    ] ;
-    sh:property [
-        a sh:NodeShape ;
+        a schema:Identifier ;
         sh:name "identifier" ;
-        sh:targetClass dc:identifier ;
-        sh:path dc:identifier ;
         sh:maxCount 1 ;
         sh:minCount 1 ;
-        sh:property [
-            sh:name "hydroshare_identifier" ;
-            sh:path hsterms:hydroShareIdentifier ;
-            sh:datatype xsd:string ;
-            sh:pattern ".*" ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-        ] ;
     ] ;
     sh:property [
-        a sh:NodeShape ;
+        a schema:Creator ;
         sh:name "creator" ;
-        sh:path dc:creator ;
-        sh:targetClass dc:creator ;
         sh:minCount 1 ;
-        sh:property [
-            sh:name "creator_order" ;
-            sh:path hsterms:creatorOrder ;
-            sh:datatype xsd:integer ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-        ] ;
-        sh:property [
-            sh:name "name" ;
-            sh:path hsterms:name ;
-            sh:datatype xsd:string ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-        ] ;
-        sh:property [
-            sh:name "organization" ;
-            sh:path hsterms:organization ;
-            sh:datatype xsd:string ;
-            sh:maxCount 1 ;
-        ] ;
-        sh:property [
-            sh:name "email" ;
-            sh:path hsterms:email ;
-            sh:datatype xsd:string ;
-            sh:maxCount 1 ;
-        ] ;
+    ] .
+
+schema:Description
+    a sh:NodeShape ;
+    sh:targetClass dc:description ;
+    sh:property [
+        sh:name "abstract" ;
+        sh:path dcterms:abstract ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] .
+
+schema:Relation
+    a sh:NodeShape ;
+    sh:targetClass dc:relation ;
+    sh:property [
+        sh:name "is_part_of" ;
+        sh:path hsterms:isPartOf ;
+        sh:datatype xsd:string ;
+        sh:pattern ".*" ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "is_copied_from" ;
+        sh:path hsterms:isCopiedFrom ;
+        sh:datatype xsd:string ;
+        sh:pattern ".*" ;
+        sh:maxCount 1 ;
+    ] .
+
+schema:Date
+    a sh:NodeShape ;
+    sh:targetClass dc:date ;
+    sh:property [
+        sh:name "value" ;
+        sh:path rdf:value ;
+        sh:datatype xsd:string ;
+        sh:pattern ".*" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "type" ;
+        sh:path rdf:type ;
+        sh:in ( dcterms:created dcterms:modified ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+schema:AwardInfo
+    a sh:NodeShape ;
+    sh:targetClass hsterms:awardInfo ;
+    sh:property [
+        sh:name "award_number" ;
+        sh:path hsterms:awardNumber ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "funding_agency_url" ;
+        sh:path hsterms:fundingAgencyURL ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "award_title" ;
+        sh:path hsterms:awardTitle ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "funding_agency_name" ;
+        sh:path hsterms:fundingAgencyName ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+    ] .
+
+schema:Contributor
+    a sh:NodeShape ;
+    sh:targetClass dc:contributor ;
+    sh:property [
+        sh:name "phone" ;
+        sh:path hsterms:phone ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "address" ;
+        sh:path hsterms:address ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "email" ;
+        sh:path hsterms:email ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "organization" ;
+        sh:path hsterms:organization ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "ORCID" ;
+        sh:path hsterms:ORCID ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "homepage" ;
+        sh:path hsterms:homepage ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "google_scholar_id" ;
+        sh:path hsterms:GoogleScholarID ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "research_gate_id" ;
+        sh:path hsterms:ResearchGateID ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+    ] .
+
+schema:Source
+    a sh:NodeShape ;
+    sh:targetClass dc:source ;
+    sh:property [
+        sh:name "is_derived_from" ;
+        sh:path hsterms:isDerivedFrom ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+    ] .
+
+schema:ExtendedMetadata
+    a sh:NodeShape ;
+    sh:targetClass hsterms:extendedMetadata ;
+    sh:property [
+        sh:name "key" ;
+        sh:path hsterms:key ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "value" ;
+        sh:path hsterms:value ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+schema:Coverage
+    a sh:NodeShape ;
+    sh:targetClass dc:coverage ;
+    sh:property [
+        sh:name "value" ;
+        sh:path rdf:value ;
+        sh:datatype xsd:string ;
+        sh:pattern ".*" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "type" ;
+        sh:path rdf:type ;
+        sh:datatype xsd:string ;
+        sh:in ( dcterms:box dcterms:period ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+schema:DCType
+    a sh:NodeShape ;
+    sh:targetClass dc:type ;
+    sh:property [
+        sh:name "is_defined_by" ;
+        sh:path rdfs:isDefinedBy ;
+        sh:datatype xsd:string ;
+        sh:pattern "http://hydroshare.org/terms/" ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "label" ;
+        sh:path rdfs:label ;
+        sh:datatype xsd:string ;
+        sh:pattern "Composite Resource" ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] .
+
+schema:Rights
+    a sh:NodeShape ;
+    sh:targetClass dc:rights ;
+    sh:property [
+        sh:name "url" ;
+        sh:path hsterms:URL ;
+        sh:datatype xsd:string ;
+        sh:pattern ".*" ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "rights_statement" ;
+        sh:path hsterms:rightsStatement ;
+        sh:datatype xsd:string ;
+        sh:pattern ".*" ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] .
+
+schema:Rights
+    a sh:NodeShape ;
+    sh:targetClass dc:rights ;
+    sh:path dc:rights ;
+    sh:property [
+        sh:name "url" ;
+        sh:path hsterms:URL ;
+        sh:datatype xsd:string ;
+        sh:pattern ".*" ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "rights_statement" ;
+        sh:path hsterms:rightsStatement ;
+        sh:datatype xsd:string ;
+        sh:pattern ".*" ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] .
+
+schema:Identifier
+    a sh:NodeShape ;
+    sh:targetClass dc:identifier ;
+    sh:property [
+        sh:name "hydroshare_identifier" ;
+        sh:path hsterms:hydroShareIdentifier ;
+        sh:datatype xsd:string ;
+        sh:pattern ".*" ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] .
+
+schema:Creator
+    a sh:NodeShape ;
+    sh:targetClass dc:creator ;
+    sh:property [
+        sh:name "creator_order" ;
+        sh:path hsterms:creatorOrder ;
+        sh:datatype xsd:integer ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "name" ;
+        sh:path hsterms:name ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "organization" ;
+        sh:path hsterms:organization ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "email" ;
+        sh:path hsterms:email ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
     ] .
