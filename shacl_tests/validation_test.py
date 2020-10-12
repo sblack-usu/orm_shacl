@@ -1,18 +1,9 @@
-from subject import hydro_document
-
-hd = hydro_document("ea93a49284204912be7fab054a9d41df")
-
-# with open('resource.ttl', 'w') as f:
-#     f.write(hd.document.get_turtle())
-
 from rdflib import Graph
-shacl_graph = Graph().parse("shacl_tests/HSResource_SHACL.ttl", format='turtle')
+
+shacl_graph = Graph().parse("../hstools/shacl/resource.ttl", format='turtle')
 for triple in shacl_graph.triples((None, None, None)):
     print(triple)
-with open('hsresource-shacl.xml', 'wb') as f:
-    f.write(shacl_graph.serialize())
-#resource_graph = hd.document.graph
-resource_graph = Graph().parse("shacl_tests/resource.ttl", format='turtle')
+resource_graph = Graph().parse("resource.ttl", format='turtle')
 
 from pyshacl import validate
 
@@ -22,7 +13,7 @@ conforms, results_graph, results_text = r
 
 assert conforms
 
-resource_graph = Graph().parse("shacl_tests/resource-bad.ttl", format='turtle')
+resource_graph = Graph().parse("resource-bad.ttl", format='turtle')
 r = validate(resource_graph, shacl_graph=shacl_graph, abort_on_error=False, debug=True)
 conforms, results_graph, results_text = r
 

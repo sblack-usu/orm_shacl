@@ -18,7 +18,8 @@
             rdf:value "2020-01-20T18:12:41.356860+00:00" ],
         [ a dcterms:modified ;
             rdf:value "2020-01-20T18:13:34.486788+00:00" ] ;
-    dc:description [ dcterms:abstract "Part of Stroud Water Research Center’s (SWRC) development modelling project for Open Space Institute's (OSI) Land Protection Impact Assessment (LPIA). Parcel analysis carried out by Model My Watershed's (MMW) Site Storm Model. Analyzing the following: ⏎ 1) Forest to Open Space Development ⏎ 2) Forest to Low Density Development ⏎ 3) Forest to Medium Density Development ⏎ 4) Forest to High Density Development ⏎ 5) OSI’s Development Scenario" ] ;
+    dc:description [ dcterms:abstract "2 abstracts?" ],
+[ dcterms:abstract "something" ] ;
     dc:identifier [ hsterms:hydroShareIdentifier "http://www.hydroshare.org/resource/ea93a49284204912be7fab054a9d41df" ] ;
     dc:language "fr" ;
     dc:rights [ hsterms:URL <http://creativecommons.org/licenses/by/4.0/> ;

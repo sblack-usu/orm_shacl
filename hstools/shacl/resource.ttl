@@ -22,34 +22,34 @@ schema:HSResource
         sh:minCount 1 ;
     ] ;
     sh:property [
-        a schema:Description ;
         sh:name "description" ;
+        sh:path dc:description ;
         sh:maxCount 1 ;
         sh:minCount 1 ;
     ] ;
     sh:property [
-        a schema:Date ;
         sh:name "date" ;
+        sh:path dc:date ;
     ] ;
     sh:property [
-        a schema:AwardInfo ;
         sh:name "award_info" ;
+        sh:path hsterms:awardInfo ;
     ] ;
     sh:property [
-        a schema:Contributor ;
         sh:name "contributor" ;
+        sh:path dc:contributor ;
     ] ;
     sh:property [
-        a schema:Source ;
         sh:name "source" ;
+        sh:path dc:source ;
     ] ;
     sh:property [
         sh:name "language" ;
         sh:path dc:language ;
         sh:datatype xsd:string ;
-        sh:maxCount 1 ;
-        sh:minCount 1 ;
-        sh:in ( "eng" "es" ) ;
+        #sh:maxCount 1 ;
+        #sh:minCount 1 ;
+        #sh:in ( "eng" "es" ) ;
     ] ;
     sh:property [
         sh:name "subject" ;
@@ -57,41 +57,41 @@ schema:HSResource
         sh:datatype xsd:string ;
     ] ;
     sh:property [
-        a schema:ExtendedMetadata ;
         sh:name "extended_metadata" ;
+        sh:path hsterms:extendedMetadata ;
     ] ;
     sh:property [
-        a schema:Coverage ;
         sh:name "coverage" ;
+        sh:path dc:coverage ;
     ] ;
     sh:property [
-        a schema:DCType ;
         sh:name "dc_type" ;
+        sh:path dc:type ;
         sh:maxCount 1 ;
         sh:minCount 1 ;
     ] ;
     sh:property [
-        a schema:Relation ;
         sh:name "relation" ;
+        sh:path dc:relation ;
     ] ;
     sh:property [
-        a schema:Rights ;
         sh:name "rights" ;
+        sh:path dc:rights ;
     ] ;
     sh:property [
-        a schema:Identifier ;
         sh:name "identifier" ;
+        sh:path dc:identifier ;
         sh:maxCount 1 ;
         sh:minCount 1 ;
     ] ;
     sh:property [
-        a schema:Creator ;
         sh:name "creator" ;
-        sh:minCount 1 ;
+        sh:path dc:creator ;
+        #sh:minCount 1 ;
     ] .
 
 schema:Description
-    a sh:NodeShape ;
+    a sh:Shape ;
     sh:targetClass dc:description ;
     sh:property [
         sh:name "abstract" ;
@@ -102,7 +102,7 @@ schema:Description
     ] .
 
 schema:Relation
-    a sh:NodeShape ;
+    a sh:Shape ;
     sh:targetClass dc:relation ;
     sh:property [
         sh:name "is_part_of" ;
@@ -120,7 +120,7 @@ schema:Relation
     ] .
 
 schema:Date
-    a sh:NodeShape ;
+    a sh:Shape ;
     sh:targetClass dc:date ;
     sh:property [
         sh:name "value" ;
@@ -139,7 +139,7 @@ schema:Date
     ] .
 
 schema:AwardInfo
-    a sh:NodeShape ;
+    a sh:Shape ;
     sh:targetClass hsterms:awardInfo ;
     sh:property [
         sh:name "award_number" ;
@@ -167,7 +167,7 @@ schema:AwardInfo
     ] .
 
 schema:Contributor
-    a sh:NodeShape ;
+    a sh:Shape ;
     sh:targetClass dc:contributor ;
     sh:property [
         sh:name "phone" ;
@@ -219,7 +219,7 @@ schema:Contributor
     ] .
 
 schema:Source
-    a sh:NodeShape ;
+    a sh:Shape ;
     sh:targetClass dc:source ;
     sh:property [
         sh:name "is_derived_from" ;
@@ -229,7 +229,7 @@ schema:Source
     ] .
 
 schema:ExtendedMetadata
-    a sh:NodeShape ;
+    a sh:Shape ;
     sh:targetClass hsterms:extendedMetadata ;
     sh:property [
         sh:name "key" ;
@@ -247,7 +247,7 @@ schema:ExtendedMetadata
     ] .
 
 schema:Coverage
-    a sh:NodeShape ;
+    a sh:Shape ;
     sh:targetClass dc:coverage ;
     sh:property [
         sh:name "value" ;
@@ -267,7 +267,7 @@ schema:Coverage
     ] .
 
 schema:DCType
-    a sh:NodeShape ;
+    a sh:Shape ;
     sh:targetClass dc:type ;
     sh:property [
         sh:name "is_defined_by" ;
@@ -287,29 +287,8 @@ schema:DCType
     ] .
 
 schema:Rights
-    a sh:NodeShape ;
+    a sh:Shape ;
     sh:targetClass dc:rights ;
-    sh:property [
-        sh:name "url" ;
-        sh:path hsterms:URL ;
-        sh:datatype xsd:string ;
-        sh:pattern ".*" ;
-        sh:maxCount 1 ;
-        sh:minCount 1 ;
-    ] ;
-    sh:property [
-        sh:name "rights_statement" ;
-        sh:path hsterms:rightsStatement ;
-        sh:datatype xsd:string ;
-        sh:pattern ".*" ;
-        sh:maxCount 1 ;
-        sh:minCount 1 ;
-    ] .
-
-schema:Rights
-    a sh:NodeShape ;
-    sh:targetClass dc:rights ;
-    sh:path dc:rights ;
     sh:property [
         sh:name "url" ;
         sh:path hsterms:URL ;
@@ -328,7 +307,7 @@ schema:Rights
     ] .
 
 schema:Identifier
-    a sh:NodeShape ;
+    a sh:Shape ;
     sh:targetClass dc:identifier ;
     sh:property [
         sh:name "hydroshare_identifier" ;
@@ -340,7 +319,7 @@ schema:Identifier
     ] .
 
 schema:Creator
-    a sh:NodeShape ;
+    a sh:Shape ;
     sh:targetClass dc:creator ;
     sh:property [
         sh:name "creator_order" ;

@@ -12,7 +12,7 @@ class RDFProperty:
 
     Someday, we can add validation at assignment within __get__/__delete__
     '''
-    def __init__(self, property_name, data_type, term, max_count=None, min_count=None):
+    def __init__(self, property_name, data_type, term, max_count=None, constraints={}):
         """
         :param property_name:
         :param data_type:
@@ -25,7 +25,7 @@ class RDFProperty:
         self.data_type = data_type
         self.term = term
         self.max_count = max_count
-        self.min_count = min_count
+        self.constraints = constraints
 
     def __get__(self, instance, owner):
         """
