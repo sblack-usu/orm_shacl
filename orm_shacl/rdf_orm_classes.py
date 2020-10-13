@@ -19,13 +19,14 @@ class RDFProperty:
         :param path:
         :param max_count:
         :param min_count:
+        :param constraints:
         """
-        self.property_name = property_name
-        self.private_property = "_" + property_name
-        self.data_type = data_type
-        self.term = path
-        self.max_count = max_count
-        self.constraints = constraints
+        self.__property_name = property_name
+        self.__private_property = "_" + property_name
+        self.__data_type = data_type
+        self.__path = path
+        self.__max_count = max_count
+        self.__constraints = constraints
 
     def __get__(self, instance, owner):
         """
@@ -38,7 +39,7 @@ class RDFProperty:
         if instance is None:
             # returning self allows us to store property parsing data and logic on the descriptor
             return self
-        return getattr(instance, self.private_property)
+        return getattr(instance, self.__private_property)
 
     def __set__(self, instance, value):
         """
@@ -47,7 +48,7 @@ class RDFProperty:
         :param value:
         :return:
         """
-        return setattr(instance, self.private_property, value)
+        return setattr(instance, self.__private_property, value)
 
     def __delete__(self, instance):
         """
@@ -55,7 +56,7 @@ class RDFProperty:
         :param instance:
         :return:
         """
-        setattr(instance, self.private_property, None)
+        setattr(instance, self.__private_property, None)
 
     def parse(self, metadata_graph, subject):
         """
@@ -66,20 +67,20 @@ class RDFProperty:
         :return: the value of this property in the metadata_graph
         """
         values = []
-        predicate = self.term
+        predicate = self.__path
 
-        if str(self.data_type).startswith(str(XSD)):
-            values = [from_datatype(prop_value, self.data_type)
+        if str(self.__data_type).startswith(str(XSD)):
+            values = [from_datatype(prop_value, self.__data_type)
                       for prop_value in
                       metadata_graph.objects(subject=subject, predicate=predicate)]
         else:
             for nested_subject in metadata_graph.objects(subject=subject, predicate=predicate):
-                rdf_metadata_class = self.data_type
+                rdf_metadata_class = self.__data_type
                 val = rdf_metadata_class()
                 val.parse_from_graph(metadata_graph=metadata_graph, root_subject=nested_subject)
                 values.append(val)
 
-        if self.max_count == Literal(1):
+        if self.__max_count == Literal(1):
             if len(values) == 1:
                 return values[0]
             if len(values) > 1:
@@ -97,17 +98,17 @@ class RDFProperty:
         :param subject: The subject of the property's data
         :return:
         """
-        values = getattr(instance, self.private_property)
+        values = getattr(instance, self.__private_property)
         if values:
-            if self.max_count == Literal(1):
+            if self.__max_count == Literal(1):
                 values = [values]
 
             for val in values:
-                if str(self.data_type).startswith(str(XSD)):
-                    metadata_graph.add((subject, self.term, to_datatype(val, self.data_type)))
+                if str(self.__data_type).startswith(str(XSD)):
+                    metadata_graph.add((subject, self.__path, to_datatype(val, self.__data_type)))
                 else:
                     property_subject = BNode()
-                    metadata_graph.add((subject, self.term, property_subject))
+                    metadata_graph.add((subject, self.__path, property_subject))
                     val.serialize(metadata_graph, property_subject, False)
 
 
