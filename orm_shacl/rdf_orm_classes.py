@@ -129,7 +129,7 @@ class AbstractRDFMetadata:
     def parse(self, file, file_format='turtle', root_subject=None):
         """
         Requires the file path of an rdf serialization.  The default file format is turtle.
-        Extracts all metadata for each RDFPropertynon the class for the given root_subject.
+        Extracts all metadata for each RDFProperty on the class for the given root_subject.
         If root_subject is not supplied, the root of the graph is used.
         :param file:
         :param file_format:
@@ -188,7 +188,8 @@ class AbstractRDFMetadata:
         :return: list of property names as strings
         """
         names = []
-        for name in dir(self):
+        attributes = vars(self.__class__).keys()
+        for name in attributes:
             if not name.startswith('_') and isinstance(getattr(type(self), name), RDFProperty):
                 names.append(name)
         return names
