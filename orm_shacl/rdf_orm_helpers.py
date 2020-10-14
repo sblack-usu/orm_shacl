@@ -1,4 +1,4 @@
-from rdflib import URIRef, Literal, XSD
+from rdflib import URIRef, Literal, XSD, BNode
 
 
 def URIRef_or_Literal(value):
@@ -76,3 +76,11 @@ def to_datatype(val, data_type):
         return Literal(val)
     else:
         raise Exception("Encountered unsupported XSD data type {}".format(data_type))
+
+def children_triples(graph, subject):
+    children = []
+    for sub, pred, obj in graph.triples((subject, None, None)):
+        if isinstance(obj, BNode):
+            children = children + children_triples(graph, obj)
+        children.append((sub, pred, obj))
+    return children

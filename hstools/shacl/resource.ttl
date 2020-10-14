@@ -26,22 +26,27 @@ schema:HSResource
         sh:path dc:description ;
         sh:maxCount 1 ;
         sh:minCount 1 ;
+        sh:node schema:Description ;
     ] ;
     sh:property [
         sh:name "date" ;
         sh:path dc:date ;
+        sh:node schema:Date ;
     ] ;
     sh:property [
         sh:name "award_info" ;
         sh:path hsterms:awardInfo ;
+        sh:node schema:AwardInfo ;
     ] ;
     sh:property [
         sh:name "contributor" ;
         sh:path dc:contributor ;
+        sh:node schema:Contributor ;
     ] ;
     sh:property [
         sh:name "source" ;
         sh:path dc:source ;
+        sh:node schema:Source ;
     ] ;
     sh:property [
         sh:name "language" ;
@@ -55,38 +60,39 @@ schema:HSResource
         sh:name "subject" ;
         sh:path dc:subject ;
         sh:datatype xsd:string ;
+        sh:maxCount 4 ;
     ] ;
     sh:property [
         sh:name "extended_metadata" ;
         sh:path hsterms:extendedMetadata ;
+        sh:node schema:ExtendedMetadata ;
     ] ;
     sh:property [
         sh:name "coverage" ;
         sh:path dc:coverage ;
-    ] ;
-    sh:property [
-        sh:name "dc_type" ;
-        sh:path dc:type ;
-        sh:maxCount 1 ;
-        sh:minCount 1 ;
+        sh:node schema:Coverage ;
     ] ;
     sh:property [
         sh:name "relation" ;
         sh:path dc:relation ;
+        sh:node schema:Relation ;
     ] ;
     sh:property [
         sh:name "rights" ;
         sh:path dc:rights ;
+        sh:node schema:Rights ;
     ] ;
     sh:property [
         sh:name "identifier" ;
         sh:path dc:identifier ;
+        sh:node schema:Identifier ;
         sh:maxCount 1 ;
         sh:minCount 1 ;
     ] ;
     sh:property [
         sh:name "creator" ;
         sh:path dc:creator ;
+        sh:node schema:Creator ;
         #sh:minCount 1 ;
     ] .
 
@@ -107,14 +113,12 @@ schema:Relation
     sh:property [
         sh:name "is_part_of" ;
         sh:path hsterms:isPartOf ;
-        sh:datatype xsd:string ;
         sh:pattern ".*" ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:name "is_copied_from" ;
         sh:path hsterms:isCopiedFrom ;
-        sh:datatype xsd:string ;
         sh:pattern ".*" ;
         sh:maxCount 1 ;
     ] .
@@ -133,14 +137,13 @@ schema:Date
     sh:property [
         sh:name "type" ;
         sh:path rdf:type ;
-        sh:datatype xsd:string ;
         sh:in ( dcterms:created dcterms:modified ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ] .
 
 schema:AwardInfo
-    a sh:Shape ;
+    a sh:NodeShape ;
     sh:targetClass hsterms:awardInfo ;
     sh:property [
         sh:name "award_number" ;
@@ -151,7 +154,7 @@ schema:AwardInfo
     sh:property [
         sh:name "funding_agency_url" ;
         sh:path hsterms:fundingAgencyURL ;
-        sh:datatype xsd:string ;
+        sh:pattern ".*" ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
@@ -163,7 +166,7 @@ schema:AwardInfo
     sh:property [
         sh:name "funding_agency_name" ;
         sh:path hsterms:fundingAgencyName ;
-        sh:datatype xsd:string ;
+        sh:pattern ".*" ;
         sh:maxCount 1 ;
     ] .
 
@@ -191,31 +194,31 @@ schema:Contributor
     sh:property [
         sh:name "organization" ;
         sh:path hsterms:organization ;
-        sh:datatype xsd:string ;
+        sh:pattern ".*" ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:name "ORCID" ;
         sh:path hsterms:ORCID ;
-        sh:datatype xsd:string ;
+        sh:pattern ".*" ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:name "homepage" ;
         sh:path hsterms:homepage ;
-        sh:datatype xsd:string ;
+        sh:pattern ".*" ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:name "google_scholar_id" ;
         sh:path hsterms:GoogleScholarID ;
-        sh:datatype xsd:string ;
+        sh:pattern ".*" ;
         sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:name "research_gate_id" ;
         sh:path hsterms:ResearchGateID ;
-        sh:datatype xsd:string ;
+        sh:pattern ".*" ;
         sh:maxCount 1 ;
     ] .
 
@@ -225,7 +228,7 @@ schema:Source
     sh:property [
         sh:name "is_derived_from" ;
         sh:path hsterms:isDerivedFrom ;
-        sh:datatype xsd:string ;
+        sh:pattern ".*" ;
         sh:maxCount 1 ;
     ] .
 
@@ -261,7 +264,6 @@ schema:Coverage
     sh:property [
         sh:name "type" ;
         sh:path rdf:type ;
-        sh:datatype xsd:string ;
         sh:in ( dcterms:box dcterms:period ) ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
@@ -273,7 +275,6 @@ schema:DCType
     sh:property [
         sh:name "is_defined_by" ;
         sh:path rdfs:isDefinedBy ;
-        sh:datatype xsd:string ;
         sh:pattern "http://hydroshare.org/terms/" ;
         sh:maxCount 1 ;
         sh:minCount 1 ;
@@ -293,7 +294,6 @@ schema:Rights
     sh:property [
         sh:name "url" ;
         sh:path hsterms:URL ;
-        sh:datatype xsd:string ;
         sh:pattern ".*" ;
         sh:maxCount 1 ;
         sh:minCount 1 ;
@@ -313,7 +313,6 @@ schema:Identifier
     sh:property [
         sh:name "hydroshare_identifier" ;
         sh:path hsterms:hydroShareIdentifier ;
-        sh:datatype xsd:string ;
         sh:pattern ".*" ;
         sh:maxCount 1 ;
         sh:minCount 1 ;

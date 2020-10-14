@@ -1,8 +1,8 @@
-from rdflib import Graph, Namespace
+from rdflib import Graph, Namespace, BNode
 from rdflib.namespace import RDF, SH, XSD
 
 from orm_shacl.rdf_orm_classes import RDFProperty, AbstractRDFMetadata
-from orm_shacl.rdf_orm_helpers import root_subject, extract_name
+from orm_shacl.rdf_orm_helpers import root_subject, extract_name, children_triples
 
 HSTERMS = Namespace("http://hydroshare.org/terms/")
 
@@ -52,22 +52,44 @@ def generate_classes(shacl_filename, format='turtle'):
 
         attributes = {}
         for prop in shacl_graph.objects(subject, SH.property):
-            data_type = shacl_graph.value(prop, SH.datatype)
+
             name = shacl_graph.value(prop, SH.name).value
+            if name is None:
+                raise Exception("sh:name is required, check property {}".format(prop))
+
             path = shacl_graph.value(prop, SH.path)
             if path is None:
-                raise Exception("path is required")
+                raise Exception("sh:path is required, check property {}".format(name))
+
+            data_type = shacl_graph.value(prop, SH.datatype)
+            if not data_type:
+                # work around to account for urirefs shacl doesn't allow datatype for URIRef types, only Literal
+                if shacl_graph.value(prop, SH.pattern):
+                    data_type = XSD.string
+                if shacl_graph.value(prop, getattr(SH, "in")):
+                    data_type = XSD.string
             max_count = shacl_graph.value(prop, SH.maxCount)
             # TODO implement validation against reserved attribute names of the AbstractRDFMetadata
             if not data_type:
-                if not path:
-                    raise Exception("Could not find sh:path on {}".format(prop))
                 schema = shacl_graph.value(predicate=SH.targetClass, object=path)
                 nested_schema_name = extract_name(schema)
                 if nested_schema_name not in classes:
                     raise Exception("{} is not a known schema".format(nested_schema_name))
                 data_type = classes[nested_schema_name]
-            attributes[name] = RDFProperty(property_name=name, data_type=data_type, path=path, max_count=max_count)
+
+            # extract all other attributes in the property
+            constraints = []
+            for predicate, obj in shacl_graph.predicate_objects(subject=prop):
+                if predicate not in (SH.name, SH.datatype, SH.path, SH.maxCount):
+                    constraints.append((predicate, obj))
+                    constraints = constraints + children_triples(shacl_graph, obj)
+
+            #constraints = [(predicate, obj)
+            #               for predicate, obj in shacl_graph.predicate_objects(subject=prop)
+            #               if predicate not in (SH.name, SH.datatype, SH.path, SH.maxCount)]
+
+            attributes[name] = RDFProperty(property_name=name, data_type=data_type, path=path, max_count=max_count,
+                                           constraints=constraints)
 
         shape_class = type(schema_name, (AbstractRDFMetadata,), {'_target_class': target_class, **attributes})
         classes[schema_name] = shape_class

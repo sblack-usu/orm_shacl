@@ -1,4 +1,5 @@
-from rdflib import XSD, Literal, RDF, Graph, BNode, Namespace, DC
+from pyshacl import validate
+from rdflib import XSD, Literal, RDF, Graph, BNode, Namespace, DC, SH
 
 from orm_shacl.rdf_orm_helpers import from_datatype, to_datatype
 
@@ -58,6 +59,53 @@ class RDFProperty:
         """
         setattr(instance, self.__private_property, None)
 
+    def _datatype_is_primitive(self):
+        return str(self.__data_type).startswith(str(XSD))
+
+    def _validate(self, instance, value):
+        SCHEMA = Namespace("http://schema.org/")
+
+        shacl_graph = self._build_shacl_graph(SCHEMA)
+        print(shacl_graph.serialize(format='ttl').decode())
+        data_graph = self._build_data_graph(SCHEMA, value)
+        print(data_graph.serialize(format='ttl').decode())
+
+        r = validate(data_graph, shacl_graph=shacl_graph, abort_on_error=False, debug=True)
+        conforms, results_graph, results_text = r
+        return conforms
+
+    def _build_data_graph(self, SCHEMA, values):
+        data_graph = Graph()
+        data_root = BNode()
+        data_graph.add((data_root, RDF.type, SCHEMA.testing))
+        if self.__max_count == Literal(1):
+            values = [values]
+        for val in values:
+            data_graph.add((data_root, self.__path, to_datatype(val, self.__data_type)))
+        return data_graph
+
+    def _build_shacl_graph(self, SCHEMA):
+        shacl_graph = Graph()
+        shacl_root = BNode()
+        shacl_graph.add((shacl_root, RDF.type, SH.NodeShape))
+        shacl_graph.add((shacl_root, SH.targetClass, SCHEMA.testing))
+        shacl_property_root = BNode()
+        shacl_graph.add((shacl_root, SH.property, shacl_property_root))
+        #shacl_graph.add((shacl_property_root, SH.name, self.__property_name))
+        shacl_graph.add((shacl_property_root, SH.path, self.__path))
+        shacl_graph.add((shacl_property_root, SH.datatype, self.__data_type))
+        if self.__max_count:
+            shacl_graph.add((shacl_property_root, SH.maxCount, self.__max_count))
+        for constraint in self.__constraints:
+            if len(constraint) == 2:
+                predicate, obj = constraint
+                shacl_graph.add((shacl_property_root, predicate, obj))
+            elif len(constraint) == 3:
+                shacl_graph.add(constraint)
+            else:
+                raise Exception("Unexpected constraints tuple {}, must be len 2 or 3".format(constraint))
+        return shacl_graph
+
     def parse(self, metadata_graph, subject):
         """
         Using property information stored within this class descriptor,
@@ -69,7 +117,7 @@ class RDFProperty:
         values = []
         predicate = self.__path
 
-        if str(self.__data_type).startswith(str(XSD)):
+        if self._datatype_is_primitive():
             values = [from_datatype(prop_value, self.__data_type)
                       for prop_value in
                       metadata_graph.objects(subject=subject, predicate=predicate)]
@@ -104,7 +152,7 @@ class RDFProperty:
                 values = [values]
 
             for val in values:
-                if str(self.__data_type).startswith(str(XSD)):
+                if self._datatype_is_primitive():
                     metadata_graph.add((subject, self.__path, to_datatype(val, self.__data_type)))
                 else:
                     property_subject = BNode()
