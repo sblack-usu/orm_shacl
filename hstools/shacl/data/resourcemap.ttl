@@ -1,0 +1,101 @@
+@prefix citoterms: <http://purl.org/spar/cito/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ore: <http://www.openarchives.org/ore/terms/> .
+@prefix rdfs1: <http://www.w3.org/2001/01/rdf-schema#> .
+
+<http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml> a ore:ResourceMap ;
+    dc:creator <http://foresite-toolkit.googlecode.com/#pythonAgent> ;
+    dc:format "application/rdf+xml" ;
+    dc:identifier "c559c10d076149d6b2f79eee7e8b33f3" ;
+    dcterms:created "2020-10-13T21:41:15Z" ;
+    dcterms:modified "2020-10-13T21:41:15Z" ;
+    ore:describes <http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation> .
+
+<http://foresite-toolkit.googlecode.com/#pythonAgent> foaf:mbox "foresite@googlegroups.com" ;
+    foaf:name "Foresite Toolkit (Python)" .
+
+<http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/> dc:format "application/" ;
+    ore:isAggregatedBy "http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation" .
+
+<http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/SWE_time_resmap.xml#aggregation> a ore:Aggregation ;
+    dcterms:type <http://localhost:8000/terms/MultidimensionalAggregation> ;
+    ore:isAggregatedBy "http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation" .
+
+<http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/asdf/asdf_resmap.xml#aggregation> a ore:Aggregation ;
+    dcterms:type <http://localhost:8000/terms/FileSetAggregation> ;
+    ore:isAggregatedBy "http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation" .
+
+<http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/hs_restclient_demo.ipynb> dc:format "application/ipynb" ;
+    ore:isAggregatedBy "http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation" .
+
+<http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/logan_resmap.xml#aggregation> a ore:Aggregation ;
+    dcterms:type <http://localhost:8000/terms/GeographicRasterAggregation> ;
+    ore:isAggregatedBy "http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation" .
+
+<http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/msf_version.refts_resmap.xml#aggregation> a ore:Aggregation ;
+    dcterms:type <http://localhost:8000/terms/ReferencedTimeSeriesAggregation> ;
+    ore:isAggregatedBy "http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation" .
+
+<http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/other.txt> dc:format "text/plain" ;
+    ore:isAggregatedBy "http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation" .
+
+<http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test.txt> dc:format "text/plain" ;
+    ore:isAggregatedBy "http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation" .
+
+<http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test_folder/deep/test.txt> dc:format "text/plain" ;
+    ore:isAggregatedBy "http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation" .
+
+<http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test_folder/deep/test1.txt> dc:format "text/plain" ;
+    ore:isAggregatedBy "http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation" .
+
+<http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test_folder/deep/test2.txt> dc:format "text/plain" ;
+    ore:isAggregatedBy "http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation" .
+
+<http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test_folder/deep/test3.txt> dc:format "text/plain" ;
+    ore:isAggregatedBy "http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation" .
+
+<http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test_resmap.xml#aggregation> a ore:Aggregation ;
+    dcterms:type <http://localhost:8000/terms/SingleFileAggregation> ;
+    ore:isAggregatedBy "http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation" .
+
+<http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/watersheds_resmap.xml#aggregation> a ore:Aggregation ;
+    dcterms:type <http://localhost:8000/terms/GeographicFeatureAggregation> ;
+    ore:isAggregatedBy "http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation" .
+
+<http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation> a ore:Aggregation ;
+    dc:title "sadfadsgasdf" ;
+    dcterms:type <http://www.hydroshare.org/terms/CompositeResource> ;
+    citoterms:isDocumentedBy "http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemetadata.xml" ;
+    ore:aggregates <http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/>,
+        <http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/SWE_time_resmap.xml#aggregation>,
+        <http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/asdf/asdf_resmap.xml#aggregation>,
+        <http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/hs_restclient_demo.ipynb>,
+        <http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/logan_resmap.xml#aggregation>,
+        <http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/msf_version.refts_resmap.xml#aggregation>,
+        <http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/other.txt>,
+        <http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test.txt>,
+        <http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test_folder/deep/test.txt>,
+        <http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test_folder/deep/test1.txt>,
+        <http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test_folder/deep/test2.txt>,
+        <http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test_folder/deep/test3.txt>,
+        <http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test_resmap.xml#aggregation>,
+        <http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/watersheds_resmap.xml#aggregation>,
+        <http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemetadata.xml> ;
+    ore:isDescribedBy "http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml" .
+
+<http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemetadata.xml> dc:format "application/rdf+xml" ;
+    dc:title "Dublin Core science metadata document describing the HydroShare resource" ;
+    citoterms:documents "http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation" ;
+    ore:isAggregatedBy "http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation" .
+
+<http://www.hydroshare.org/terms/CompositeResource> rdfs1:isDefinedBy "http://localhost:8000/terms" ;
+    rdfs1:label "Composite Resource" .
+
+ore:ResourceMap rdfs1:isDefinedBy "http://www.openarchives.org/ore/terms/" ;
+    rdfs1:label "ResourceMap" .
+
+ore:Aggregation rdfs1:isDefinedBy "http://www.openarchives.org/ore/terms/" ;
+    rdfs1:label "Aggregation" .
+

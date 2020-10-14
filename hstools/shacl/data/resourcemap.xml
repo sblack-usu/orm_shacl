@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+   xmlns:citoterms="http://purl.org/spar/cito/"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:dcterms="http://purl.org/dc/terms/"
+   xmlns:foaf="http://xmlns.com/foaf/0.1/"
+   xmlns:ore="http://www.openarchives.org/ore/terms/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs1="http://www.w3.org/2001/01/rdf-schema#"
+>
+  <rdf:Description rdf:about="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml">
+    <dcterms:created>2020-10-13T21:41:15Z</dcterms:created>
+    <ore:describes rdf:resource="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation"/>
+    <dc:identifier>c559c10d076149d6b2f79eee7e8b33f3</dc:identifier>
+    <dcterms:modified>2020-10-13T21:41:15Z</dcterms:modified>
+    <rdf:type rdf:resource="http://www.openarchives.org/ore/terms/ResourceMap"/>
+    <dc:creator rdf:resource="http://foresite-toolkit.googlecode.com/#pythonAgent"/>
+    <dc:format>application/rdf+xml</dc:format>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation">
+    <ore:aggregates rdf:resource="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test_folder/deep/test1.txt"/>
+    <ore:aggregates rdf:resource="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/"/>
+    <ore:aggregates rdf:resource="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test_resmap.xml#aggregation"/>
+    <ore:aggregates rdf:resource="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/watersheds_resmap.xml#aggregation"/>
+    <rdf:type rdf:resource="http://www.openarchives.org/ore/terms/Aggregation"/>
+    <ore:aggregates rdf:resource="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/other.txt"/>
+    <ore:aggregates rdf:resource="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test_folder/deep/test2.txt"/>
+    <ore:aggregates rdf:resource="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/asdf/asdf_resmap.xml#aggregation"/>
+    <ore:aggregates rdf:resource="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/logan_resmap.xml#aggregation"/>
+    <ore:aggregates rdf:resource="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test.txt"/>
+    <ore:aggregates rdf:resource="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/hs_restclient_demo.ipynb"/>
+    <ore:aggregates rdf:resource="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test_folder/deep/test3.txt"/>
+    <dcterms:type rdf:resource="http://www.hydroshare.org/terms/CompositeResource"/>
+    <dc:title>sadfadsgasdf</dc:title>
+        <ore:aggregates rdf:resource="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemetadata.xml"/>
+    <ore:aggregates rdf:resource="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test_folder/deep/test.txt"/>
+    <ore:isDescribedBy>http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml</ore:isDescribedBy>
+    <ore:aggregates rdf:resource="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/msf_version.refts_resmap.xml#aggregation"/>
+    <ore:aggregates rdf:resource="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/SWE_time_resmap.xml#aggregation"/>
+    <citoterms:isDocumentedBy>http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemetadata.xml</citoterms:isDocumentedBy>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.hydroshare.org/terms/CompositeResource">
+    <rdfs1:label>Composite Resource</rdfs1:label>
+    <rdfs1:isDefinedBy>http://localhost:8000/terms</rdfs1:isDefinedBy>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemetadata.xml">
+    <dc:format>application/rdf+xml</dc:format>
+    <ore:isAggregatedBy>http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation</ore:isAggregatedBy>
+    <citoterms:documents>http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation</citoterms:documents>
+    <dc:title>Dublin Core science metadata document describing the HydroShare resource</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/">
+    <dc:format>application/</dc:format>
+    <ore:isAggregatedBy>http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation</ore:isAggregatedBy>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/hs_restclient_demo.ipynb">
+    <ore:isAggregatedBy>http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation</ore:isAggregatedBy>
+    <dc:format>application/ipynb</dc:format>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/other.txt">
+    <dc:format>text/plain</dc:format>
+    <ore:isAggregatedBy>http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation</ore:isAggregatedBy>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test_folder/deep/test1.txt">
+    <ore:isAggregatedBy>http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation</ore:isAggregatedBy>
+    <dc:format>text/plain</dc:format>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test_folder/deep/test2.txt">
+    <dc:format>text/plain</dc:format>
+    <ore:isAggregatedBy>http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation</ore:isAggregatedBy>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test_folder/deep/test3.txt">
+    <ore:isAggregatedBy>http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation</ore:isAggregatedBy>
+    <dc:format>text/plain</dc:format>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test_folder/deep/test.txt">
+    <dc:format>text/plain</dc:format>
+    <ore:isAggregatedBy>http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation</ore:isAggregatedBy>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test.txt">
+    <dc:format>text/plain</dc:format>
+    <ore:isAggregatedBy>http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation</ore:isAggregatedBy>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/asdf/asdf_resmap.xml#aggregation">
+    <rdf:type rdf:resource="http://www.openarchives.org/ore/terms/Aggregation"/>
+    <dcterms:type rdf:resource="http://localhost:8000/terms/FileSetAggregation"/>
+    <ore:isAggregatedBy>http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation</ore:isAggregatedBy>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/test_resmap.xml#aggregation">
+    <dcterms:type rdf:resource="http://localhost:8000/terms/SingleFileAggregation"/>
+    <rdf:type rdf:resource="http://www.openarchives.org/ore/terms/Aggregation"/>
+    <ore:isAggregatedBy>http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation</ore:isAggregatedBy>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/watersheds_resmap.xml#aggregation">
+    <ore:isAggregatedBy>http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation</ore:isAggregatedBy>
+    <dcterms:type rdf:resource="http://localhost:8000/terms/GeographicFeatureAggregation"/>
+    <rdf:type rdf:resource="http://www.openarchives.org/ore/terms/Aggregation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/SWE_time_resmap.xml#aggregation">
+    <rdf:type rdf:resource="http://www.openarchives.org/ore/terms/Aggregation"/>
+    <dcterms:type rdf:resource="http://localhost:8000/terms/MultidimensionalAggregation"/>
+    <ore:isAggregatedBy>http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation</ore:isAggregatedBy>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/logan_resmap.xml#aggregation">
+    <rdf:type rdf:resource="http://www.openarchives.org/ore/terms/Aggregation"/>
+    <dcterms:type rdf:resource="http://localhost:8000/terms/GeographicRasterAggregation"/>
+    <ore:isAggregatedBy>http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation</ore:isAggregatedBy>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/contents/msf_version.refts_resmap.xml#aggregation">
+    <rdf:type rdf:resource="http://www.openarchives.org/ore/terms/Aggregation"/>
+    <dcterms:type rdf:resource="http://localhost:8000/terms/ReferencedTimeSeriesAggregation"/>
+    <ore:isAggregatedBy>http://localhost:8000/resource/c559c10d076149d6b2f79eee7e8b33f3/data/resourcemap.xml#aggregation</ore:isAggregatedBy>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.openarchives.org/ore/terms/ResourceMap">
+    <rdfs1:isDefinedBy>http://www.openarchives.org/ore/terms/</rdfs1:isDefinedBy>
+    <rdfs1:label>ResourceMap</rdfs1:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://foresite-toolkit.googlecode.com/#pythonAgent">
+    <foaf:mbox>foresite@googlegroups.com</foaf:mbox>
+    <foaf:name>Foresite Toolkit (Python)</foaf:name>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.openarchives.org/ore/terms/Aggregation">
+    <rdfs1:label>Aggregation</rdfs1:label>
+    <rdfs1:isDefinedBy>http://www.openarchives.org/ore/terms/</rdfs1:isDefinedBy>
+  </rdf:Description>
+</rdf:RDF>

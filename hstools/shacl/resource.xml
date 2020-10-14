@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+  xmlns:sh="http://www.w3.org/ns/shacl#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <sh:Shape rdf:about="http://schema.org/Coverage">
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL252C17">
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:name>value</sh:name>
+        <sh:pattern>.*</sh:pattern>
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:path rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#value"/>
+      </rdf:Description>
+    </sh:property>
+    <sh:targetClass rdf:resource="http://purl.org/dc/elements/1.1/coverage"/>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL260C17">
+        <sh:name>type</sh:name>
+        <sh:path rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#type"/>
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:in rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://purl.org/dc/terms/box"/>
+          <rdf:Description rdf:about="http://purl.org/dc/terms/period"/>
+        </sh:in>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      </rdf:Description>
+    </sh:property>
+  </sh:Shape>
+  <sh:Shape rdf:about="http://schema.org/Contributor">
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL178C17">
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:path rdf:resource="http://hydroshare.org/terms/address"/>
+        <sh:name>address</sh:name>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL190C17">
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:path rdf:resource="http://hydroshare.org/terms/organization"/>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:name>organization</sh:name>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL184C17">
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:path rdf:resource="http://hydroshare.org/terms/email"/>
+        <sh:name>email</sh:name>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL196C17">
+        <sh:name>ORCID</sh:name>
+        <sh:path rdf:resource="http://hydroshare.org/terms/ORCID"/>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL202C17">
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:path rdf:resource="http://hydroshare.org/terms/homepage"/>
+        <sh:name>homepage</sh:name>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL214C17">
+        <sh:path rdf:resource="http://hydroshare.org/terms/ResearchGateID"/>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:name>research_gate_id</sh:name>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL172C17">
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:path rdf:resource="http://hydroshare.org/terms/phone"/>
+        <sh:name>phone</sh:name>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+      </rdf:Description>
+    </sh:property>
+    <sh:targetClass rdf:resource="http://purl.org/dc/elements/1.1/contributor"/>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL208C17">
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:path rdf:resource="http://hydroshare.org/terms/GoogleScholarID"/>
+        <sh:name>google_scholar_id</sh:name>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      </rdf:Description>
+    </sh:property>
+  </sh:Shape>
+  <sh:Shape rdf:about="http://schema.org/Creator">
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL338C17">
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:name>organization</sh:name>
+        <sh:path rdf:resource="http://hydroshare.org/terms/organization"/>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL344C17">
+        <sh:path rdf:resource="http://hydroshare.org/terms/email"/>
+        <sh:name>email</sh:name>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL324C17">
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:path rdf:resource="http://hydroshare.org/terms/creatorOrder"/>
+        <sh:name>creator_order</sh:name>
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL331C17">
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:path rdf:resource="http://hydroshare.org/terms/name"/>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:name>name</sh:name>
+      </rdf:Description>
+    </sh:property>
+    <sh:targetClass rdf:resource="http://purl.org/dc/elements/1.1/creator"/>
+  </sh:Shape>
+  <sh:Shape rdf:about="http://schema.org/AwardInfo">
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL156C17">
+        <sh:path rdf:resource="http://hydroshare.org/terms/awardTitle"/>
+        <sh:name>award_title</sh:name>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL144C17">
+        <sh:name>award_number</sh:name>
+        <sh:path rdf:resource="http://hydroshare.org/terms/awardNumber"/>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL150C17">
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:path rdf:resource="http://hydroshare.org/terms/fundingAgencyURL"/>
+        <sh:name>funding_agency_url</sh:name>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL162C17">
+        <sh:name>funding_agency_name</sh:name>
+        <sh:path rdf:resource="http://hydroshare.org/terms/fundingAgencyName"/>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      </rdf:Description>
+    </sh:property>
+    <sh:targetClass rdf:resource="http://hydroshare.org/terms/awardInfo"/>
+  </sh:Shape>
+  <sh:NodeShape rdf:about="http://schema.org/HSResource">
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL58C17">
+        <sh:name>extended_metadata</sh:name>
+        <sh:path rdf:resource="http://hydroshare.org/terms/extendedMetadata"/>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL72C17">
+        <sh:name>relation</sh:name>
+        <sh:path rdf:resource="http://purl.org/dc/elements/1.1/relation"/>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL76C17">
+        <sh:name>rights</sh:name>
+        <sh:path rdf:resource="http://purl.org/dc/elements/1.1/rights"/>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL29C17">
+        <sh:path rdf:resource="http://purl.org/dc/elements/1.1/date"/>
+        <sh:name>date</sh:name>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL86C17">
+        <sh:name>creator</sh:name>
+        <sh:path rdf:resource="http://purl.org/dc/elements/1.1/creator"/>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL45C17">
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+        <sh:path rdf:resource="http://purl.org/dc/elements/1.1/language"/>
+        <sh:in rdf:parseType="Collection">
+          <rdf:Description rdf:about="eng"/>
+          <rdf:Description rdf:about="es"/>
+        </sh:in>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:name>language</sh:name>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL62C17">
+        <sh:path rdf:resource="http://purl.org/dc/elements/1.1/coverage"/>
+        <sh:name>coverage</sh:name>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL66C17">
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+        <sh:name>dc_type</sh:name>
+        <sh:path rdf:resource="http://purl.org/dc/elements/1.1/type"/>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL80C17">
+        <sh:name>identifier</sh:name>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:path rdf:resource="http://purl.org/dc/elements/1.1/identifier"/>
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL23C17">
+        <sh:name>description</sh:name>
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+        <sh:path rdf:resource="http://purl.org/dc/elements/1.1/description"/>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL53C17">
+        <sh:path rdf:resource="http://purl.org/dc/elements/1.1/subject"/>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:name>subject</sh:name>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL41C17">
+        <sh:path rdf:resource="http://purl.org/dc/elements/1.1/source"/>
+        <sh:name>source</sh:name>
+      </rdf:Description>
+    </sh:property>
+    <sh:targetClass rdf:resource="http://hydroshare.org/terms/resource"/>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL37C17">
+        <sh:name>contributor</sh:name>
+        <sh:path rdf:resource="http://purl.org/dc/elements/1.1/contributor"/>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL16C17">
+        <sh:name>title</sh:name>
+        <sh:path rdf:resource="http://purl.org/dc/elements/1.1/title"/>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL33C17">
+        <sh:name>award_info</sh:name>
+        <sh:path rdf:resource="http://hydroshare.org/terms/awardInfo"/>
+      </rdf:Description>
+    </sh:property>
+  </sh:NodeShape>
+  <sh:Shape rdf:about="http://schema.org/Relation">
+    <sh:targetClass rdf:resource="http://purl.org/dc/elements/1.1/relation"/>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL106C17">
+        <sh:pattern>.*</sh:pattern>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:name>is_part_of</sh:name>
+        <sh:path rdf:resource="http://hydroshare.org/terms/isPartOf"/>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL113C17">
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:pattern>.*</sh:pattern>
+        <sh:path rdf:resource="http://hydroshare.org/terms/isCopiedFrom"/>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:name>is_copied_from</sh:name>
+      </rdf:Description>
+    </sh:property>
+  </sh:Shape>
+  <sh:Shape rdf:about="http://schema.org/Rights">
+    <sh:targetClass rdf:resource="http://purl.org/dc/elements/1.1/rights"/>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL292C17">
+        <sh:name>url</sh:name>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:path rdf:resource="http://hydroshare.org/terms/URL"/>
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:pattern>.*</sh:pattern>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL300C17">
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+        <sh:pattern>.*</sh:pattern>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:path rdf:resource="http://hydroshare.org/terms/rightsStatement"/>
+        <sh:name>rights_statement</sh:name>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      </rdf:Description>
+    </sh:property>
+  </sh:Shape>
+  <sh:Shape rdf:about="http://schema.org/Description">
+    <sh:targetClass rdf:resource="http://purl.org/dc/elements/1.1/description"/>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL95C17">
+        <sh:path rdf:resource="http://purl.org/dc/terms/abstract"/>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:name>abstract</sh:name>
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+      </rdf:Description>
+    </sh:property>
+  </sh:Shape>
+  <sh:Shape rdf:about="http://schema.org/Source">
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL224C17">
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:path rdf:resource="http://hydroshare.org/terms/isDerivedFrom"/>
+        <sh:name>is_derived_from</sh:name>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+      </rdf:Description>
+    </sh:property>
+    <sh:targetClass rdf:resource="http://purl.org/dc/elements/1.1/source"/>
+  </sh:Shape>
+  <sh:Shape rdf:about="http://schema.org/Date">
+    <sh:targetClass rdf:resource="http://purl.org/dc/elements/1.1/date"/>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL124C17">
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+        <sh:path rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#value"/>
+        <sh:name>value</sh:name>
+        <sh:pattern>.*</sh:pattern>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL132C17">
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:name>type</sh:name>
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+        <sh:path rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#type"/>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:in rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://purl.org/dc/terms/created"/>
+          <rdf:Description rdf:about="http://purl.org/dc/terms/modified"/>
+        </sh:in>
+      </rdf:Description>
+    </sh:property>
+  </sh:Shape>
+  <sh:Shape rdf:about="http://schema.org/Identifier">
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL312C17">
+        <sh:pattern>.*</sh:pattern>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:name>hydroshare_identifier</sh:name>
+        <sh:path rdf:resource="http://hydroshare.org/terms/hydroShareIdentifier"/>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+      </rdf:Description>
+    </sh:property>
+    <sh:targetClass rdf:resource="http://purl.org/dc/elements/1.1/identifier"/>
+  </sh:Shape>
+  <sh:Shape rdf:about="http://schema.org/DCType">
+    <sh:targetClass rdf:resource="http://purl.org/dc/elements/1.1/type"/>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL280C17">
+        <sh:pattern>Composite Resource</sh:pattern>
+        <sh:name>label</sh:name>
+        <sh:path rdf:resource="http://www.w3.org/2000/01/rdf-schema#label"/>
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL272C17">
+        <sh:pattern>http://hydroshare.org/terms/</sh:pattern>
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:name>is_defined_by</sh:name>
+        <sh:path rdf:resource="http://www.w3.org/2000/01/rdf-schema#isDefinedBy"/>
+      </rdf:Description>
+    </sh:property>
+  </sh:Shape>
+  <sh:Shape rdf:about="http://schema.org/ExtendedMetadata">
+    <sh:targetClass rdf:resource="http://hydroshare.org/terms/extendedMetadata"/>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL241C17">
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:path rdf:resource="http://hydroshare.org/terms/value"/>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:name>value</sh:name>
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+      </rdf:Description>
+    </sh:property>
+    <sh:property>
+      <rdf:Description rdf:nodeID="ub1bL234C17">
+        <sh:datatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <sh:path rdf:resource="http://hydroshare.org/terms/key"/>
+        <sh:minCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:minCount>
+        <sh:maxCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</sh:maxCount>
+        <sh:name>key</sh:name>
+      </rdf:Description>
+    </sh:property>
+  </sh:Shape>
+</rdf:RDF>
