@@ -68,6 +68,13 @@ schema:HSResource
         sh:node schema:ExtendedMetadata ;
     ] ;
     sh:property [
+        sh:name "dc_type" ;
+        sh:path dc:type ;
+        sh:node schema:DCType ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
         sh:name "coverage" ;
         sh:path dc:coverage ;
         sh:node schema:Coverage ;
@@ -143,7 +150,7 @@ schema:Date
     ] .
 
 schema:AwardInfo
-    a sh:NodeShape ;
+    a sh:Shape ;
     sh:targetClass hsterms:awardInfo ;
     sh:property [
         sh:name "award_number" ;
