@@ -1,35 +1,26 @@
 from rdflib import Graph
 from rdflib.namespace import Namespace
 
-from orm_shacl.shacl_class_generator import root_class, generate_classes
+from orm_shacl.shacl_class_generator import generate_classes
 
 HSTERMS = Namespace("http://hydroshare.org/terms/")
 
 def test__property_setup():
     shacl_filename = 'data/HSResource_SHACL.ttl'
     metadata_filename = 'data/resource.ttl'
-    Resource = root_class(shacl_filename)
-    res = Resource()
-    res.parse(file=metadata_filename)
+    classes = generate_classes(shacl_filename)
+    res = classes['HSResource']()
+    res.parse(file=metadata_filename, file_format='turtle')
 
-    assert res.title == '00_ZemelWoodlandN_SiteModel'
+    assert res.title == 'hello'
 
     assert res.language == 'eng'
     del res.language
     assert not res.language
 
-    assert len(res.subject) == 4
+    assert len(res.subject) == 3
     for subject in res.subject:
-        assert subject in ["mmw", "model-my-watershed", "open-space-institute", "osi"]
-
-    assert len(res.creator) == 1
-    assert res.creator[0] == 'http://www.hydroshare.org/user/3015'
-
-    assert res.version == 1
-
-    assert len(res.value) == 3
-    for value in res.value:
-        assert value in [1, 2, 3]
+        assert subject in ["dude", "it", "works"]
 
     assert len(res.extended_metadata) == 2
     keys = ['key', 'key2']
@@ -44,8 +35,8 @@ def test__property_setup():
 def test__property_modification():
     metadata_filename = 'data/resource.ttl'
     shacl_filename = 'data/HSResource_SHACL.ttl'
-    Resource = root_class(shacl_filename)
-    res = Resource()
+    classes = generate_classes(shacl_filename)
+    res = classes['HSResource']()
     res.parse(file=metadata_filename)
 
     res.title = 'modified'
@@ -103,29 +94,29 @@ def test_rdf_creation():
     shacl_filename = 'data/HSResource_SHACL.ttl'
     classes = generate_classes(shacl_filename)
 
-    res = classes['resource']()
+    res = classes['HSResource']()
     res.subject = ['subject 1', 'subject 2']
     res.title = "a new title"
     res.language = "en"
 
-    em1 = classes['extended_metadata']()
+    em1 = classes['ExtendedMetadata']()
     em1.key = "key1"
     em1.value = "value1"
 
-    em2 = classes['extended_metadata']()
+    em2 = classes['ExtendedMetadata']()
     em2.key = "key2"
     em2.value = "value2"
 
     res.extended_metadata = [em1, em2]
 
-    coverage = classes['coverage']()
+    coverage = classes['Coverage']()
     coverage.box = "I don't have regex validation running yet so any string will do for box coverage"
-    res.coverage = coverage
+    res.coverage = [coverage]
 
     g = Graph()
     res.serialize(g)
 
-    res2 = classes['resource']()
+    res2 = classes['HSResource']()
     res2.parse_from_graph(g)
 
     assert res2.title == 'a new title'
@@ -146,6 +137,6 @@ def test_rdf_creation():
         assert subject in subjects
         subjects.remove(subject)
 
-    assert res.coverage.box == "I don't have regex validation running yet so any string will do for box coverage"
+    assert res.coverage[0].box == "I don't have regex validation running yet so any string will do for box coverage"
 
 

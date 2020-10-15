@@ -1,7 +1,7 @@
 from rdflib import Graph
 
-g = Graph().parse("shacl/data/resourcemap.xml", format='xml')
-with open("shacl/data/resourcemap.ttl", "wb") as f:
+g = Graph().parse("retrieved_xml.xml", format='xml')
+with open("retrieved_xml.ttl", "wb") as f:
     f.write(g.serialize(format='turtle'))
 
 

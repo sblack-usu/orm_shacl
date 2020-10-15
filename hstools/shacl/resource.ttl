@@ -42,6 +42,7 @@ schema:HSResource
         sh:name "contributor" ;
         sh:path dc:contributor ;
         sh:node schema:Contributor ;
+        sh:minCount 1 ;
     ] ;
     sh:property [
         sh:name "source" ;
@@ -60,7 +61,7 @@ schema:HSResource
         sh:name "subject" ;
         sh:path dc:subject ;
         sh:datatype xsd:string ;
-        sh:maxCount 4 ;
+        sh:minCount 1 ;
     ] ;
     sh:property [
         sh:name "extended_metadata" ;
@@ -100,7 +101,7 @@ schema:HSResource
         sh:name "creator" ;
         sh:path dc:creator ;
         sh:node schema:Creator ;
-        #sh:minCount 1 ;
+        sh:minCount 1 ;
     ] .
 
 schema:Description

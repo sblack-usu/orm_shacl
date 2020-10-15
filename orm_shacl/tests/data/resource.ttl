@@ -3,45 +3,64 @@
 @prefix hsterms: <http://hydroshare.org/terms/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix schema: <http://schema.org/> .
-@prefix hsresource: <http://www.hydroshare.org/resource/> .
-@prefix hsuser: <http://www.hydroshare.org/user/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-hsresource:ea93a49284204912be7fab054a9d41df
-    a hsterms:resource ;
-    hsterms:extendedMetadata
+<http://www.hydroshare.org/terms/CompositeResource> rdfs:label "Composite Resource" ;
+    rdfs:isDefinedBy hsterms: .
+
+<http://www.hydroshare.org/resource/770730dcd0a143b4aa45fc9504486079> a hsterms:resource ;
+    hsterms:awardInfo [ hsterms:awardNumber "TN" ;
+            hsterms:awardTitle "T2" ;
+            hsterms:fundingAgencyName "agency2" ;
+            hsterms:fundingAgencyURL <https://google.com> ],
+        [ hsterms:awardNumber "n" ;
+            hsterms:awardTitle "t" ;
+            hsterms:fundingAgencyName "agency1" ;
+            hsterms:fundingAgencyURL <https://google.com> ] ;
+    hsterms:extendedMetadata [ hsterms:key "key" ;
+            hsterms:value "value" ],
         [ hsterms:key "key2" ;
-            hsterms:value "value2" ],
-        [ hsterms:key "key" ;
-            hsterms:value "value" ] ;
-    dc:coverage [ a dcterms:box ;
-            rdf:value "northlimit=39.8474472377113; eastlimit=-74.46517977947326; southlimit=39.833547609226464; westlimit=-74.49757575942797; units=Decimal degrees; projection=WGS 84 EPSG:4326" ] ;
-    dc:creator hsuser:3015 ;
-    dc:date [ a dcterms:created ;
-            rdf:value "2020-01-20T18:12:41.356860+00:00" ],
-        [ a dcterms:modified ;
-            rdf:value "2020-01-20T18:13:34.486788+00:00" ] ;
-    dc:description [ dcterms:abstract "Part of Stroud Water Research Center’s (SWRC) development modelling project for Open Space Institute's (OSI) Land Protection Impact Assessment (LPIA). Parcel analysis carried out by Model My Watershed's (MMW) Site Storm Model. Analyzing the following: ⏎ 1) Forest to Open Space Development ⏎ 2) Forest to Low Density Development ⏎ 3) Forest to Medium Density Development ⏎ 4) Forest to High Density Development ⏎ 5) OSI’s Development Scenario" ] ;
-    dc:identifier [ hsterms:hydroShareIdentifier "http://www.hydroshare.org/resource/ea93a49284204912be7fab054a9d41df" ] ;
+            hsterms:value "value2" ] ;
+    dc:contributor [ hsterms:GoogleScholarID <https://scholar.google.com/citations?user=ScWTFoQAAAAJ&hl=en> ;
+            hsterms:ORCID <https://orcid.org/0000-0002-1341-5681> ;
+            hsterms:ResearchGateID <https://www.researchgate.net/profile/Anthony_Castronova> ;
+            hsterms:address "MA, US" ;
+            hsterms:email "castronova.anthony@gmail.com" ;
+            hsterms:homepage <http://anthonycastronova.com> ;
+            hsterms:organization "CUAHSI" ;
+            hsterms:phone "tel:3399334127" ],
+        [ hsterms:ORCID <https://orcid.org/0000-0002-1998-3479> ;
+            hsterms:address "Utah, US" ;
+            hsterms:email "dtarb@usu.edu" ;
+            hsterms:homepage <http://hydrology.usu.edu/dtarb> ;
+            hsterms:organization "Utah State University" ;
+            hsterms:phone "tel:4357973172" ] ;
+    dc:coverage [ a dcterms:period ;
+            rdf:value "start=2020-07-10T00:00:00; end=2020-07-29T00:00:00" ],
+        [ a dcterms:box ;
+            rdf:value "name=asdfsadf; northlimit=42.1505; eastlimit=-84.5739; southlimit=30.282; westlimit=-104.7887; units=Decimal degrees; projection=WGS 84 EPSG:4326" ] ;
+    dc:creator [ hsterms:creatorOrder 1 ;
+            hsterms:name "Tseganeh Z. Gichamo" ],
+        [ hsterms:creatorOrder 2 ;
+            hsterms:email "scott.black@usu.edu" ;
+            hsterms:name "Scott s Black" ;
+            hsterms:organization "USU" ] ;
+    dc:date [ a dcterms:modified ;
+            rdf:value "2020-10-13T14:54:01.130536+00:00" ],
+        [ a dcterms:created ;
+            rdf:value "2020-07-09T19:12:21.354703+00:00" ] ;
+    dc:description [ dcterms:abstract "updated abstract with DescriptionShape" ] ;
+    dc:identifier [ hsterms:hydroShareIdentifier <http://www.hydroshare.org/resource/770730dcd0a143b4aa45fc9504486079> ] ;
     dc:language "eng" ;
-    dc:rights [ hsterms:URL <http://creativecommons.org/licenses/by/4.0/> ;
-            hsterms:rightsStatement "This resource is shared under the Creative Commons Attribution CC BY." ] ;
-    dc:subject "mmw",
-        "model-my-watershed",
-        "open-space-institute",
-        "osi" ;
-    dc:version 1 ;
-    dc:value 1,
-         2,
-         3 ;
-    dc:title "00_ZemelWoodlandN_SiteModel" ;
-    dc:type hsterms:CompositeResource .
-
-hsterms:CompositeResource rdfs:label "Composite Resource" ;
-    rdfs:isDefinedBy "http://www.hydroshare.org/terms" .
-
-hsuser:3015 hsterms:creatorOrder "1" ;
-    hsterms:email "mgisondi@stroudcenter.org" ;
-    hsterms:name "Matt Gisondi" ;
-    hsterms:organization "Stroud Water Research Center" .
+    dc:relation [ hsterms:isPartOf <file:///Users/scootna/projects/orm_shacl/hstools/sadf> ],
+        [ hsterms:isCopiedFrom <https://www.google.com> ] ;
+    dc:rights [ hsterms:URL <http://studio.bakajo.com> ;
+            hsterms:rightsStatement "my statement" ] ;
+    dc:source [ hsterms:isDerivedFrom "the source" ],
+        [ hsterms:isDerivedFrom "another" ] ;
+    dc:subject "dude",
+        "it",
+        "works" ;
+    dc:title "hello" ;
+    dc:type <file:///Users/scootna/projects/orm_shacl/hstools/N1ae3e6ca85f447639bf4a14122da8ff1> .
 

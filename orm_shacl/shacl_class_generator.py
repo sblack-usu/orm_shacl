@@ -7,18 +7,6 @@ from orm_shacl.rdf_orm_helpers import root_subject, extract_name, children_tripl
 HSTERMS = Namespace("http://hydroshare.org/terms/")
 
 
-def root_class(shacl_filename, format='turtle'):
-    """
-    Generates all the classes in the shacl file.  Returns only the generated root class described in the shacl file.
-    :param shacl_filename:
-    :param format:
-    :return:
-    """
-    shacl_graph = Graph().parse(source=shacl_filename, format=format)
-    subject = root_subject(shacl_graph)
-    schema_name = shacl_graph.value(subject=subject, predicate=SH.name)
-    return generate_classes(shacl_filename)[schema_name.value]
-
 def generate_classes(shacl_filename, format='turtle'):
     """
     Generates classes that represents each NodeShape in a SHACL rdf graph
@@ -62,27 +50,27 @@ def generate_classes(shacl_filename, format='turtle'):
                 raise Exception("sh:path is required, check property {}".format(name))
 
             data_type = shacl_graph.value(prop, SH.datatype)
+            node = None
             if not data_type:
-                # work around to account for urirefs shacl doesn't allow datatype for URIRef types, only Literal
-                if shacl_graph.value(prop, SH.pattern):
-                    data_type = XSD.string
-                if shacl_graph.value(prop, getattr(SH, "in")):
+                node = shacl_graph.value(prop, SH.node)
+                if not node:
                     data_type = XSD.string
             max_count = shacl_graph.value(prop, SH.maxCount)
+            if data_type and node:
+                raise Exception("I don't know how to handle both sh:node and sh:datatype")
             # TODO implement validation against reserved attribute names of the AbstractRDFMetadata
-            if not data_type:
-                schema = shacl_graph.value(predicate=SH.targetClass, object=path)
-                nested_schema_name = extract_name(schema)
+            if not data_type and node:
+                nested_schema_name = extract_name(node)
                 if nested_schema_name not in classes:
                     raise Exception("{} is not a known schema".format(nested_schema_name))
                 data_type = classes[nested_schema_name]
 
             # extract all other attributes in the property
             constraints = []
-            for predicate, obj in shacl_graph.predicate_objects(subject=prop):
-                if predicate not in (SH.name, SH.datatype, SH.path, SH.maxCount):
-                    constraints.append((predicate, obj))
-                    constraints = constraints + children_triples(shacl_graph, obj)
+            #for predicate, obj in shacl_graph.predicate_objects(subject=prop):
+            #    if predicate not in (SH.name, SH.datatype, SH.path, SH.maxCount):
+            #        constraints.append((predicate, obj))
+            #        constraints = constraints + children_triples(shacl_graph, obj)
 
             #constraints = [(predicate, obj)
             #               for predicate, obj in shacl_graph.predicate_objects(subject=prop)

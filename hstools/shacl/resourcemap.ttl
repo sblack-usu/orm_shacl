@@ -1,0 +1,98 @@
+@prefix dash: <http://datashapes.org/dash#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix schema: <http://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix hsterms: <http://hydroshare.org/terms/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix hsresource: <http://www.hydroshare.org/resource/> .
+@prefix hsuser: <http://www.hydroshare.org/user/> .
+@prefix citoterms: <http://purl.org/spar/cito/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ore: <http://www.openarchives.org/ore/terms/> .
+@prefix rdfs1: <http://www.w3.org/2001/01/rdf-schema#> .
+
+schema:ResourceMap
+    a sh:NodeShape ;
+    sh:targetClass ore:ResourceMap ;
+    sh:property [
+        sh:name "creator" ;
+        sh:path dc:creator ;
+        sh:pattern ".*" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "format" ;
+        sh:path dc:format ;
+        sh:datatype xsd:string ;
+        sh:in ( "application/rdf+xml" ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "identifier" ;
+        sh:path dc:identifier ;
+        sh:datatype xsd:string ;
+        sh:pattern ".*" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "created" ;
+        sh:path dcterms:created ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "modified" ;
+        sh:path dcterms:modified ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "describes" ;
+        sh:path ore:describes ;
+        sh:node schema:FileMap ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+schema:FileMap
+    a sh:Shape ;
+    sh:targetClass ore:Aggregation ;
+    sh:property [
+        sh:name "title" ;
+        sh:path dc:title ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "dc_type" ;
+        sh:path dcterms:type ;
+        sh:pattern "http://www.hydroshare.org/terms/CompositeResource" ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "is_documented_by" ;
+        sh:path citoterms:isDocumentedBy ;
+        sh:pattern "http://.*/data/resourcemap.xml#aggregation" ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "files" ;
+        sh:path ore:aggregates ;
+        sh:pattern "http://.*/data/resourcemap.xml#aggregation" ;
+    ] ;
+    sh:property [
+        sh:name "is_described_by" ;
+        sh:path ore:isDescribedBy ;
+        sh:pattern "http://.*/data/resourcemap.xml" ;
+        sh:maxCount 1 ;
+    ] .
