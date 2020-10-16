@@ -62,5 +62,5 @@
         "it",
         "works" ;
     dc:title "hello" ;
-    dc:type <file:///Users/scootna/projects/orm_shacl/hstools/N1ae3e6ca85f447639bf4a14122da8ff1> .
+    dc:type [ rdfs:label "Composite Resource" ; rdfs:isDefinedBy "http://hydroshare.org/terms/" ] .
 

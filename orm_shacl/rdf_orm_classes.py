@@ -1,5 +1,5 @@
 from pyshacl import validate
-from rdflib import XSD, Literal, RDF, Graph, BNode, Namespace, DC, SH
+from rdflib import XSD, RDF, Graph, BNode, Namespace, DC, SH
 
 from orm_shacl.rdf_orm_helpers import from_datatype, to_datatype
 
@@ -78,7 +78,7 @@ class RDFProperty:
         data_graph = Graph()
         data_root = BNode()
         data_graph.add((data_root, RDF.type, SCHEMA.testing))
-        if self.__max_count == Literal(1):
+        if self.__max_count == 1:
             values = [values]
         for val in values:
             data_graph.add((data_root, self.__path, to_datatype(val, self.__data_type)))
@@ -128,7 +128,7 @@ class RDFProperty:
                 val.parse_from_graph(metadata_graph=metadata_graph, root_subject=nested_subject)
                 values.append(val)
 
-        if self.__max_count == Literal(1):
+        if self.__max_count == 1:
             if len(values) == 1:
                 return values[0]
             if len(values) > 1:
@@ -148,7 +148,7 @@ class RDFProperty:
         """
         values = getattr(instance, self.__private_property)
         if values:
-            if self.__max_count == Literal(1):
+            if self.__max_count == 1:
                 values = [values]
 
             for val in values:
