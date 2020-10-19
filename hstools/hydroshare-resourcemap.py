@@ -1,21 +1,20 @@
 import os
 
 from rdflib import URIRef
-from rdflib.namespace import Namespace
 
+from rdflib.namespace import Namespace
 from orm_shacl.shacl_class_generator import generate_classes
 
 ORE = Namespace("http://www.openarchives.org/ore/terms/")
 
-shacl_filename = 'shacl/resourcemap.ttl'
-classes = generate_classes(shacl_filename)
-filemap = classes['ResourceMap']()
+#generate_classes('shacl/resourcemap.ttl', 'shacl/resource.ttl')
 
-filemap.parse('shacl/data/resourcemap.ttl', file_format='turtle')
+from hstools.generated_classes import ResourceMap
+resourcemap = ResourceMap()
 
-filemap.title
+resourcemap.parse('shacl/data/mapandmetadata.ttl', file_format='turtle')
 
-subject = URIRef("http://www.hydroshare.org/resource/0da9f76234844c2094a2f598ecdf261d")
-updated_graph = filemap.serialize(subject=subject)
+resourcemap.title
+
 
 

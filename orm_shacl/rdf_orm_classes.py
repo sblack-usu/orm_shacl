@@ -1,5 +1,5 @@
 from pyshacl import validate
-from rdflib import XSD, RDF, Graph, BNode, Namespace, DC, SH
+from rdflib import XSD, RDF, Graph, BNode, DC, SH, Namespace
 
 from orm_shacl.rdf_orm_helpers import from_datatype, to_datatype
 

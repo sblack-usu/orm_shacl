@@ -12,15 +12,30 @@ HSTERMS = Namespace("http://hydroshare.org/terms/")
 Schema = collections.namedtuple('Schema', 'name target_class prop_parameters')
 
 
-def generate_classes(shacl_filename, format='turtle'):
+def generate_classes(*files):
+    """
+    Generates classes that represents each NodeShape in one or more SHACL file
+    :param files:
+    :return:
+    """
+    namespaces_set = set()
+    schemas_list = []
+    for f in files:
+        n, s = _generate_classes(f)
+        for namespace in n:
+            namespaces_set.add(namespace)
+        schemas_list = schemas_list + s
+    generate_classes_from_schemas(namespaces_set, schemas_list)
+
+
+def _generate_classes(shacl_filename):
     """
     Generates classes that represents each NodeShape in a SHACL rdf graph
     :param shacl_filename:
     :param format: shacl_filename format, defaults to turtle
     :return:
     """
-    shacl_graph = Graph().parse(source=shacl_filename, format=format)
-    classes = {}
+    shacl_graph = Graph().parse(source=shacl_filename, format='turtle')
     schemas = []
 
     namespaces = []
@@ -32,18 +47,7 @@ def generate_classes(shacl_filename, format='turtle'):
             if str(identifier).startswith(str(np)):
                 id_namespace = str(identifier).split(str(np), 1)[1]
                 return "{}.{}".format(abr, id_namespace)
-
-
-    def nested_property(subject):
-        """
-        Determines whether the subject has a property with a property (nested)
-        :param subject: a subject of the shacl_graph
-        :return: True if nested
-        """
-        for prop in shacl_graph.objects(subject=subject, predicate=SH.property):
-            if shacl_graph.value(subject=prop, predicate=RDF.type):
-                return True
-        return False
+        return identifier
 
     def parse_class(subject):
         """
@@ -80,10 +84,7 @@ def generate_classes(shacl_filename, format='turtle'):
                 raise Exception("I don't know how to handle both sh:node and sh:datatype")
             # TODO implement validation against reserved attribute names of the AbstractRDFMetadata
             if not data_type and node:
-                nested_schema_name = extract_name(node)
-                if nested_schema_name not in classes:
-                    raise Exception("{} is not a known schema".format(nested_schema_name))
-                data_type = classes[nested_schema_name]
+                data_type = extract_name(node)
 
             # extract all other attributes in the property
             constraints = []
@@ -99,15 +100,11 @@ def generate_classes(shacl_filename, format='turtle'):
             attributes[name] = RDFProperty(property_name=name, data_type=data_type, path=path, max_count=max_count,
                                            constraints=constraints)
             pp_path = convert_namespace_identifier(path)
-            if not isinstance(data_type, str):
-                pp_datatype = data_type.__name__
-            else:
-                pp_datatype = convert_namespace_identifier(data_type)
+            pp_datatype = convert_namespace_identifier(data_type)
             prop_parameters.append((name, pp_datatype, pp_path, max_count))
 
 
         shape_class = type(schema_name, (AbstractRDFMetadata,), {'_target_class': target_class, **attributes})
-        classes[schema_name] = shape_class
 
         schemas.append(Schema(name=schema_name, target_class=convert_namespace_identifier(target_class),
                               prop_parameters=prop_parameters))
@@ -117,6 +114,4 @@ def generate_classes(shacl_filename, format='turtle'):
         parse_class(subject)
     for subject in shacl_graph.subjects(RDF.type, SH.NodeShape):
         parse_class(subject)
-
-    generate_classes_from_schemas(namespaces, schemas)
-    return classes
+    return namespaces, schemas
