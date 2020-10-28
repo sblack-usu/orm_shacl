@@ -103,12 +103,8 @@ def _generate_classes(shacl_filename):
             pp_datatype = convert_namespace_identifier(data_type)
             prop_parameters.append((name, pp_datatype, pp_path, max_count))
 
-
-        shape_class = type(schema_name, (AbstractRDFMetadata,), {'_target_class': target_class, **attributes})
-
         schemas.append(Schema(name=schema_name, target_class=convert_namespace_identifier(target_class),
                               prop_parameters=prop_parameters))
-        return shape_class
 
     for subject in shacl_graph.subjects(RDF.type, SH.Shape):
         parse_class(subject)

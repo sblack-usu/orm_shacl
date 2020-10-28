@@ -10,7 +10,154 @@
 @prefix hsresource: <http://www.hydroshare.org/resource/> .
 @prefix hsuser: <http://www.hydroshare.org/user/> .
 
-schema:HSResource
+
+schema:BandInformation
+    a sh:NodeShape ;
+    sh:targetClass hsterms:BandInformation ;
+    sh:property [
+        sh:name "name" ;
+        sh:path hsterms:name ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "variable_name" ;
+        sh:path hsterms:variableName ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "variable_unit" ;
+        sh:path hsterms:variableUnit ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "method" ;
+        sh:path hsterms:method ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "comment" ;
+        sh:path hsterms:comment ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "no_data_value" ;
+        sh:path hsterms:noDataValue ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "maximum_value" ;
+        sh:path hsterms:maximumValue ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:property [
+        sh:name "minimum_value" ;
+        sh:path hsterms:minimumValue ;
+        sh:datatype xsd:string ;
+    ] .
+
+schema:CellInformation
+    a sh:NodeShape ;
+    sh:targetClass hsterms:CellInformation ;
+    sh:property [
+        sh:name "name" ;
+        sh:path hsterms:name ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "rows" ;
+        sh:path hsterms:rows ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "columns" ;
+        sh:path hsterms:columns ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "cell_size_x_value" ;
+        sh:path hsterms:cellSizeXValue ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "cell_size_y_value" ;
+        sh:path hsterms:cellSizeYValue ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "cell_data_type" ;
+        sh:path hsterms:cellDataType ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] .
+
+schema:GeographicRaster
+    a sh:NodeShape ;
+    sh:targetClass hsterms:geographicRaster ;
+    sh:property [
+        sh:name "band_information" ;
+        sh:path hsterms:BandInformation ;
+        sh:sh:node schema:BandInformation ;
+    ] ;
+    sh:property [
+        sh:name "spatial_reference" ;
+        sh:path hsterms:spatialReference ;
+        sh:sh:node schema:Coverage ;
+    ] ;
+    sh:property [
+        sh:name "cell_information" ;
+        sh:path hsterms:CellInformation ;
+        sh:sh:node schema:CellInformation ;
+    ] ;
+    sh:property [
+        sh:name "title" ;
+        sh:path dc:title ;
+        sh:datatype xsd:string ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "subject" ;
+        sh:path dc:subject ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:name "extended_metadata" ;
+        sh:path hsterms:extendedMetadata ;
+        sh:node schema:ExtendedMetadata ;
+    ] ;
+    sh:property [
+        sh:name "coverage" ;
+        sh:path dc:coverage ;
+        sh:node schema:Coverage ;
+    ] ;
+    sh:property [
+        sh:name "rights" ;
+        sh:path dc:rights ;
+        sh:node schema:Rights ;
+    ] .
+
+schema:ResourceMetadata
     a sh:NodeShape ;
     sh:targetClass hsterms:resource ;
     # sh:closed true ;

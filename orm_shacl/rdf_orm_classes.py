@@ -49,6 +49,7 @@ class RDFProperty:
         :param value:
         :return:
         """
+
         return setattr(instance, self.__private_property, value)
 
     def __delete__(self, instance):
@@ -200,7 +201,7 @@ class AbstractRDFMetadata:
             root_subject = metadata_graph.value(predicate=RDF.type, object=self._target_class)
             if not root_subject:
                 raise Exception("Could not find subject for predicate=RDF.type, object={}".format(self._target_class))
-
+        self._subject_uri = root_subject
         properties = self._rdf_properties()
         for property_name in properties:
             # we can grab the descriptor because __get__ returns itself when accessed from the class

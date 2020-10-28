@@ -4,6 +4,26 @@ import functools
 from jinja2 import Template
 
 
+metadata_template_str_marshmallow = '''\
+from rdflib import Namespace
+from marshmallow import Schema, fields
+
+{% for abbreviation, url in namespaces %}
+{{ abbreviation }} = Namespace("{{ url }}"){% endfor %}
+
+{% for schema in schemas %}
+class {{ schema.name }}Schema(Schema):
+    {% for prop_name, data_type, path, max_count in schema.prop_parameters %}
+    {{ prop_name }} = fields.{{ data_type }}{% endfor %}
+
+{% endfor %}
+
+schemas_by_target_class = {
+{% for schema in schemas %}
+{{ schema.target_class }}: {{ schema.name }},{% endfor %}
+}\
+'''
+
 metadata_template_str = '''\
 from orm_shacl.rdf_orm_classes import AbstractRDFMetadata, RDFProperty
 from rdflib import Namespace
@@ -15,9 +35,14 @@ from rdflib import Namespace
 class {{ schema.name }}(AbstractRDFMetadata):
     _target_class = {{ schema.target_class }}
     {% for prop_name, data_type, path, max_count in schema.prop_parameters %}
-    {{prop_name}} = RDFProperty(property_name="{{prop_name}}", data_type={{data_type}}, path={{path}}, max_count={{max_count}}){% endfor %}
+    {{ prop_name }} = RDFProperty(property_name="{{ prop_name }}", data_type={{ data_type }}, path={{ path }}, max_count={{ max_count }}){% endfor %}
 
-{% endfor %}\
+{% endfor %}
+
+schemas_by_target_class = {
+{% for schema in schemas %}
+{{ schema.target_class }}: {{ schema.name }},{% endfor %}
+}\
 '''
 
 Schema = collections.namedtuple('Schema', 'name target_class prop_parameters')

@@ -1,0 +1,241 @@
+{
+  "@context": {
+    "dc": "http://purl.org/dc/elements/1.1/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "hsterms": "http://hydroshare.org/terms/",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xml": "http://www.w3.org/XML/1998/namespace",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@graph": [
+    {
+      "@id": "http://www.hydroshare.org/terms/CompositeResource",
+      "rdfs:isDefinedBy": {
+        "@id": "http://hydroshare.org/terms/"
+      },
+      "rdfs:label": "Composite Resource"
+    },
+    {
+      "@id": "http://www.hydroshare.org/resource/770730dcd0a143b4aa45fc9504486079",
+      "@type": "hsterms:resource",
+      "hsterms:awardInfo": [
+        {
+          "@id": "_:ub1bL11C23"
+        },
+        {
+          "@id": "_:ub1bL15C9"
+        }
+      ],
+      "hsterms:extendedMetadata": [
+        {
+          "@id": "_:ub1bL19C30"
+        },
+        {
+          "@id": "_:ub1bL21C9"
+        }
+      ],
+      "dc:contributor": [
+        {
+          "@id": "_:ub1bL23C20"
+        },
+        {
+          "@id": "_:ub1bL31C9"
+        }
+      ],
+      "dc:coverage": [
+        {
+          "@id": "_:ub1bL39C9"
+        },
+        {
+          "@id": "_:ub1bL37C17"
+        }
+      ],
+      "dc:creator": [
+        {
+          "@id": "_:ub1bL43C9"
+        },
+        {
+          "@id": "_:ub1bL41C16"
+        }
+      ],
+      "dc:date": [
+        {
+          "@id": "_:ub1bL49C9"
+        },
+        {
+          "@id": "_:ub1bL47C13"
+        }
+      ],
+      "dc:description": {
+        "@id": "_:ub1bL51C20"
+      },
+      "dc:identifier": {
+        "@id": "_:ub1bL52C19"
+      },
+      "dc:language": "eng",
+      "dc:relation": [
+        {
+          "@id": "_:ub1bL55C9"
+        },
+        {
+          "@id": "_:ub1bL54C17"
+        }
+      ],
+      "dc:rights": {
+        "@id": "_:ub1bL56C15"
+      },
+      "dc:source": [
+        {
+          "@id": "_:ub1bL58C15"
+        },
+        {
+          "@id": "_:ub1bL59C9"
+        }
+      ],
+      "dc:subject": [
+        "dude",
+        "works",
+        "it"
+      ],
+      "dc:title": "hello",
+      "dc:type": {
+        "@id": "_:ub1bL66C13"
+      }
+    },
+    {
+      "@id": "_:ub1bL23C20",
+      "hsterms:GoogleScholarID": {
+        "@id": "https://scholar.google.com/citations?user=ScWTFoQAAAAJ&hl=en"
+      },
+      "hsterms:ORCID": {
+        "@id": "https://orcid.org/0000-0002-1341-5681"
+      },
+      "hsterms:ResearchGateID": {
+        "@id": "https://www.researchgate.net/profile/Anthony_Castronova"
+      },
+      "hsterms:address": "MA, US",
+      "hsterms:email": "castronova.anthony@gmail.com",
+      "hsterms:homepage": {
+        "@id": "http://anthonycastronova.com"
+      },
+      "hsterms:organization": "CUAHSI",
+      "hsterms:phone": "tel:3399334127"
+    },
+    {
+      "@id": "_:ub1bL58C15",
+      "hsterms:isDerivedFrom": "the source"
+    },
+    {
+      "@id": "_:ub1bL11C23",
+      "hsterms:awardNumber": "TN",
+      "hsterms:awardTitle": "T2",
+      "hsterms:fundingAgencyName": "agency2",
+      "hsterms:fundingAgencyURL": {
+        "@id": "https://google.com"
+      }
+    },
+    {
+      "@id": "_:ub1bL19C30",
+      "hsterms:key": "key1",
+      "hsterms:value": "value1"
+    },
+    {
+      "@id": "_:ub1bL49C9",
+      "@type": "dcterms:created",
+      "rdf:value": "2020-07-09T19:12:21.354703+00:00"
+    },
+    {
+      "@id": "_:ub1bL39C9",
+      "@type": "dcterms:box",
+      "rdf:value": "name=asdfsadf; northlimit=42.1505; eastlimit=-84.5739; southlimit=30.282; westlimit=-104.7887; units=Decimal degrees; projection=WGS 84 EPSG:4326"
+    },
+    {
+      "@id": "_:ub1bL21C9",
+      "hsterms:key": "hello",
+      "hsterms:value": "goodbye"
+    },
+    {
+      "@id": "_:ub1bL59C9",
+      "hsterms:isDerivedFrom": "another"
+    },
+    {
+      "@id": "_:ub1bL43C9",
+      "hsterms:creatorOrder": 2,
+      "hsterms:email": "scott.black@usu.edu",
+      "hsterms:name": "Scott s Black",
+      "hsterms:organization": "USU"
+    },
+    {
+      "@id": "_:ub1bL55C9",
+      "hsterms:isCopiedFrom": {
+        "@id": "https://www.google.com"
+      }
+    },
+    {
+      "@id": "_:ub1bL52C19",
+      "hsterms:hydroShareIdentifier": {
+        "@id": "http://www.hydroshare.org/resource/770730dcd0a143b4aa45fc9504486079"
+      }
+    },
+    {
+      "@id": "_:ub1bL56C15",
+      "hsterms:URL": {
+        "@id": "http://studio.bakajo.com"
+      },
+      "hsterms:rightsStatement": "my statement"
+    },
+    {
+      "@id": "_:ub1bL41C16",
+      "hsterms:creatorOrder": 1,
+      "hsterms:name": "Tseganeh Z. Gichamo"
+    },
+    {
+      "@id": "_:ub1bL31C9",
+      "hsterms:ORCID": {
+        "@id": "https://orcid.org/0000-0002-1998-3479"
+      },
+      "hsterms:address": "Utah, US",
+      "hsterms:email": "dtarb@usu.edu",
+      "hsterms:homepage": {
+        "@id": "http://hydrology.usu.edu/dtarb"
+      },
+      "hsterms:organization": "Utah State University",
+      "hsterms:phone": "tel:4357973172"
+    },
+    {
+      "@id": "_:ub1bL54C17",
+      "hsterms:isPartOf": {
+        "@id": "file:///Users/scootna/projects/orm_shacl/hstools/sadf"
+      }
+    },
+    {
+      "@id": "_:ub1bL15C9",
+      "hsterms:awardNumber": "n",
+      "hsterms:awardTitle": "t",
+      "hsterms:fundingAgencyName": "agency1",
+      "hsterms:fundingAgencyURL": {
+        "@id": "https://google.com"
+      }
+    },
+    {
+      "@id": "_:ub1bL51C20",
+      "dcterms:abstract": "updated abstract with DescriptionShape"
+    },
+    {
+      "@id": "_:ub1bL37C17",
+      "@type": "dcterms:period",
+      "rdf:value": "start=2020-07-10T00:00:00; end=2020-07-29T00:00:00"
+    },
+    {
+      "@id": "_:ub1bL47C13",
+      "@type": "dcterms:modified",
+      "rdf:value": "2020-10-13T14:54:01.130536+00:00"
+    },
+    {
+      "@id": "_:ub1bL66C13",
+      "rdfs:isDefinedBy": "http://hydroshare.org/terms/",
+      "rdfs:label": "Composite Resource"
+    }
+  ]
+}

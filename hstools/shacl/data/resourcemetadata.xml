@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:dcterms="http://purl.org/dc/terms/"
+   xmlns:hsterms="http://hydroshare.org/terms/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+>
+  <rdf:Description rdf:nodeID="ub1bL41C16">
+    <hsterms:creatorOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hsterms:creatorOrder>
+    <hsterms:name>Tseganeh Z. Gichamo</hsterms:name>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL21C9">
+    <hsterms:key>hello</hsterms:key>
+    <hsterms:value>goodbye</hsterms:value>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL31C9">
+    <hsterms:address>Utah, US</hsterms:address>
+    <hsterms:organization>Utah State University</hsterms:organization>
+    <hsterms:email>dtarb@usu.edu</hsterms:email>
+    <hsterms:homepage rdf:resource="http://hydrology.usu.edu/dtarb"/>
+    <hsterms:ORCID rdf:resource="https://orcid.org/0000-0002-1998-3479"/>
+    <hsterms:phone>tel:4357973172</hsterms:phone>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL49C9">
+    <rdf:value>2020-07-09T19:12:21.354703+00:00</rdf:value>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/created"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL15C9">
+    <hsterms:awardTitle>t</hsterms:awardTitle>
+    <hsterms:fundingAgencyURL rdf:resource="https://google.com"/>
+    <hsterms:awardNumber>n</hsterms:awardNumber>
+    <hsterms:fundingAgencyName>agency1</hsterms:fundingAgencyName>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL54C17">
+    <hsterms:isPartOf rdf:resource="file:///Users/scootna/projects/orm_shacl/hstools/sadf"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.hydroshare.org/resource/770730dcd0a143b4aa45fc9504486079">
+    <dc:creator rdf:nodeID="ub1bL41C16"/>
+    <dc:subject>dude</dc:subject>
+    <dc:date rdf:nodeID="ub1bL47C13"/>
+    <dc:language>eng</dc:language>
+    <dc:description rdf:nodeID="ub1bL51C20"/>
+    <dc:rights rdf:nodeID="ub1bL56C15"/>
+    <hsterms:extendedMetadata rdf:nodeID="ub1bL21C9"/>
+    <dc:source rdf:nodeID="ub1bL58C15"/>
+    <dc:contributor rdf:nodeID="ub1bL23C20"/>
+    <dc:subject>it</dc:subject>
+    <dc:identifier rdf:nodeID="ub1bL52C19"/>
+    <dc:relation rdf:nodeID="ub1bL54C17"/>
+    <dc:contributor rdf:nodeID="ub1bL31C9"/>
+    <dc:creator rdf:nodeID="ub1bL43C9"/>
+    <dc:subject>works</dc:subject>
+    <dc:coverage rdf:nodeID="ub1bL39C9"/>
+    <dc:type rdf:nodeID="ub1bL66C13"/>
+    <hsterms:awardInfo rdf:nodeID="ub1bL15C9"/>
+    <dc:source rdf:nodeID="ub1bL59C9"/>
+    <rdf:type rdf:resource="http://hydroshare.org/terms/resource"/>
+    <dc:title>hello</dc:title>
+    <dc:date rdf:nodeID="ub1bL49C9"/>
+    <dc:coverage rdf:nodeID="ub1bL37C17"/>
+    <hsterms:awardInfo rdf:nodeID="ub1bL11C23"/>
+    <dc:relation rdf:nodeID="ub1bL55C9"/>
+    <hsterms:extendedMetadata rdf:nodeID="ub1bL19C30"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.hydroshare.org/terms/CompositeResource">
+    <rdfs:isDefinedBy rdf:resource="http://hydroshare.org/terms/"/>
+    <rdfs:label>Composite Resource</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL39C9">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/box"/>
+    <rdf:value>name=asdfsadf; northlimit=42.1505; eastlimit=-84.5739; southlimit=30.282; westlimit=-104.7887; units=Decimal degrees; projection=WGS 84 EPSG:4326</rdf:value>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL23C20">
+    <hsterms:ORCID rdf:resource="https://orcid.org/0000-0002-1341-5681"/>
+    <hsterms:GoogleScholarID rdf:resource="https://scholar.google.com/citations?user=ScWTFoQAAAAJ&amp;hl=en"/>
+    <hsterms:organization>CUAHSI</hsterms:organization>
+    <hsterms:phone>tel:3399334127</hsterms:phone>
+    <hsterms:email>castronova.anthony@gmail.com</hsterms:email>
+    <hsterms:address>MA, US</hsterms:address>
+    <hsterms:ResearchGateID rdf:resource="https://www.researchgate.net/profile/Anthony_Castronova"/>
+    <hsterms:homepage rdf:resource="http://anthonycastronova.com"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL43C9">
+    <hsterms:creatorOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</hsterms:creatorOrder>
+    <hsterms:name>Scott s Black</hsterms:name>
+    <hsterms:email>scott.black@usu.edu</hsterms:email>
+    <hsterms:organization>USU</hsterms:organization>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL19C30">
+    <hsterms:key>key1</hsterms:key>
+    <hsterms:value>value1</hsterms:value>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL52C19">
+    <hsterms:hydroShareIdentifier rdf:resource="http://www.hydroshare.org/resource/770730dcd0a143b4aa45fc9504486079"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL56C15">
+    <hsterms:URL rdf:resource="http://studio.bakajo.com"/>
+    <hsterms:rightsStatement>my statement</hsterms:rightsStatement>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL47C13">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/modified"/>
+    <rdf:value>2020-10-13T14:54:01.130536+00:00</rdf:value>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL11C23">
+    <hsterms:fundingAgencyURL rdf:resource="https://google.com"/>
+    <hsterms:awardNumber>TN</hsterms:awardNumber>
+    <hsterms:fundingAgencyName>agency2</hsterms:fundingAgencyName>
+    <hsterms:awardTitle>T2</hsterms:awardTitle>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL51C20">
+    <dcterms:abstract>updated abstract with DescriptionShape</dcterms:abstract>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL37C17">
+    <rdf:value>start=2020-07-10T00:00:00; end=2020-07-29T00:00:00</rdf:value>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/period"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL66C13">
+    <rdfs:isDefinedBy>http://hydroshare.org/terms/</rdfs:isDefinedBy>
+    <rdfs:label>Composite Resource</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL58C15">
+    <hsterms:isDerivedFrom>the source</hsterms:isDerivedFrom>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL59C9">
+    <hsterms:isDerivedFrom>another</hsterms:isDerivedFrom>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="ub1bL55C9">
+    <hsterms:isCopiedFrom rdf:resource="https://www.google.com"/>
+  </rdf:Description>
+</rdf:RDF>
