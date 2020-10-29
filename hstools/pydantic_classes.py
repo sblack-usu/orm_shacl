@@ -1,3 +1,4 @@
+import uuid
 from datetime import datetime
 from typing import List
 
@@ -83,8 +84,14 @@ class Date(RDFBaseModel):
     type: str = Field(rdf_predicate=RDF.type)
     value: datetime = Field(rdf_predicate=RDF.value)
 
-class HydroShareResource(RDFBaseModel):
+
+def hs_uid():
+    return getattr(HSRESOURCE, uuid.uuid4().hex)
+
+class ResourceMetadata(RDFBaseModel):
+    rdf_subject: URIRef = Field(default_factory=hs_uid)
     rdf_type: URIRef = Field(rdf_predicate=RDF.type, const=True, default=HSTERMS.resource)
+
     title: str = Field(rdf_predicate=DC.title)
     description: str = Field(rdf_predicate=DC.description)
     dates: List[Date] = Field(rdf_predicate=DC.date)
@@ -92,11 +99,10 @@ class HydroShareResource(RDFBaseModel):
 
 created = Date(type='created', value=datetime.now())
 modified = Date(type='modified', value=datetime.now())
-res = HydroShareResource(rdf_subject=HSRESOURCE.ab3234,
-                         title="default",
-                         description="default description",
-                         dates=[created, modified],
-                         subjects=['s1', 's2', 's3'])
+res = ResourceMetadata(title="default",
+                       description="default description",
+                       dates=[created, modified],
+                       subjects=['s1', 's2', 's3'])
 res.description = "a description"
 res.title = "a title"
 res.dates[0].value = datetime.now()
@@ -106,7 +112,7 @@ g = res.rdf(Graph())
 for t in g.triples((None, None, None)):
     print(t)
 
-new_res = HydroShareResource.parse(g, res.rdf_subject)
+new_res = ResourceMetadata.parse(g, res.rdf_subject)
 print(new_res.title)
 print(new_res.rdf_string('turtle'))
 
