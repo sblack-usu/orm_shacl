@@ -1,9 +1,10 @@
 from datetime import datetime
+from typing import List
 
 from marshmallow import Schema, fields
 from pydantic.fields import Undefined
 from rdflib import Namespace, Graph, BNode, URIRef, Literal
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, typing
 
 HSRESOURCE = Namespace("http://www.hydroshare.org/resource/")
 DCTERMS = Namespace("http://purl.org/dc/terms/")
@@ -32,15 +33,18 @@ class RDFBaseModel(BaseModel):
         for f in self.__fields__.values():
             predicate = f.field_info.extra['rdf_predicate']
             predicate = URIRef(predicate)
-            val = getattr(self, f.name, Undefined)
-            if val is not Undefined:
-                if isinstance(val, RDFBaseModel):
-                    sub = BNode()
-                    graph.add((subject, predicate, sub))
-                    graph = val.rdf(graph, sub)
-                else:
-                    val = Literal(val)
-                    graph.add((subject, predicate, val))
+            values = getattr(self, f.name, Undefined)
+            if values is not Undefined:
+                if not isinstance(values, list):
+                    values = [values]
+                for value in values:
+                    if isinstance(value, RDFBaseModel):
+                        sub = BNode()
+                        graph.add((subject, predicate, sub))
+                        graph = value.rdf(graph, sub)
+                    else:
+                        value = Literal(value)
+                        graph.add((subject, predicate, value))
         return graph
 
     def rdf_string(self, subject=BNode(), rdf_format='ttl'):
@@ -52,11 +56,20 @@ class RDFBaseModel(BaseModel):
         kwargs = {}
         for f in cls.__fields__.values():
             predicate = f.field_info.extra['rdf_predicate']
-            val = metadata_graph.value(subject=subject, predicate=predicate)
-            if metadata_graph.value(subject=val):
-                kwargs[f.name] = f.outer_type_.parse(metadata_graph, val)
+            parsed = []
+            for value in metadata_graph.objects(subject=subject, predicate=predicate):
+                if metadata_graph.value(subject=value):
+                    if f.sub_fields:
+                        clazz = f.sub_fields[0].outer_type_
+                    else:
+                        clazz = f.outer_type_
+                    parsed.append(clazz.parse(metadata_graph, value))
+                else:
+                    parsed.append(value.value)
+            if f.sub_fields:
+                kwargs[f.name] = parsed
             else:
-                kwargs[f.name] = val.value
+                kwargs[f.name] = parsed[0]
         return cls(**kwargs)
 
 
@@ -67,20 +80,22 @@ class Date(RDFBaseModel):
 class HydroShareResource(RDFBaseModel):
     title: str = Field(rdf_predicate=DC.title)
     description: str = Field(rdf_predicate=DC.description)
-    date: Date = Field(rdf_predicate=DC.date)
+    dates: List[Date] = Field(rdf_predicate=DC.date)
+    subjects: List[str] = Field(rdf_predicate=DC.subject)
 
-date = Date(type='created', value=datetime.now())
-res = HydroShareResource(title="default", description="default description", date=date)
+created = Date(type='created', value=datetime.now())
+modified = Date(type='modified', value=datetime.now())
+res = HydroShareResource(title="default", description="default description", dates=[created, modified], subjects=['s1', 's2', 's3'])
 res.description = "a description"
 res.title = "a title"
-res.date.value = datetime.now()
+res.dates[0].value = datetime.now()
 
 
 g = res.rdf(Graph(), HSRESOURCE.ab3234)
 
 new_res = HydroShareResource.parse(g, HSRESOURCE.ab3234)
 print(new_res.title)
-print(new_res.date.value)
+print(new_res.dates[0].value)
 
 print(res.rdf_string(HSRESOURCE.ab3234, 'turtle'))
 
