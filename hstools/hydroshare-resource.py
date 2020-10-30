@@ -52,23 +52,37 @@ class Aggregation:
         return self._parsed_files
 
     @property
+    def _aggregations(self):
+        if not self._parsed_aggregations:
+            self._parsed_aggregations = []
+            for file in self._map.describes.files:
+                if str(file.path).endswith('#aggregation'):
+                    self._parsed_aggregations.append(Aggregation(str(file)))
+        return self._parsed_aggregations
+
+    @property
     def files(self):
         return self._files
 
     @property
     def aggregations(self):
-        for file in self._map.describes.files:
-            if str(file.path).endswith('#aggregation'):
-                yield file
+        return self._aggregations
 
     @property
     def metadata(self):
         return self._metadata
 
+    def __str__(self):
+        return self._map_url
 
-resource = Aggregation('https://dev-hs-1.cuahsi.org/resource/9560c2b29497470bbc79bd6484db06e1/data/resourcemap.xml')
+
+resource = Aggregation('https://dev-hs-1.cuahsi.org/resource/09041bbe8015485db414a4d41b3575db/data/resourcemap.xml')
 print(resource.metadata.title)
 print([f for f in resource.files])
-print([f for f in resource.aggregations])
+
+for agg in resource.aggregations:
+    print(agg.metadata.title)
+    for f in agg.files:
+        print(f)
 
 

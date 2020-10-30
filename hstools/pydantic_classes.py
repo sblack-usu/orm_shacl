@@ -235,8 +235,65 @@ class BandInformation(RDFBaseModel):
     minimum_value: List[str] = Field(rdf_predicate=HSTERMS.minimumValue, default=None)
 
 
+class SpatialReference(RDFBaseModel):
+    rdf_type: AnyUrl = Field(rdf_predicate=RDF.type, const=True, default=HSTERMS.spatialReference)
+
+    # TODO fix these fields
+    value: str = Field(rdf_predicate=RDF.value, default=None)
+    type: str = Field(rdf_predicate=RDF.type, default=None)
+
+
+class GeographicRasterMetadata(RDFBaseModel):
+    rdf_type: AnyUrl = Field(rdf_predicate=RDF.type, const=True, default=HSTERMS.GeographicRasterAggregation)
+
+    band_information: BandInformation = Field(rdf_predicate=HSTERMS.BandInformation)
+    spatial_reference: SpatialReference = Field(rdf_predicate=HSTERMS.spatialReference)
+    cell_information: CellInformation = Field(rdf_predicate=HSTERMS.CellInformation)
+    title: str = Field(rdf_predicate=DC.title)
+    subjects: List[str] = Field(rdf_predicate=DC.subject, default=None)
+    extended_metadata: List[ExtendedMetadata] = Field(rdf_predicate=HSTERMS.extendedMetadata, default=None)
+    coverage: List[Coverage] = Field(rdf_predicate=DC.coverage, default=None)
+    rights: List[Rights] = Field(rdf_predicate=DC.rights, default=None)
+
+
+class GeographicFeatureMetadata(RDFBaseModel):
+    # TODO fields haven't been added yet
+    rdf_type: AnyUrl = Field(rdf_predicate=RDF.type, const=True, default=HSTERMS.GeographicFeatureAggregation)
+
+    title: str = Field(rdf_predicate=DC.title)
+
+
+class MultidimensionalMetadata(RDFBaseModel):
+    # TODO fields haven't been added yet
+    rdf_type: AnyUrl = Field(rdf_predicate=RDF.type, const=True, default=HSTERMS.MultidimensionalAggregation)
+
+    title: str = Field(rdf_predicate=DC.title)
+
+
+class ReferencedTimeSeriesMetadata(RDFBaseModel):
+    # TODO fields haven't been added yet
+    rdf_type: AnyUrl = Field(rdf_predicate=RDF.type, const=True, default=HSTERMS.ReferencedTimeSeriesAggregation)
+
+    title: str = Field(rdf_predicate=DC.title)
+
+
+class FileSetMetadata(RDFBaseModel):
+    # TODO fields haven't been added yet
+    rdf_type: AnyUrl = Field(rdf_predicate=RDF.type, const=True, default=HSTERMS.FileSetAggregation)
+
+    title: str = Field(rdf_predicate=DC.title)
+
+
+class SingleFileMetadata(RDFBaseModel):
+    # TODO fields haven't been added yet
+    rdf_type: AnyUrl = Field(rdf_predicate=RDF.type, const=True, default=HSTERMS.SingleFileAggregation)
+
+    title: str = Field(rdf_predicate=DC.title)
+
+
 def hs_uid():
     return getattr(HSRESOURCE, uuid.uuid4().hex)
+
 
 class ResourceMetadata(RDFBaseModel):
     rdf_subject: RDFIdentifier = Field(default_factory=hs_uid)
@@ -244,13 +301,13 @@ class ResourceMetadata(RDFBaseModel):
 
     title: str = Field(rdf_predicate=DC.title)
     description: Description = Field(rdf_predicate=DC.description)
-    contributor: List[Contributor] = Field(rdf_predicate=DC.contributor)
     language: str = Field(rdf_predicate=DC.language)
     subjects: List[str] = Field(rdf_predicate=DC.subject)
     dc_type: DCType = Field(rdf_predicate=DC.type)
     identifier: Identifier = Field(rdf_predicate=DC.identifier)
     creator: List[Creator] = Field(rdf_predicate=DC.creator)
 
+    contributor: List[Contributor] = Field(rdf_predicate=DC.contributor, default=None)
     source: List[Source] = Field(rdf_predicate=DC.source, default=None)
     relation: List[Relation] = Field(rdf_predicate=DC.relation, default=None)
     extended_metadata: List[ExtendedMetadata] = Field(rdf_predicate=HSTERMS.extendedMetadata, default=None)
@@ -274,14 +331,20 @@ class ResourceMap(RDFBaseModel):
     rdf_type: AnyUrl = Field(rdf_predicate=RDF.type, const=True, default=ORE.ResourceMap)
 
     describes: FileMap = Field(rdf_predicate=ORE.describes)
-    identifier: str = Field(rdf_predicate=DC.identifier)
+    identifier: str = Field(rdf_predicate=DC.identifier, default=None)
     #modified: datetime = Field(rdf_predicate=DCTERMS.modified)
-    creator: str = Field(rdf_predicate=DC.creator)
+    creator: str = Field(rdf_predicate=DC.creator, default=None)
 
 
 def load_rdf(file, file_format):
     schemas = {ORE.ResourceMap: ResourceMap,
-               HSTERMS.resource: ResourceMetadata}
+               HSTERMS.resource: ResourceMetadata,
+               HSTERMS.GeographicRasterAggregation: GeographicRasterMetadata,
+               HSTERMS.GeographicFeatureAggregation : GeographicFeatureMetadata,
+               HSTERMS.MultidimensionalAggregation : MultidimensionalMetadata,
+               HSTERMS.ReferencedTimeSeriesAggregation : ReferencedTimeSeriesMetadata,
+               HSTERMS.FileSetAggregation : FileSetMetadata,
+               HSTERMS.SingleFileAggregation : SingleFileMetadata}
     g = Graph().parse(file, format=file_format)
     for target_class, schema in schemas.items():
         subject = g.value(predicate=RDF.type, object=target_class)
