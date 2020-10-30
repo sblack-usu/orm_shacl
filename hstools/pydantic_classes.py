@@ -108,7 +108,7 @@ class DCType(RDFBaseModel):
 class Source(RDFBaseModel):
     rdf_type: AnyUrl = Field(rdf_predicate=RDF.type, const=True, default=DC.source)
 
-    is_derived_from: AnyUrl = Field(rdf_predicate=HSTERMS.isDerivedFrom)
+    is_derived_from: AnyUrl = Field(rdf_predicate=HSTERMS.isDerivedFrom, default=None)
 
 
 class Relation(RDFBaseModel):
@@ -147,9 +147,9 @@ class ExtendedMetadata(RDFBaseModel):
 class CellInformation(RDFBaseModel):
     rdf_type: AnyUrl = Field(rdf_predicate=RDF.type, const=True, default=HSTERMS.CellInformation)
 
-    columns: str = Field(rdf_predicate=HSTERMS.columns)
-    rows: str = Field(rdf_predicate=HSTERMS.rows)
     name: str = Field(rdf_predicate=HSTERMS.name)
+    rows: str = Field(rdf_predicate=HSTERMS.rows)
+    columns: str = Field(rdf_predicate=HSTERMS.columns)
     cell_size_x_value: str = Field(rdf_predicate=HSTERMS.cellSizeXValue)
     cell_data_type: str = Field(rdf_predicate=HSTERMS.cellDataType)
     cell_size_y_value: str = Field(rdf_predicate=HSTERMS.cellSizeYValue)
@@ -170,10 +170,11 @@ class Rights(RDFBaseModel):
 class Creator(RDFBaseModel):
     rdf_type: AnyUrl = Field(rdf_predicate=RDF.type, const=True, default=DC.creator)
 
+    creator_order: int = Field(rdf_predicate=HSTERMS.creatorOrder)
+    name: str = Field(rdf_predicate=HSTERMS.name)
+
     email: str = Field(rdf_predicate=HSTERMS.email, default=None)
     organization: str = Field(rdf_predicate=HSTERMS.organization, default=None)
-    creator_order: int = Field(rdf_predicate=HSTERMS.creatorOrder, default=None)
-    name: str = Field(rdf_predicate=HSTERMS.name, default=None)
 
 
 class Contributor(RDFBaseModel):
@@ -192,23 +193,24 @@ class Contributor(RDFBaseModel):
 class AwardInfo(RDFBaseModel):
     rdf_type: AnyUrl = Field(rdf_predicate=RDF.type, const=True, default=HSTERMS.awardInfo)
 
-    funding_agency_name: str = Field(rdf_predicate=HSTERMS.fundingAgencyName)
-    award_title: str = Field(rdf_predicate=HSTERMS.awardTitle)
-    award_number: str = Field(rdf_predicate=HSTERMS.awardNumber)
-    funding_agency_url: HttpUrl = Field(rdf_predicate=HSTERMS.fundingAgencyURL)
+    funding_agency_name: str = Field(rdf_predicate=HSTERMS.fundingAgencyName, default=None)
+    award_title: str = Field(rdf_predicate=HSTERMS.awardTitle, default=None)
+    award_number: str = Field(rdf_predicate=HSTERMS.awardNumber, default=None)
+    funding_agency_url: HttpUrl = Field(rdf_predicate=HSTERMS.fundingAgencyURL, default=None)
 
 
 class BandInformation(RDFBaseModel):
     rdf_type: AnyUrl = Field(rdf_predicate=RDF.type, const=True, default=HSTERMS.BandInformation)
 
-    no_data_value: str = Field(rdf_predicate=HSTERMS.noDataValue)
-    variable_unit: str = Field(rdf_predicate=HSTERMS.variableUnit)
-    maximum_value: List[str] = Field(rdf_predicate=HSTERMS.maximumValue)
-    comment: str = Field(rdf_predicate=HSTERMS.comment)
-    method: str = Field(rdf_predicate=HSTERMS.method)
-    minimum_value: List[str] = Field(rdf_predicate=HSTERMS.minimumValue)
-    variable_name: str = Field(rdf_predicate=HSTERMS.variableName)
     name: str = Field(rdf_predicate=HSTERMS.name)
+    variable_name: str = Field(rdf_predicate=HSTERMS.variableName)
+    variable_unit: str = Field(rdf_predicate=HSTERMS.variableUnit)
+
+    no_data_value: str = Field(rdf_predicate=HSTERMS.noDataValue, default=None)
+    maximum_value: List[str] = Field(rdf_predicate=HSTERMS.maximumValue, default=None)
+    comment: str = Field(rdf_predicate=HSTERMS.comment, default=None)
+    method: str = Field(rdf_predicate=HSTERMS.method, default=None)
+    minimum_value: List[str] = Field(rdf_predicate=HSTERMS.minimumValue, default=None)
 
 
 def hs_uid():
@@ -218,21 +220,22 @@ class ResourceMetadata(RDFBaseModel):
     rdf_subject: RDFIdentifier = Field(default_factory=hs_uid)
     rdf_type: AnyUrl = Field(rdf_predicate=RDF.type, const=True, default=HSTERMS.resource)
 
-    identifier: Identifier = Field(rdf_predicate=DC.identifier)
-    language: str = Field(rdf_predicate=DC.language)
-    source: List[Source] = Field(rdf_predicate=DC.source)
-    relation: List[Relation] = Field(rdf_predicate=DC.relation)
-    extended_metadata: List[ExtendedMetadata] = Field(rdf_predicate=HSTERMS.extendedMetadata)
-    rights: List[Rights] = Field(rdf_predicate=DC.rights)
     title: str = Field(rdf_predicate=DC.title)
     description: Description = Field(rdf_predicate=DC.description)
-    dates: List[Date] = Field(rdf_predicate=DC.date)
-    subjects: List[str] = Field(rdf_predicate=DC.subject)
-    award_info: List[AwardInfo] = Field(rdf_predicate=HSTERMS.awardInfo)
-    creator: List[Creator] = Field(rdf_predicate=DC.creator)
-    dc_type: DCType = Field(rdf_predicate=DC.type)
-    coverage: List[Coverage] = Field(rdf_predicate=DC.coverage)
     contributor: List[Contributor] = Field(rdf_predicate=DC.contributor)
+    language: str = Field(rdf_predicate=DC.language)
+    subjects: List[str] = Field(rdf_predicate=DC.subject)
+    dc_type: DCType = Field(rdf_predicate=DC.type)
+    identifier: Identifier = Field(rdf_predicate=DC.identifier)
+    creator: List[Creator] = Field(rdf_predicate=DC.creator)
+
+    source: List[Source] = Field(rdf_predicate=DC.source, default=None)
+    relation: List[Relation] = Field(rdf_predicate=DC.relation, default=None)
+    extended_metadata: List[ExtendedMetadata] = Field(rdf_predicate=HSTERMS.extendedMetadata, default=None)
+    rights: List[Rights] = Field(rdf_predicate=DC.rights, default=None)
+    dates: List[Date] = Field(rdf_predicate=DC.date, default=None)
+    award_info: List[AwardInfo] = Field(rdf_predicate=HSTERMS.awardInfo, default=None)
+    coverage: List[Coverage] = Field(rdf_predicate=DC.coverage, default=None)
 
 
 class FileMap(RDFBaseModel):
