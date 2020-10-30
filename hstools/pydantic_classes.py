@@ -38,23 +38,27 @@ class RDFBaseModel(BaseModel):
 
     @classmethod
     def class_rdf_type(cls):
-        return cls.__fields__['rdf_type'].default
+        if cls.__fields__['rdf_type']:
+            return cls.__fields__['rdf_type'].default
+        return None
 
     def rdf(self, graph):
         for f in self._rdf_fields():
             predicate = f.field_info.extra['rdf_predicate']
-            values = getattr(self, f.name, Undefined)
-            if values is not Undefined:
+            values = getattr(self, f.name, None)
+            if values:
                 if not isinstance(values, list):
+                    # handle single values as a list to simplify
                     values = [values]
                 for value in values:
                     if isinstance(value, RDFBaseModel):
+                        # nested class
                         graph.add((self.rdf_subject, predicate, value.rdf_subject))
                         graph = value.rdf(graph)
                     else:
-                        if value:
-                            value = Literal(value)
-                            graph.add((self.rdf_subject, predicate, value))
+                        # primitive value
+                        value = Literal(value)
+                        graph.add((self.rdf_subject, predicate, value))
         if self.rdf_type:
             graph.add((self.rdf_subject, RDF.type, self.rdf_type))
         return graph
@@ -71,29 +75,38 @@ class RDFBaseModel(BaseModel):
     @classmethod
     def parse(cls, metadata_graph, subject=None):
         if not subject:
+            # lookup subject using RDF.type specified in the schema
             target_class = cls.class_rdf_type()
+            if not target_class:
+                raise Exception("Subject must be provided, no RDF.type specified on class {}".format(cls))
             subject = metadata_graph.value(predicate=RDF.type, object=target_class)
             if not subject:
                 raise Exception("Could not find subject for predicate=RDF.type, object={}".format(target_class))
-        if not isinstance(subject, RDFIdentifier):
-            subject = URIRef(subject)
         kwargs = {'rdf_subject': subject}
         for f in cls._rdf_fields():
             predicate = f.field_info.extra['rdf_predicate']
+            if not predicate:
+                raise Exception("Schema configuration error for {}, all fields must specify a rdf_predicate".format(cls))
             parsed = []
             for value in metadata_graph.objects(subject=subject, predicate=predicate):
                 if isinstance(value, BNode):
+                    # nested class
                     if f.sub_fields:
+                        # list
                         clazz = f.sub_fields[0].outer_type_
                     else:
+                        # single
                         clazz = f.outer_type_
                     parsed.append(clazz.parse(metadata_graph, value))
                 else:
+                    # primitive value
                     parsed.append(str(value))
             if len(parsed) > 0:
                 if f.sub_fields:
+                    # list
                     kwargs[f.name] = parsed
                 else:
+                    # single
                     kwargs[f.name] = parsed[0]
         return cls(**kwargs)
 
