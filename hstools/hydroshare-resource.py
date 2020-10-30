@@ -6,7 +6,7 @@ def retrieve_and_parse(url):
     import requests
 
     session = requests.Session()
-    session.auth = ('sblack', 'j1u2n3o4')
+    session.auth = ('sblack', 'password')
 
     metadata = session.request('GET', url, allow_redirects=True)
 
