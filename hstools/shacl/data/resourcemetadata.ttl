@@ -52,12 +52,12 @@
     dc:description [ dcterms:abstract "updated abstract with DescriptionShape" ] ;
     dc:identifier [ hsterms:hydroShareIdentifier <http://www.hydroshare.org/resource/770730dcd0a143b4aa45fc9504486079> ] ;
     dc:language "eng" ;
-    dc:relation [ hsterms:isPartOf <file:///Users/scootna/projects/orm_shacl/hstools/sadf> ],
+    dc:relation [ hsterms:isPartOf <http://www.hydroshare.org/resource/hstools/sadf> ],
         [ hsterms:isCopiedFrom <https://www.google.com> ] ;
     dc:rights [ hsterms:URL <http://studio.bakajo.com> ;
             hsterms:rightsStatement "my statement" ] ;
-    dc:source [ hsterms:isDerivedFrom "the source" ],
-        [ hsterms:isDerivedFrom "another" ] ;
+    dc:source [ hsterms:isDerivedFrom <https://photos.google.com> ],
+        [ hsterms:isDerivedFrom <https://drive.google.com> ] ;
     dc:subject "dude",
         "it",
         "works" ;
