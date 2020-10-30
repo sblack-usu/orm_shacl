@@ -1,8 +1,8 @@
 import uuid
+import inspect
 from datetime import datetime
-from typing import List
+from typing import List, get_args
 
-from pydantic.fields import Undefined
 from rdflib import Namespace, Graph, BNode, URIRef, Literal
 from rdflib.term import Identifier as RDFIdentifier
 from pydantic import BaseModel, Field, AnyUrl, HttpUrl
@@ -74,23 +74,23 @@ class RDFBaseModel(BaseModel):
 
     @classmethod
     def parse(cls, metadata_graph, subject=None):
+        schema = cls
         if not subject:
             # lookup subject using RDF.type specified in the schema
-            target_class = cls.class_rdf_type()
+            target_class = schema.class_rdf_type()
             if not target_class:
                 raise Exception("Subject must be provided, no RDF.type specified on class {}".format(cls))
             subject = metadata_graph.value(predicate=RDF.type, object=target_class)
             if not subject:
                 raise Exception("Could not find subject for predicate=RDF.type, object={}".format(target_class))
         kwargs = {'rdf_subject': subject}
-        for f in cls._rdf_fields():
+        for f in schema._rdf_fields():
             predicate = f.field_info.extra['rdf_predicate']
             if not predicate:
                 raise Exception("Schema configuration error for {}, all fields must specify a rdf_predicate".format(cls))
             parsed = []
             for value in metadata_graph.objects(subject=subject, predicate=predicate):
-                if isinstance(value, BNode):
-                    # nested class
+                if nested_class(f):
                     if f.sub_fields:
                         # list
                         clazz = f.sub_fields[0].outer_type_
@@ -108,7 +108,16 @@ class RDFBaseModel(BaseModel):
                 else:
                     # single
                     kwargs[f.name] = parsed[0]
-        return cls(**kwargs)
+        return schema(**kwargs)
+
+def nested_class(field):
+    if field.sub_fields:
+        clazz = get_args(field.outer_type_)[0]
+    else:
+        clazz = field.outer_type_
+    if inspect.isclass(clazz):
+        return issubclass(clazz, RDFBaseModel)
+    return False
 
 
 class DCType(RDFBaseModel):
@@ -121,14 +130,14 @@ class DCType(RDFBaseModel):
 class Source(RDFBaseModel):
     rdf_type: AnyUrl = Field(rdf_predicate=RDF.type, const=True, default=DC.source)
 
-    is_derived_from: AnyUrl = Field(rdf_predicate=HSTERMS.isDerivedFrom, default=None)
+    is_derived_from: str = Field(rdf_predicate=HSTERMS.isDerivedFrom, default=None)
 
 
 class Relation(RDFBaseModel):
     rdf_type: AnyUrl = Field(rdf_predicate=RDF.type, const=True, default=DC.relation)
 
-    is_copied_from: AnyUrl = Field(rdf_predicate=HSTERMS.isCopiedFrom, default=None)
-    is_part_of: AnyUrl = Field(rdf_predicate=HSTERMS.isPartOf, default=None)
+    is_copied_from: str = Field(rdf_predicate=HSTERMS.isCopiedFrom, default=None)
+    is_part_of: str = Field(rdf_predicate=HSTERMS.isPartOf, default=None)
 
 
 class Description(RDFBaseModel):
@@ -264,11 +273,20 @@ class FileMap(RDFBaseModel):
 class ResourceMap(RDFBaseModel):
     rdf_type: AnyUrl = Field(rdf_predicate=RDF.type, const=True, default=ORE.ResourceMap)
 
-    describes: str = Field(rdf_predicate=ORE.describes)
+    describes: FileMap = Field(rdf_predicate=ORE.describes)
     identifier: str = Field(rdf_predicate=DC.identifier)
-    modified: datetime = Field(rdf_predicate=DCTERMS.modified)
+    #modified: datetime = Field(rdf_predicate=DCTERMS.modified)
     creator: str = Field(rdf_predicate=DC.creator)
 
+
+def load_rdf(file, file_format):
+    schemas = {ORE.ResourceMap: ResourceMap,
+               HSTERMS.resource: ResourceMetadata}
+    g = Graph().parse(file, format=file_format)
+    for target_class, schema in schemas.items():
+        subject = g.value(predicate=RDF.type, object=target_class)
+        if subject:
+            return schema.parse(g)
 
 
 
